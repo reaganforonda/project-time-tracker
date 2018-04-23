@@ -18,6 +18,8 @@ TODO:
 + Postgres SQL
 + Amazon AWS S3
 + React S3 Uploader
++ Material-UI
++ Sass
 
 ___
 ## Features
