@@ -10,9 +10,8 @@ export default class Landing extends React.Component {
         <nav>
           <h1>App Title</h1>
           <a href={process.env.REACT_APP_LOGIN}>
-            <button>Log In</button>
+            <button>Login</button>
           </a>
-          <button>Register</button>
         </nav>
         <header className="landing-header" />
         <section className="about-section-landing">
