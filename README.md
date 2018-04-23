@@ -6,7 +6,7 @@ TODO:
 ___
 ## Motivation
 TODO:
-This project is to demonstrate knowledge of creating a full stack web application using React.js as well as implementing various tech and frameworks.
+This project is to demonstrate knowledge of creating a React, single-page full stack web application.  This project is also for demonstrating the ability to impliment different tech and frameworks.
 ___
 ## Screenshots
 TODO:
