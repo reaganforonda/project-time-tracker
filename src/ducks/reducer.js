@@ -1,8 +1,8 @@
 const INITIAL_STATE = {
-    // TODO:
+    user : {}
 };
 
-// TODO:
+const GET_USER_INFO = 'GET_USER_INFO';
 
 
 export default function reducer(state = INITIAL_STATE, action){

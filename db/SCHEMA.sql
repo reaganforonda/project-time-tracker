@@ -7,9 +7,10 @@ DROP TABLE IF EXISTS users;
 CREATE TABLE users
 (
     user_ID SERIAL PRIMARY KEY,
+    auth_ID TEXT,
     first_Name VARCHAR(45),
     last_Name VARCHAR(45),
-    user_NAme VARCHAR(45),
+    user_Name VARCHAR(45),
     email VARCHAR(45),
     phone VARCHAR(45),
     picture TEXT,
