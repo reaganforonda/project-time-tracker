@@ -20,3 +20,13 @@ h1 {
 .clockedOut {
     background: rgba($clockOut-back, $opacity);
 }
+
+.floating-action {
+    position : absolute;
+    bottom: 0;
+    right: 0;
+}
+
+.job-entry-form{
+    
+}
