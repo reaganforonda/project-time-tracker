@@ -30,9 +30,9 @@ export default class Landing extends React.Component {
             post-ironic chia direct trade man bun meditation locavore. Man bun
             gochujang bicycle rights actually kitsch activated charcoal
             farm-to-table deep v stumptown banjo flannel bespoke tote bag
-            fingerstache. <p>Oh. You need a little dummy text for your mockup? How
+            fingerstache.
+          </p> <p>Oh. You need a little dummy text for your mockup? How
             quaint.</p>
-          </p>
         </section>
 
         <section className='section-two'>

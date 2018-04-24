@@ -9,6 +9,9 @@ const express = require("express"),
   passport = require("passport"),
   Auth0Strategy = require("passport-auth0");
 
+const jobsController = require("./jobsController"),
+  clientController = require("./clientController");
+
 const app = express();
 
 // .env Desconstructor
@@ -34,14 +37,12 @@ app.use(
   })
 );
 
-
 // ###### DB Connection ######
 massive(CONNECTION_STRING)
   .then(dbInstance => {
     app.set("db", dbInstance);
   })
   .catch(e => console.log(`Error: ${e}`));
-
 
 app.use(passport.initialize());
 app.use(passport.session());
@@ -57,61 +58,72 @@ passport.use(
       scope: "openid profile"
     },
 
-    function(accessToken, refreshToken, extraParams, profile, done){
-      const db = app.get('db');
-      const {id, displayName, picture} = profile;
+    function(accessToken, refreshToken, extraParams, profile, done) {
+      const db = app.get("db");
+      
+      const { id, displayName, picture } = profile;
+      
 
       db.FIND_USER_AUTH([id]).then(users => {
-        if(users[0]){
-          return done(null, users[0].id);
-        }
-        else {
+        
+        if (users[0]) {
+          return done(null, users[0].auth_id);
+        } else {
           db.CREATE_USER([id, displayName, picture]).then(createdUser => {
             return done(null, createdUser[0].id);
-          })
+          });
         }
-      })
+      });
     }
   )
 );
 
 passport.serializeUser((id, done) => {
   // Putting info in session
+  console.log(id);
   return done(null, id);
 });
 
 passport.deserializeUser((id, done) => {
-  app.get('db').FIND_USER_SESSION([id].then((user) => {
-    done(null, user[0]);
-  }))
-})
+  app.get("db").FIND_USER_SESSION(
+    [id].then(user => {
+      done(null, user[0]);
+    })
+  );
+});
 
-app.get('/auth', passport.authenticate('auth0'));
+app.get("/auth", passport.authenticate("auth0"));
 
 app.get(
   "/auth/callback",
   passport.authenticate("auth0", {
-    successRedirect: "http://localhost:3000/#/dashboard",
+    successRedirect: "http://localhost:3000/#/jobview",
     failureRedirect: "http://localhost:3000"
   })
 );
 
 app.get("/auth/me", function(req, res) {
+  console.log(req.user);
   if (req.user) {
     res.status(200).send(req.user);
   } else {
-    res.status(401).send(console.log('Get to the choppa'));
+    res.status(401).send(console.log("Get to the choppa"));
   }
 });
 
-
-app.get('/logout', function(req, res){
+app.get("/logout", function(req, res) {
   req.logOut();
-  res.redirect('http://localhost:3000')
+  res.redirect("http://localhost:3000");
 });
 
+// ###### ENDPOINTS - JOB ######
+// app.post("/api/job", jobsController.addJob);
 
-// ###### ENDPOINTS ######
+// ###### ENDPOINTS - Client ######
+// app.get('/api/clients/:id', clientController.getClients)
+
+
+
 
 app.listen(CONNECTION_PORT, () => {
   console.log(`Creeping on Port: ${CONNECTION_PORT}`);

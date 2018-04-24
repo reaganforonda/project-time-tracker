@@ -2,6 +2,7 @@ import React from "react";
 import Menu from "../Menu/Menu";
 import Jobs from "../Jobs/Jobs";
 import axios from "axios";
+import DropDownMenu from 'material-ui/DropDownMenu';
 import FloatingActionButton from "material-ui/FloatingActionButton";
 import ContentAdd from "material-ui/svg-icons/content/add";
 import Dialog from "material-ui/Dialog";
@@ -25,6 +26,7 @@ export default class JobView extends React.Component {
     this.handleCancelModalClick = this.handleCancelModalClick.bind(this);
     this.handleTextChange = this.handleTextChange.bind(this);
     this.handleDateChange = this.handleDateChange.bind(this);
+    this.formatDate = this.formatDate.bind(this);
   }
 
   handleAddJobClick() {
@@ -50,6 +52,13 @@ export default class JobView extends React.Component {
   }
 
   handleJobSubmit() {
+    // TODO: ALSO BIND THIS THING!!!
+  }
+
+  // Formate Datepicker's date to something for useable
+  formatDate(date){
+    let formatedDate = `${date.getMonth()}/${date.getDate()}/${date.getFullYear()}`;
+    return formatedDate;
     
   }
 
@@ -99,6 +108,7 @@ export default class JobView extends React.Component {
                   floatingLabelText="Job Description"
                 />
                 <DatePicker
+                  
                   autoOk={true}
                   value={this.state.startDate}
                   onChange={this.handleDateChange}
