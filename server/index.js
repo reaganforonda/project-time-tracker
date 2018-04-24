@@ -4,13 +4,13 @@ const express = require("express"),
   massive = require("massive"),
   bodyParser = require("body-parser"),
   cors = require("cors"),
-  controller = require("./controller.js"),
+  controller = require("./controllers/controller"),
   session = require("express-session"),
   passport = require("passport"),
   Auth0Strategy = require("passport-auth0");
 
-const jobsController = require("./jobsController"),
-  clientController = require("./clientController");
+const jobsController = require("./controllers/jobsController"),
+  clientController = require("./controllers/clientController");
 
 const app = express();
 
@@ -125,7 +125,7 @@ app.get("/logout", function(req, res) {
 // app.post("/api/job", jobsController.addJob);
 
 // ###### ENDPOINTS - Client ######
-// app.get('/api/clients/:id', clientController.getClients)
+app.get('/api/clients', clientController.getAllClients);
 
 app.listen(CONNECTION_PORT, () => {
   console.log(`Creeping on Port: ${CONNECTION_PORT}`);

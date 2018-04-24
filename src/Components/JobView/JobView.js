@@ -23,8 +23,6 @@ export class JobView extends React.Component {
       jobDescription: "",
       startDate: null,
       hourlyRate: 0,
-      user_name : '',
-      img : "",
     };
 
     this.handleAddJobClick = this.handleAddJobClick.bind(this);
@@ -32,12 +30,10 @@ export class JobView extends React.Component {
     this.handleTextChange = this.handleTextChange.bind(this);
     this.handleDateChange = this.handleDateChange.bind(this);
     this.formatDate = this.formatDate.bind(this);
-    this.handleNonUserLogin = this.handleNonUserLogin.bind(this);
   }
 
   componentDidMount(){
     this.props.getUser();
-    this.setState({user_name : this.props.user.user_name})
   }
 
   
@@ -74,15 +70,13 @@ export class JobView extends React.Component {
     
   }
 
-  handleNonUserLogin(){
-    return <Dialog label='Login Error' modal={true} open={true}/>
-  }
 
   render() {
     let {picture, user_name} = this.props.user;
     console.log(this.props.user)
     return (
       <div>
+        
         <div className="menu">
           <Menu img={picture} userName={user_name}/>
         </div>

@@ -1,10 +1,12 @@
 import axios from 'axios';
 
 const INITIAL_STATE = {
-    user : {}
+    user : {},
+    clients :[]
 };
 
 const GET_USER_INFO = 'GET_USER_INFO';
+const GET_ALL_CLIENTS = 'GET_ALL_CLIENTS';
 
 export function getUser() {
     let userData = axios.get("/auth/me").then(res => {
@@ -15,6 +17,10 @@ export function getUser() {
       type: GET_USER_INFO,
       payload: userData
     };
+  }
+
+  export function getAllClients(){
+      
   }
 
 
