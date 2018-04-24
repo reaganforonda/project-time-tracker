@@ -2,18 +2,20 @@ import React from "react";
 import Menu from "../Menu/Menu";
 import Jobs from "../Jobs/Jobs";
 import axios from "axios";
-import DropDownMenu from 'material-ui/DropDownMenu';
+import SelectField from "material-ui/SelectField";
+import MenuItem from "material-ui/MenuItem";
 import FloatingActionButton from "material-ui/FloatingActionButton";
 import ContentAdd from "material-ui/svg-icons/content/add";
 import Dialog from "material-ui/Dialog";
 import TextField from "material-ui/TextField";
 import DatePicker from "material-ui/DatePicker";
+import Divider from "material-ui/Divider";
 import RaisedButton from "material-ui/RaisedButton";
 import { Link } from "react-router-dom";
-import DropMenu from '../DropMenu/DropMenu';
+import DropMenu from "../DropMenu/DropMenu";
 
-import {getUser, getAllClients} from '../../ducks/reducer';
-import {connect} from 'react-redux';
+import { getUser, getAllClients } from "../../ducks/reducer";
+import { connect } from "react-redux";
 
 export class JobView extends React.Component {
   constructor(props) {
@@ -24,6 +26,8 @@ export class JobView extends React.Component {
       jobDescription: "",
       startDate: null,
       hourlyRate: 0,
+      clients: [],
+      client: ""
     };
 
     this.handleAddJobClick = this.handleAddJobClick.bind(this);
@@ -31,14 +35,15 @@ export class JobView extends React.Component {
     this.handleTextChange = this.handleTextChange.bind(this);
     this.handleDateChange = this.handleDateChange.bind(this);
     this.formatDate = this.formatDate.bind(this);
+
+    this.handleSelectClients = this.handleSelectClients.bind(this);
   }
 
-  componentDidMount(){
+  componentDidMount() {
     this.props.getUser();
     this.props.getAllClients();
   }
 
-  
   handleAddJobClick() {
     this.setState({ modalOpen: true });
   }
@@ -66,19 +71,29 @@ export class JobView extends React.Component {
   }
 
   // Formate Datepicker's date to something for useable
-  formatDate(date){
+  formatDate(date) {
     let formatedDate = `${date.getMonth()}/${date.getDate()}/${date.getFullYear()}`;
     return formatedDate;
   }
 
+  handleSelectClients(event, index, value) {
+    this.setState({client : value});
+  }
 
   render() {
-    let {picture, user_name} = this.props.user;
+    let { picture, user_name } = this.props.user;
+
+    const clients = [
+      <MenuItem key={1} value={'dookie'} primaryText="Client 1" />,
+      <MenuItem key={2} value={2} primaryText="Client 2" />,
+      <MenuItem key={3} value={3} primaryText="Client 3" />,
+      <MenuItem key={4} value={4} primaryText="Client 4" />
+    ];
 
     return (
       <div>
         <div className="menu">
-          <Menu img={picture} userName={user_name}/>
+          <Menu img={picture} userName={user_name} />
         </div>
 
         <div className="job-container">
@@ -106,9 +121,13 @@ export class JobView extends React.Component {
 
             <Dialog modal={true} open={this.state.modalOpen}>
               <form className="job-entry-form">
-
-                <DropMenu/>
-
+                <SelectField
+                  onChange={this.handleSelectClients}
+                  value={this.state.client}
+                  floatingLabelText="Select Client"
+                >
+                  {clients}
+                </SelectField>
 
                 <TextField
                   value={this.state.jobName}
@@ -127,7 +146,6 @@ export class JobView extends React.Component {
                 />
 
                 <DatePicker
-                  
                   autoOk={true}
                   value={this.state.startDate}
                   onChange={this.handleDateChange}
@@ -135,6 +153,7 @@ export class JobView extends React.Component {
                   hintText="Job Start Date"
                   floatingLabelText="Job Start Date"
                 />
+
                 <TextField
                   type="number"
                   value={this.state.hourlyRate}
@@ -158,11 +177,11 @@ export class JobView extends React.Component {
   }
 }
 
-function mapStateToProps(state){
+function mapStateToProps(state) {
   return {
-    user : state.user,
-    clients : state.clients
-  }
-};
+    user: state.user,
+    clients: state.clients
+  };
+}
 
-export default connect(mapStateToProps, {getUser, getAllClients})(JobView);
+export default connect(mapStateToProps, { getUser, getAllClients })(JobView);

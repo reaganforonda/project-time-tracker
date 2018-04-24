@@ -27,6 +27,7 @@ CREATE TABLE clients
 (
     client_ID SERIAL PRIMARY KEY,
     user_ID INTEGER REFERENCES users(user_ID),
+    client_name VARCHAR(45),
     address_one VARCHAR(45),
     address_two VARCHAR(45),
     city VARCHAR(45),

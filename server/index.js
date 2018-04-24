@@ -128,6 +128,7 @@ app.get('/api/jobs/:userId', jobsController.getJobsByUserID)
 
 // ###### ENDPOINTS - Client ######
 app.get('/api/clients', clientController.getAllClients);
+app.post('/api/client/', clientController.addClient);
 
 app.listen(CONNECTION_PORT, () => {
   console.log(`Creeping on Port: ${CONNECTION_PORT}`);
