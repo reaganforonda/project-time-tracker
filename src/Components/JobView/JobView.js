@@ -13,11 +13,17 @@ export default class JobView extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      modalOpen: false
+      modalOpen: false,
+      jobName : '',
+      jobDescription: '',
+      startDate : '',
+      hourlyRate : 0
+
     };
 
     this.handleAddJobClick = this.handleAddJobClick.bind(this);
     this.handleCancelModalClick = this.handleCancelModalClick.bind(this);
+    this.handleTextChange = this.handleTextChange.bind(this);
   }
 
   handleAddJobClick() {
@@ -26,6 +32,10 @@ export default class JobView extends React.Component {
 
   handleCancelModalClick(){
     this.setState({modalOpen: false})
+  }
+
+  handleTextChange(e){
+    this.setState({[e.target.name] : e.target.value})
   }
 
   render() {
@@ -59,16 +69,16 @@ export default class JobView extends React.Component {
             <ContentAdd />
             <Dialog modal={true} open={this.state.modalOpen}>
               <form className="job-entry-form">
-                <TextField hintText="Job Name" floatingLabelText="Job Name" />
-                <TextField
+                <TextField onChange={(e)=>this.handleTextChange(e)} name='jobName' hintText="Job Name" floatingLabelText="Job Name" />
+                <TextField onChange={(e)=>this.handleTextChange(e)} name='jobDescription'
                   hintText="Job Description"
                   floatingLabelText="Job Description"
                 />
-                <DatePicker
+                <DatePicker onClick={(e)=>this.handleTextChange(e)} name='startDate'
                   hintText="Job Start Date"
                   floatingLabelText="Job Start Date"
                 />
-                <TextField
+                <TextField onChange={(e)=>this.handleTextChange(e)} name='hourlyRate'
                   hintText="Hourly Rate"
                   floatingLabelText="Hourly Rate"
                 />
