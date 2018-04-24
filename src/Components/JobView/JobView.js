@@ -10,8 +10,10 @@ import TextField from "material-ui/TextField";
 import DatePicker from "material-ui/DatePicker";
 import RaisedButton from "material-ui/RaisedButton";
 import { Link } from "react-router-dom";
+import {getUser} from '../../ducks/reducer';
+import {connect} from 'react-redux';
 
-export default class JobView extends React.Component {
+export class JobView extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -19,7 +21,9 @@ export default class JobView extends React.Component {
       jobName: "",
       jobDescription: "",
       startDate: null,
-      hourlyRate: 0
+      hourlyRate: 0,
+      user_name : '',
+      img : "",
     };
 
     this.handleAddJobClick = this.handleAddJobClick.bind(this);
@@ -27,8 +31,16 @@ export default class JobView extends React.Component {
     this.handleTextChange = this.handleTextChange.bind(this);
     this.handleDateChange = this.handleDateChange.bind(this);
     this.formatDate = this.formatDate.bind(this);
+    this.handleNonUserLogin = this.handleNonUserLogin.bind(this);
   }
 
+  componentDidMount(){
+    if(!this.props.getUser()){
+      this.handleNonUserLogin();
+    }
+  }
+
+  
   handleAddJobClick() {
     this.setState({ modalOpen: true });
   }
@@ -60,6 +72,10 @@ export default class JobView extends React.Component {
     let formatedDate = `${date.getMonth()}/${date.getDate()}/${date.getFullYear()}`;
     return formatedDate;
     
+  }
+
+  handleNonUserLogin(){
+    return <Dialog label='Login Error' modal={true} open={true}/>
   }
 
   render() {
@@ -138,3 +154,11 @@ export default class JobView extends React.Component {
     );
   }
 }
+
+function mapStateToProps(state){
+  return {
+    user : state
+  }
+};
+
+export default connect(mapStateToProps, {getUser})(JobView);

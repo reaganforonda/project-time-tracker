@@ -60,18 +60,21 @@ passport.use(
 
     function(accessToken, refreshToken, extraParams, profile, done) {
       const db = app.get("db");
-      
-      const { id, displayName, picture } = profile;
-      
+
+      const { id, displayName, picture, given_name, family_name } = profile;
 
       db.FIND_USER_AUTH([id]).then(users => {
-        
         if (users[0]) {
           return done(null, users[0].auth_id);
         } else {
-          db.CREATE_USER([id, displayName, picture]).then(createdUser => {
-            return done(null, createdUser[0].id);
-          });
+          db
+            .CREATE_USER([id, displayName, picture, given_name, family_name])
+            .then(createdUser => {
+              
+              return done(null, createdUser[0].auth_id);
+            }).catch((e) => {
+              console.log(`Error at Creating User: ${e}`);
+            });
         }
       });
     }
@@ -80,16 +83,20 @@ passport.use(
 
 passport.serializeUser((id, done) => {
   // Putting info in session
-  console.log(id);
+  
   return done(null, id);
 });
 
 passport.deserializeUser((id, done) => {
-  app.get("db").FIND_USER_SESSION(
-    [id].then(user => {
+  
+  app
+    .get("db")
+    .FIND_USER_SESSION([id])
+    .then(user => {
       done(null, user[0]);
-    })
-  );
+    }).catch((e)=> {
+      console.log(`Error : ${e}`);
+    });
 });
 
 app.get("/auth", passport.authenticate("auth0"));
@@ -103,7 +110,6 @@ app.get(
 );
 
 app.get("/auth/me", function(req, res) {
-  console.log(req.user);
   if (req.user) {
     res.status(200).send(req.user);
   } else {
@@ -121,9 +127,6 @@ app.get("/logout", function(req, res) {
 
 // ###### ENDPOINTS - Client ######
 // app.get('/api/clients/:id', clientController.getClients)
-
-
-
 
 app.listen(CONNECTION_PORT, () => {
   console.log(`Creeping on Port: ${CONNECTION_PORT}`);
