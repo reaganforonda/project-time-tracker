@@ -1,0 +1,59 @@
+$font-main: 'Roboto', sans-serif;
+$nav-height: 10vh;
+$nav-padding: 20px;
+$h1-size: 50px;
+$h2-size: 30px;
+$head-height: 100vh;
+$width : 60%;
+$line-space : 5px;
+$about-paddding: 30px;
+
+nav {
+    height : $nav-height;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-left: $nav-padding;
+    padding-right: $nav-padding;
+    position: fixed;
+    margin: 0;
+}
+
+nav h1 {
+    font-size: $h1-size;
+    letter-spacing: $line-space
+}
+
+header {
+    // Photo by Alesia Kazantceva on Unsplash
+    background: url('../src/Images/alesia-kazantceva-283291-unsplash.jpg') no-repeat center;
+    background-size: cover;
+    height: $head-height;
+}
+
+.about-section-landing h2 {
+    font-size: $h1-size;
+    letter-spacing: $line-space;
+    margin-bottom: 30px;
+}
+
+.about-section-landing {
+    text-align : center;
+    background : #373737;
+    color: white;
+    padding-top: $about-paddding;
+    padding-bottom : $about-paddding;
+    height: calc($head-height-30px);
+}
+
+.about-text {
+    width : $width;
+    margin-left : auto;
+    margin-right: auto;
+}
+
+.section-two{
+    background: url('../src/Images/breather-168766-unsplash.jpg') no-repeat center;
+    background-size : cover;
+    height: 50vh;
+}
