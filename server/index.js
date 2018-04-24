@@ -88,7 +88,6 @@ passport.serializeUser((id, done) => {
 });
 
 passport.deserializeUser((id, done) => {
-  
   app
     .get("db")
     .FIND_USER_SESSION([id])
@@ -113,7 +112,7 @@ app.get("/auth/me", function(req, res) {
   if (req.user) {
     res.status(200).send(req.user);
   } else {
-    res.status(401).send(console.log("Get to the choppa"));
+    res.status(401).send(console.log("Error 401"));
   }
 });
 

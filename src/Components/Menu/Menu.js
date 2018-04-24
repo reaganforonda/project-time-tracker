@@ -5,11 +5,13 @@ import Avatar from "material-ui/Avatar";
 import {Link} from 'react-router-dom';
 
 export default function Menu(props) {
+  console.log(props.img);
   return (
     <div>
+      
       <Drawer docked={true} width={200} open={true} className="menu-drawer">
-        <Avatar src="http://www.fillmurray.com/100/100" size={75} />
-        <p>Insert Name Here</p>
+        <Avatar src={props.img} size={75} />
+        <p>{props.userName}</p>
         <div className="menu-items">
           <Link className='link' to='/jobview'> <MenuItem primaryText="JOBS"></MenuItem></Link>
           <Link className='link' to='/entryview'><MenuItem primaryText="ENTERIES"></MenuItem></Link>

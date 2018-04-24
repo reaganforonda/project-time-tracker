@@ -10,6 +10,7 @@ import TextField from "material-ui/TextField";
 import DatePicker from "material-ui/DatePicker";
 import RaisedButton from "material-ui/RaisedButton";
 import { Link } from "react-router-dom";
+
 import {getUser} from '../../ducks/reducer';
 import {connect} from 'react-redux';
 
@@ -35,9 +36,8 @@ export class JobView extends React.Component {
   }
 
   componentDidMount(){
-    if(!this.props.getUser()){
-      this.handleNonUserLogin();
-    }
+    this.props.getUser();
+    this.setState({user_name : this.props.user.user_name})
   }
 
   
@@ -79,10 +79,12 @@ export class JobView extends React.Component {
   }
 
   render() {
+    let {picture, user_name} = this.props.user;
+    console.log(this.props.user)
     return (
       <div>
         <div className="menu">
-          <Menu />
+          <Menu img={picture} userName={user_name}/>
         </div>
 
         <div className="job-container">
@@ -157,7 +159,7 @@ export class JobView extends React.Component {
 
 function mapStateToProps(state){
   return {
-    user : state
+    user : state.user
   }
 };
 
