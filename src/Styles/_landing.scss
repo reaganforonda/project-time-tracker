@@ -10,13 +10,16 @@ $about-paddding: 30px;
 
 nav {
     height : $nav-height;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
     padding-left: $nav-padding;
     padding-right: $nav-padding;
     position: fixed;
+    display: flex;
+    align-items: center;
     margin: 0;
+}
+
+nav button{
+    font-size: 30px;
 }
 
 nav h1 {

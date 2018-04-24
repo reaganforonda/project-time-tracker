@@ -1,41 +1,56 @@
 import React from "react";
 import Menu from "../Menu/Menu";
 import Jobs from "../Jobs/Jobs";
+import axios from "axios";
 import FloatingActionButton from "material-ui/FloatingActionButton";
 import ContentAdd from "material-ui/svg-icons/content/add";
 import Dialog from "material-ui/Dialog";
 import TextField from "material-ui/TextField";
 import DatePicker from "material-ui/DatePicker";
-import RaisedButton from 'material-ui/RaisedButton';
-import {Link} from 'react-router-dom';
+import RaisedButton from "material-ui/RaisedButton";
+import { Link } from "react-router-dom";
 
 export default class JobView extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       modalOpen: false,
-      jobName : '',
-      jobDescription: '',
-      startDate : '',
-      hourlyRate : 0
-
+      jobName: "",
+      jobDescription: "",
+      startDate: null,
+      hourlyRate: 0
     };
 
     this.handleAddJobClick = this.handleAddJobClick.bind(this);
     this.handleCancelModalClick = this.handleCancelModalClick.bind(this);
     this.handleTextChange = this.handleTextChange.bind(this);
+    this.handleDateChange = this.handleDateChange.bind(this);
   }
 
   handleAddJobClick() {
     this.setState({ modalOpen: true });
   }
 
-  handleCancelModalClick(){
-    this.setState({modalOpen: false})
+  handleCancelModalClick() {
+    this.setState({
+      modalOpen: false,
+      jobName: "",
+      jobDescription: "",
+      startDate: null,
+      hourlyRate: 0
+    });
   }
 
-  handleTextChange(e){
-    this.setState({[e.target.name] : e.target.value})
+  handleTextChange(e) {
+    this.setState({ [e.target.name]: e.target.value });
+  }
+
+  handleDateChange(e, date) {
+    this.setState({ startDate: date });
+  }
+
+  handleJobSubmit() {
+    
   }
 
   render() {
@@ -69,21 +84,40 @@ export default class JobView extends React.Component {
             <ContentAdd />
             <Dialog modal={true} open={this.state.modalOpen}>
               <form className="job-entry-form">
-                <TextField onChange={(e)=>this.handleTextChange(e)} name='jobName' hintText="Job Name" floatingLabelText="Job Name" />
-                <TextField onChange={(e)=>this.handleTextChange(e)} name='jobDescription'
+                <TextField
+                  value={this.state.jobName}
+                  onChange={e => this.handleTextChange(e)}
+                  name="jobName"
+                  hintText="Job Name"
+                  floatingLabelText="Job Name"
+                />
+                <TextField
+                  value={this.state.jobDescription}
+                  onChange={e => this.handleTextChange(e)}
+                  name="jobDescription"
                   hintText="Job Description"
                   floatingLabelText="Job Description"
                 />
-                <DatePicker onClick={(e)=>this.handleTextChange(e)} name='startDate'
+                <DatePicker
+                  autoOk={true}
+                  value={this.state.startDate}
+                  onChange={this.handleDateChange}
+                  name="startDate"
                   hintText="Job Start Date"
                   floatingLabelText="Job Start Date"
                 />
-                <TextField onChange={(e)=>this.handleTextChange(e)} name='hourlyRate'
+                <TextField
+                  type="number"
+                  value={this.state.hourlyRate}
+                  onChange={e => this.handleTextChange(e)}
+                  name="hourlyRate"
                   hintText="Hourly Rate"
                   floatingLabelText="Hourly Rate"
                 />
                 <div>
-                  <RaisedButton onClick={()=> this.handleCancelModalClick()}>Cancel</RaisedButton>
+                  <RaisedButton onClick={() => this.handleCancelModalClick()}>
+                    Cancel
+                  </RaisedButton>
                   <RaisedButton>Confirm</RaisedButton>
                 </div>
               </form>
