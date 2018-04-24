@@ -64,6 +64,7 @@ passport.use(
       const { id, displayName, picture, given_name, family_name } = profile;
 
       db.FIND_USER_AUTH([id]).then(users => {
+
         if (users[0]) {
           return done(null, users[0].auth_id);
         } else {
@@ -83,7 +84,6 @@ passport.use(
 
 passport.serializeUser((id, done) => {
   // Putting info in session
-  
   return done(null, id);
 });
 
@@ -122,7 +122,9 @@ app.get("/logout", function(req, res) {
 });
 
 // ###### ENDPOINTS - JOB ######
-// app.post("/api/job", jobsController.addJob);
+app.post('/api/job', jobsController.addJob);
+app.get('/api/jobs', jobsController.getAllJobs)
+app.get('/api/jobs/:userId', jobsController.getJobsByUserID)
 
 // ###### ENDPOINTS - Client ######
 app.get('/api/clients', clientController.getAllClients);

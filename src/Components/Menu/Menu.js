@@ -5,7 +5,6 @@ import Avatar from "material-ui/Avatar";
 import {Link} from 'react-router-dom';
 
 export default function Menu(props) {
-  console.log(props.img);
   return (
     <div>
       

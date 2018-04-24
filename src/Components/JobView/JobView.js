@@ -10,8 +10,9 @@ import TextField from "material-ui/TextField";
 import DatePicker from "material-ui/DatePicker";
 import RaisedButton from "material-ui/RaisedButton";
 import { Link } from "react-router-dom";
+import DropMenu from '../DropMenu/DropMenu';
 
-import {getUser} from '../../ducks/reducer';
+import {getUser, getAllClients} from '../../ducks/reducer';
 import {connect} from 'react-redux';
 
 export class JobView extends React.Component {
@@ -34,6 +35,7 @@ export class JobView extends React.Component {
 
   componentDidMount(){
     this.props.getUser();
+    this.props.getAllClients();
   }
 
   
@@ -67,16 +69,14 @@ export class JobView extends React.Component {
   formatDate(date){
     let formatedDate = `${date.getMonth()}/${date.getDate()}/${date.getFullYear()}`;
     return formatedDate;
-    
   }
 
 
   render() {
     let {picture, user_name} = this.props.user;
-    console.log(this.props.user)
+
     return (
       <div>
-        
         <div className="menu">
           <Menu img={picture} userName={user_name}/>
         </div>
@@ -103,8 +103,13 @@ export class JobView extends React.Component {
             disabled={false}
           >
             <ContentAdd />
+
             <Dialog modal={true} open={this.state.modalOpen}>
               <form className="job-entry-form">
+
+                <DropMenu/>
+
+
                 <TextField
                   value={this.state.jobName}
                   onChange={e => this.handleTextChange(e)}
@@ -112,6 +117,7 @@ export class JobView extends React.Component {
                   hintText="Job Name"
                   floatingLabelText="Job Name"
                 />
+
                 <TextField
                   value={this.state.jobDescription}
                   onChange={e => this.handleTextChange(e)}
@@ -119,6 +125,7 @@ export class JobView extends React.Component {
                   hintText="Job Description"
                   floatingLabelText="Job Description"
                 />
+
                 <DatePicker
                   
                   autoOk={true}
@@ -153,8 +160,9 @@ export class JobView extends React.Component {
 
 function mapStateToProps(state){
   return {
-    user : state.user
+    user : state.user,
+    clients : state.clients
   }
 };
 
-export default connect(mapStateToProps, {getUser})(JobView);
+export default connect(mapStateToProps, {getUser, getAllClients})(JobView);
