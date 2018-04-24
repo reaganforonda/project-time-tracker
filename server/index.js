@@ -42,6 +42,10 @@ massive(CONNECTION_STRING)
   })
   .catch(e => console.log(`Error: ${e}`));
 
+
+app.use(passport.initialize());
+app.use(passport.session());
+
 // ###### Auth0 Connection ######
 passport.use(
   new Auth0Strategy(
@@ -72,21 +76,25 @@ passport.use(
 );
 
 passport.serializeUser((id, done) => {
+  // Putting info in session
   return done(null, id);
 });
 
 passport.deserializeUser((id, done) => {
-  app.get('db').FIND_SESSION_USER([id].then((user) => {
+  app.get('db').FIND_USER_SESSION([id].then((user) => {
     done(null, user[0]);
   }))
 })
 
 app.get('/auth', passport.authenticate('auth0'));
 
-app.get('/auth/callback', passport.authenticate('auth0', {
-  successRedirect: "http://localhost:3000/#/dashboard",
-  failureRedirect: "http://localhost:3000"
-}));
+app.get(
+  "/auth/callback",
+  passport.authenticate("auth0", {
+    successRedirect: "http://localhost:3000/#/dashboard",
+    failureRedirect: "http://localhost:3000"
+  })
+);
 
 app.get("/auth/me", function(req, res) {
   if (req.user) {

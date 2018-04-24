@@ -1,0 +1,22 @@
+$font-main: 'Roboto', sans-serif;
+$nav-height: 10vh;
+$nav-padding: 20px;
+$h1-size: 30px;
+$h2-size: 20px;
+
+nav {
+    height : $nav-height;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-left: $nav-padding;
+    padding-right: $nav-padding;
+}
+
+nav h1 {
+    font-size: $h1-size;
+}
+
+header {
+    
+}

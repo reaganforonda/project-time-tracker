@@ -1,0 +1,22 @@
+$h1-size: 40px;
+$opacity: .5;
+$clockIn-back : rgb(0,150,52);
+$clockOut-back : rgb(198,15,15);
+
+h1 {
+    font-size: $h1-size;
+    text-align: center;
+}
+
+.job-container{
+    border: black 1px solid;
+}
+
+.clockedIn {
+    background : rgba($clockIn-back, $opacity);
+}
+
+
+.clockedOut {
+    background: rgba($clockOut-back, $opacity);
+}

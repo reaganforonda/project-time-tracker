@@ -1,5 +1,6 @@
 import React from "react";
 import axios from "axios";
+import AppBar from "material-ui/AppBar";
 
 export default class Landing extends React.Component {
   handleLogin() {}
@@ -8,7 +9,7 @@ export default class Landing extends React.Component {
     return (
       <div className="landing-page">
         <nav>
-          <h1>App Title</h1>
+          <h1>Creative App Title</h1>
           <a href={process.env.REACT_APP_LOGIN}>
             <button>Login</button>
           </a>
@@ -18,14 +19,13 @@ export default class Landing extends React.Component {
           <h2>About</h2>
           <p>
             Lorem ipsum dolor amet meh selfies DIY pour-over selvage iceland,
-            gentrify drinking vinegar. Iceland austin pop-up street art,
-            listicle chillwave vape artisan. Typewriter humblebrag everyday
-            carry crucifix, wolf paleo yuccie pitchfork XOXO letterpress green
-            juice cliche whatever yr. Mustache deep v master cleanse sustainable
-            migas intelligentsia semiotics hashtag vegan.
           </p>
         </section>
-        <footer />
+        <footer>
+          <div>
+
+          </div>
+        </footer>
       </div>
     );
   }
