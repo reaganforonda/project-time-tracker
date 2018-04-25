@@ -5,9 +5,50 @@ INSERT INTO clients
 VALUES
 (1, 'DevMountain Provo', '560 S 100 W St in Provo', '', 'Provo', 'UT', 'United States', '844-433-8686', 'https://devmountain.com/', 84601);
 
-
 INSERT INTO clients
 (user_id, client_name, address_one, address_two, city, state, country, phone, website, zip)
 VALUES
 (1, 'Au Cheval', '800 W Randolph Street', '', 'Chicago', 'IL', 'United States', '312-555-5555', 'https://www.auchevalchicago.com/', 60607);
 
+INSERT INTO clients
+(user_id, client_name, address_one, address_two, city, state, country, phone, website, zip)
+VALUES
+(1, 'Smith and Sons', '1000 W Fulton Market', '', 'Chicago', 'IL', 'United States', '312-733-9420', 'https://www.swiftandsonschicago.com/', 60607);
+
+INSERT INTO clients
+(user_id, client_name, address_one, address_two, city, state, country, phone, website, zip)
+VALUES
+(1, 'Elske', '1350 W Randolph St', '', 'Chicago', 'IL', 'United States', '312-733-1314', 'https://elskerestaurant.com/', 60607);
+
+INSERT INTO clients
+(user_id, client_name, address_one, address_two, city, state, country, phone, website, zip)
+VALUES
+(1, 'Boka', '1729 N Halsted St', '', 'Chicago', 'IL', 'United States', '312-337-6070', 'https://www.bokachicago.com', 60614);
+
+INSERT INTO clients
+(user_id, client_name, address_one, address_two, city, state, country, phone, website, zip)
+VALUES
+(1, 'Kumas Corner', '2900 W Belmont Ave', '', 'Chicago', 'IL', 'United States', '773-604-8769', 'https://kumascorner.com/', 60618);
+
+
+-- DUMMY DATA FOR JOBS
+
+INSERT INTO jobs
+(client_id, user_id, job_name, start_date, end_date, completed, rate, description)
+VALUES
+(1, 1, 'Website Project', '4/1/2018', null, FALSE, 50, 'Build new website');
+
+INSERT INTO jobs
+(client_id, user_id, job_name, start_date, end_date, completed, rate, description)
+VALUES
+(2, 1, 'Back-end Project', '12/1/2018', null, FALSE, 90, 'Build Back End Server');
+
+INSERT INTO jobs
+(client_id, user_id, job_name, start_date, end_date, completed, rate, description)
+VALUES
+(2, 1, 'Shoes Website', '1/1/2018', '3/31/18', TRUE, 90, 'Build E-Commerce Website');
+
+INSERT INTO jobs
+(client_id, user_id, job_name, start_date, end_date, completed, rate, description)
+VALUES
+(4, 1, 'Styling Website', '11/1/2017', '11/5/17', TRUE, 90, 'Style landing page of website');

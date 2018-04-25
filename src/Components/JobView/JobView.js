@@ -9,9 +9,8 @@ import ContentAdd from "material-ui/svg-icons/content/add";
 import Dialog from "material-ui/Dialog";
 import TextField from "material-ui/TextField";
 import DatePicker from "material-ui/DatePicker";
-import Divider from "material-ui/Divider";
 import RaisedButton from "material-ui/RaisedButton";
-import { Link } from "react-router-dom";
+import { withRouter, Link } from "react-router-dom";
 import DropMenu from "../DropMenu/DropMenu";
 
 import { getUser, getAllClients } from "../../ducks/reducer";
@@ -77,14 +76,19 @@ export class JobView extends React.Component {
   }
 
   handleSelectClients(event, index, value) {
-    this.setState({client : value});
+    this.setState({ client: value });
+  }
+
+  redirectAlert() {
+    alert("Please Login In");
+    this.props.history.push("/");
   }
 
   render() {
     let { picture, user_name } = this.props.user;
 
     const clients = [
-      <MenuItem key={1} value={'dookie'} primaryText="Client 1" />,
+      <MenuItem key={1} value={"dookie"} primaryText="Client 1" />,
       <MenuItem key={2} value={2} primaryText="Client 2" />,
       <MenuItem key={3} value={3} primaryText="Client 3" />,
       <MenuItem key={4} value={4} primaryText="Client 4" />
@@ -92,6 +96,7 @@ export class JobView extends React.Component {
 
     return (
       <div>
+        {/* {this.props.user.user_name ? null : this.redirectAlert()} */}
         <div className="menu">
           <Menu img={picture} userName={user_name} />
         </div>
@@ -184,4 +189,6 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps, { getUser, getAllClients })(JobView);
+export default connect(mapStateToProps, { getUser, getAllClients })(
+  withRouter(JobView)
+);

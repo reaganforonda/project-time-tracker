@@ -46,7 +46,7 @@ CREATE TABLE jobs
     job_name VARCHAR(45),
     start_date DATE,
     end_date DATE,
-    completed BIT,
+    completed BOOLEAN,
     rate DECIMAL,
     description TEXT
 );
@@ -61,7 +61,7 @@ CREATE TABLE enteries
     end_time TIME,
     duration FLOAT,
     comment TEXT,
-    billed BIT
+    billed BOOLEAN
 );
 
 CREATE TABLE billing

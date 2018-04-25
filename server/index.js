@@ -125,6 +125,7 @@ app.get("/logout", function(req, res) {
 app.post('/api/job', jobsController.addJob);
 app.get('/api/jobs', jobsController.getAllJobs)
 app.get('/api/jobs/:userId', jobsController.getJobsByUserID)
+app.get('/api/jobs/', )
 
 // ###### ENDPOINTS - Client ######
 app.get('/api/clients', clientController.getAllClients);

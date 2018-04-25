@@ -1,0 +1,10 @@
+$menu-width : 200px;
+
+.menu-section {
+    width: $menu-width;
+}
+
+.dashboard-container {
+    width : calc(100vw -  $menu-width);
+
+}

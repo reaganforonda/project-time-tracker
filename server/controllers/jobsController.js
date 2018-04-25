@@ -26,6 +26,28 @@ module.exports = {
         })
     },
 
+    getAllCompletedJobs : (req, res) => {
+        const dbInstance = req.app.get('db');
+
+        dbInstance.GET_ALL_JOBS_COMPLETE().then((jobs) => {
+            res.status(200).send(jobs);
+        }).catch((e) => {
+            console.log(`Errors : ${e}`);
+            res.sendStatus(500);
+        })
+    },
+
+    getAllOpenJobs : (req, res) => {
+        const dbInstance = req.app.get('db');
+
+        dbInstance.GET_ALL_JOBS_IN_PROGRESS().then((jobs) => {
+            res.status(200).send(jobs);
+        }).catch((e) => {
+            consle.log(`Errors : ${e}`);
+            res.sendStatus(500);
+        })
+    },
+
     getJobsByUserID : (req, res) => {
         const dbInstance = req.app.get('db');
         const user_id = req.params
