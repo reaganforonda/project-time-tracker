@@ -5,41 +5,36 @@ import {
   CardHeader,
   CardMedia,
   CardTitle,
-  CardText
-} from "material-ui/Card";
-import FlatButton from "material-ui/FlatButton";
-import Toggle from "material-ui/Toggle";
+  CardText,
+  RaisedButton
+} from "material-ui";
 
 export default class Clients extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-      expanded: false
-    };
-  }
-
-  handleExpandChange() {
-    this.setState({ expanded: true });
+    this.state = {};
   }
 
   render() {
     return (
-      <div>
-        <Card expanded={this.state.expanded}>
-          <CardHeader
-            title={this.props.name}
-            actAsExpander={true}
-            showExpandableButton={true}
-          />
+      <div className="card-container">
+        <Card className='card'>
+          <CardHeader>
+            <h1>{this.props.name}</h1>
+          </CardHeader>
           <CardText>
-              <p>{this.props.addressOne}</p>
-              <p>{this.props.addressTwo}</p>
-              <div>
-                  
-              </div>
-              
-
+            <p>{this.props.addressOne}</p>
+            <p>{this.props.addressTwo}</p>
+            <p>
+              {this.props.city}, {this.props.state} {this.props.zipcode}
+            </p>
+            <p>{this.props.website}</p>
+            <p>{this.props.phone}</p>
+          </CardText>
+          <CardText>
+            <RaisedButton label="DELETE" />
+            <RaisedButton label="EDIT" />
           </CardText>
         </Card>
       </div>

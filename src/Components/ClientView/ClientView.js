@@ -42,6 +42,7 @@ export default class ClientView extends React.Component {
             state={client.state}
             zicode={client.zip}
             website={client.website}
+            phone={client.phone}
           />
         </div>
       );
