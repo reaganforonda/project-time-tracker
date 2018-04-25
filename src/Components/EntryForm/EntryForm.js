@@ -19,11 +19,10 @@ export default class EntryForm extends React.Component {
     this.state = {
       modalOpen: false,
       startDate: "",
-      endDate: "",
       startTime: "",
       endTime: "",
       Duration: 0,
-      rate: 0,
+      hourlyRate: 0,
       comment: ""
     };
 
@@ -74,11 +73,10 @@ export default class EntryForm extends React.Component {
     this.setState({
       modalOpen: false,
       startDate: "",
-      endDate: "",
       startTime: "",
       endTime: "",
       Duration: 0,
-      rate: 0,
+      hourlyRate: 0,
       comment: ""
     });
   }
@@ -98,16 +96,8 @@ export default class EntryForm extends React.Component {
                 onChange={this.handleDateChange}
                 autoOk={true}
                 name="startDate"
-                hintText="Entry Start Date"
-                floatingLabelText="Entry Start Date"
-              />
-
-              <DatePicker
-              onChange={this.handleDateChange}
-                autoOk={true}
-                name="endDate"
-                hintText="Entry End Date"
-                floatingLabelText="Entry End Date"
+                hintText="Entry Date"
+                floatingLabelText="Entry Date"
               />
 
               <TimePicker

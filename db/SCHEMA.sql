@@ -57,6 +57,7 @@ CREATE TABLE enteries
     job_ID INTEGER REFERENCES jobs(job_ID),
     client_ID INTEGER REFERENCES clients(client_ID),
     user_ID INTEGER REFERENCES users(user_ID),
+    entry_date DATE,
     start_time TIME,
     end_time TIME,
     duration FLOAT,
