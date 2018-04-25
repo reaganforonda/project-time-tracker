@@ -1,0 +1,25 @@
+$margin: 15px;
+$padding: 15px;
+$height: 60px;
+$button-margin: 20px;
+$font-size: 20px;
+
+
+.single-job-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-left: $padding;
+    padding-right: $padding;
+    margin-top: $margin;
+    margin-bottom: $margin;
+    height: $height;
+}
+
+.job-button {
+    margin-left: $button-margin;
+}
+
+p{
+    font-size: $font-size;
+}

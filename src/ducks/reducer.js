@@ -2,11 +2,13 @@ import axios from "axios";
 
 const INITIAL_STATE = {
   user: {},
-  clients: []
+  clients: [],
+  jobs:[]
 };
 
 const GET_USER_INFO = "GET_USER_INFO";
 const GET_ALL_CLIENTS = "GET_ALL_CLIENTS";
+const GET_ALL_JOBS = "GET_ALL_JOBS";
 
 export function getUser() {
   let userData = axios.get("/auth/me").then(res => {

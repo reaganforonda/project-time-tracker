@@ -1,6 +1,6 @@
 import React from "react";
 import Menu from "../Menu/Menu";
-import Jobs from "../Jobs/Jobs";
+import Job from "../Job/Job";
 import axios from "axios";
 import SelectField from "material-ui/SelectField";
 import MenuItem from "material-ui/MenuItem";
@@ -26,7 +26,9 @@ export class JobView extends React.Component {
       startDate: null,
       hourlyRate: 0,
       clients: [],
-      client: ""
+      client: "",
+      jobs: [],
+
     };
 
     this.handleAddJobClick = this.handleAddJobClick.bind(this);
@@ -36,11 +38,13 @@ export class JobView extends React.Component {
     this.formatDate = this.formatDate.bind(this);
 
     this.handleSelectClients = this.handleSelectClients.bind(this);
+    this.getAllActiveJobs = this.getAllActiveJobs.bind(this);
   }
 
   componentDidMount() {
     this.props.getUser();
     this.props.getAllClients();
+    this.getAllActiveJobs();
   }
 
   handleAddJobClick() {
@@ -62,14 +66,14 @@ export class JobView extends React.Component {
   }
 
   handleDateChange(e, date) {
-    this.setState({ startDate: date });
+    this.setState({ startDate: this.formatDate(date) });
   }
 
   handleJobSubmit() {
     // TODO: ALSO BIND THIS THING!!!
   }
 
-  // Formate Datepicker's date to something for useable
+  // Formate Datepicker's date to something more useable
   formatDate(date) {
     let formatedDate = `${date.getMonth()}/${date.getDate()}/${date.getFullYear()}`;
     return formatedDate;
@@ -79,13 +83,36 @@ export class JobView extends React.Component {
     this.setState({ client: value });
   }
 
-  redirectAlert() {
-    alert("Please Login In");
-    this.props.history.push("/");
+  getAllActiveJobs() {
+    axios
+      .get("http://localhost:3005/api/jobs/open")
+      .then(jobs => {
+        this.setState({ jobs: jobs.data });
+      })
+      .catch(e => console.log(e));
   }
 
   render() {
+
+
+
+
+    
     let { picture, user_name } = this.props.user;
+
+    let allJobs = this.state.jobs.map(job => {
+      return (
+        <div key={job.job_id}>
+          <Job client={job.client_name} name={job.job_name} clockedIn={false}/>
+        </div>
+      );
+    });
+
+
+
+
+
+
 
     const clients = [
       <MenuItem key={1} value={"dookie"} primaryText="Client 1" />,
@@ -103,12 +130,12 @@ export class JobView extends React.Component {
             </div>
             <div />
           </div>
-          
 
           <div className="clock-out-container">
             <div className="clockedOut">
               <h1>Off The Clock</h1>
             </div>
+            {allJobs}
           </div>
         </div>
 
@@ -148,7 +175,7 @@ export class JobView extends React.Component {
 
                 <DatePicker
                   autoOk={true}
-                  value={this.state.startDate}
+                  // value={this.state.startDate}
                   onChange={this.handleDateChange}
                   name="startDate"
                   hintText="Job Start Date"

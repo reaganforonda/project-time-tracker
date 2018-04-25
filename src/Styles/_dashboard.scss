@@ -1,10 +1,19 @@
-$menu-width : 200px;
+$menuWidth: 200px;
+$padding: 10px;
+$margin: 40px;
+$width: calc(100vw - #{$menuWidth});
 
 .menu-section {
-    width: $menu-width;
+    width: $menuWidth;
 }
 
-.dashboard-container {
-    width : calc(100vw -  $menu-width);
+.dashboard-container { 
+    width: $width;
+    margin-left: $menuWidth;
+    padding-left: $padding;
+    padding-right: $padding;
+}
 
+.header-bar{
+    margin-bottom: $margin;    
 }

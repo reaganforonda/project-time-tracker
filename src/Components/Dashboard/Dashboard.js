@@ -13,6 +13,7 @@ import RaisedButton from "material-ui/RaisedButton";
 import { withRouter, Link, Switch, Route } from "react-router-dom";
 import DropMenu from "../DropMenu/DropMenu";
 import Routing from "../../routing";
+import AppBar from 'material-ui/AppBar';
 
 import { getUser, getAllClients } from "../../ducks/reducer";
 import { connect } from "react-redux";
@@ -41,6 +42,9 @@ export class Dashboard extends React.Component {
       <div className="Dashboard">
         <div className="menu-section">
           <Menu img={picture} userName={user_name}/>
+        </div>
+        <div className='header-bar'>
+          <AppBar/>
         </div>
 
         <div className="dashboard-container">
