@@ -91,7 +91,7 @@ export default class EntryForm extends React.Component {
         >
           <ContentAdd />
           <Dialog modal={true} open={this.state.modalOpen}>
-            <form className="job-entry-form">
+            <form className="entry-entry-form">
               <DatePicker
                 onChange={this.handleDateChange}
                 autoOk={true}

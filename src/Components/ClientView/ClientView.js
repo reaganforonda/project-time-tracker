@@ -1,11 +1,15 @@
 import React from "react";
-import Menu from "../Menu/Menu";
+
+import ClientForm from '../ClientForm/ClientForm';
+
 
 export default class ClientView extends React.Component {
   render() {
     return (
-      <div>
-          ClientView
+      <div className='clientview-container'>
+          <div className='floating-action'>
+            <ClientForm/>
+          </div>
       </div>
     );
   }
