@@ -103,7 +103,7 @@ app.get("/auth", passport.authenticate("auth0"));
 app.get(
   "/auth/callback",
   passport.authenticate("auth0", {
-    successRedirect: "http://localhost:3000/#/jobview",
+    successRedirect: "http://localhost:3000/#/dashboard",
     failureRedirect: "http://localhost:3000"
   })
 );

@@ -13,10 +13,10 @@ export default function Routing(props) {
     <Switch>
       <Route exact path="/" component={landing} />
       <Route path="/dashboard" component={dashboard}>
-        <Route path="/jobview" component={JobView} />
+        {/* <Route path="/jobview" component={JobView} />
         <Route path="/entryview" component={EntryView} />
         <Route path="/clientsview" component={ClientsView} />
-        <Route path="/billingview" component={BillingView} />
+        <Route path="/billingview" component={BillingView} /> */}
       </Route>
     </Switch>
   );

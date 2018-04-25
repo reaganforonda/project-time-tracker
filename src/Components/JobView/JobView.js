@@ -96,11 +96,6 @@ export class JobView extends React.Component {
 
     return (
       <div>
-        {/* {this.props.user.user_name ? null : this.redirectAlert()} */}
-        <div className="menu">
-          <Menu img={picture} userName={user_name} />
-        </div>
-
         <div className="job-container">
           <div className="clock-in-container">
             <div className="clockedIn">
@@ -108,6 +103,7 @@ export class JobView extends React.Component {
             </div>
             <div />
           </div>
+          
 
           <div className="clock-out-container">
             <div className="clockedOut">

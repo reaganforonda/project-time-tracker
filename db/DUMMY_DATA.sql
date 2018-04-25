@@ -1,3 +1,11 @@
+-- Dummy User
+
+INSERT INTO users
+(auth_id, first_name, last_name, email, phone, picture, address_one, address_two, city, state, country, website, zip)
+VALUES
+('test-user-1', 'Bob','Belcher', 'bob@bobsburgers.com', '743-043-8239', 'https://vignette.wikia.nocookie.net/bobsburgerpedia/images/3/3e/Bobbelcher2.png/revision/latest?cb=20130114075133', 'addres one', 'address two', 'city', 'st', 'usa', 'www.bobsburger.com', 384834 );
+
+
 -- Dummy Data for Clients
 
 INSERT INTO clients

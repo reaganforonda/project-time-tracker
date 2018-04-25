@@ -6,10 +6,6 @@ export default class EntryView extends React.Component{
     render(){
         return (
             <div>
-              
-                <div className="menu">
-          <Menu />
-        </div>
         Entry View Component
             </div>
         )

@@ -10,12 +10,17 @@ import Dialog from "material-ui/Dialog";
 import TextField from "material-ui/TextField";
 import DatePicker from "material-ui/DatePicker";
 import RaisedButton from "material-ui/RaisedButton";
-import { withRouter, Link } from "react-router-dom";
+import { withRouter, Link, Switch, Route } from "react-router-dom";
 import DropMenu from "../DropMenu/DropMenu";
-import Routing from '../../routing';
+import Routing from "../../routing";
 
 import { getUser, getAllClients } from "../../ducks/reducer";
 import { connect } from "react-redux";
+
+import JobView from '../JobView/JobView';
+import EntryView from '../EntryView/EntryView';
+import ClientsView from '../ClientView/ClientView';
+import BillingView from '../BillingView/BillingView';
 
 export class Dashboard extends React.Component {
   constructor(props) {
@@ -30,18 +35,26 @@ export class Dashboard extends React.Component {
 
   render() {
     console.log(this.props.user);
-    let { display_name, img } = this.props.user;
+    let { user_name, picture } = this.props.user;
+    
     return (
       <div className="Dashboard">
         <div className="menu-section">
-          <Menu />
+          <Menu img={picture} userName={user_name}/>
         </div>
-        <div className='dashboard-container'>
+
+        <div className="dashboard-container">
+          <Switch>
+            <Route path="/dashboard/jobview" component={JobView} />
+            <Route path="/dashboard/entryview" component={EntryView} />
+            <Route path="/dashboard/clientsview" component={ClientsView} />
+            <Route path="/dashboard/billingview" component={BillingView} />
+          </Switch>
         </div>
-        <div className='footer-dashboard'>
-            
+
+        <div className="footer-dashboard" />
+        
         </div>
-      </div>
     );
   }
 }

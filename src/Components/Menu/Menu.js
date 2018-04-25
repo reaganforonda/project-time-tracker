@@ -12,10 +12,10 @@ export default function Menu(props) {
         <Avatar src={props.img} size={75} />
         <p>{props.userName}</p>
         <div className="menu-items">
-          <Link className='link' to='/jobview'> <MenuItem primaryText="JOBS"></MenuItem></Link>
-          <Link className='link' to='/entryview'><MenuItem primaryText="ENTERIES"></MenuItem></Link>
-          <Link className='link' to='/clientsview'><MenuItem primaryText="CLIENTS"></MenuItem></Link>
-          <Link className='link' to='/billingview'><MenuItem primaryText="BILLING"></MenuItem></Link>
+          <Link className='link' to='/dashboard/jobview'> <MenuItem primaryText="JOBS"></MenuItem></Link>
+          <Link className='link' to='/dashboard/entryview'><MenuItem primaryText="ENTERIES"></MenuItem></Link>
+          <Link className='link' to='/dashboard/clientsview'><MenuItem primaryText="CLIENTS"></MenuItem></Link>
+          <Link className='link' to='/dashboard/billingview'><MenuItem primaryText="BILLING"></MenuItem></Link>
         </div>
       </Drawer>
     </div>
