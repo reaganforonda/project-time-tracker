@@ -37,6 +37,20 @@ app.use(
   })
 );
 
+// ### STAY LOGGED IN
+// app.use((req, res, next)=>{
+//   if(process.env.DEV_MODE){
+//       req.user = {
+//           user_id: 1,
+//           auth_id: "test-user-1",
+//           first_name : "Bob",
+//           last_name : "Belcher"
+//       }
+//   }
+// })
+
+
+
 // ###### DB Connection ######
 massive(CONNECTION_STRING)
   .then(dbInstance => {
@@ -66,6 +80,7 @@ passport.use(
       db.FIND_USER_AUTH([id]).then(users => {
 
         if (users[0]) {
+          console.log(users[0]);
           return done(null, users[0].auth_id);
         } else {
           db

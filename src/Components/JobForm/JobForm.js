@@ -1,11 +1,13 @@
 import React from "react";
-import axios from 'axios';
+import axios from "axios";
 import Dialog from "material-ui/Dialog";
 import TextField from "material-ui/TextField";
 import DatePicker from "material-ui/DatePicker";
 import ContentAdd from "material-ui/svg-icons/content/add";
 import RaisedButton from "material-ui/RaisedButton";
-import { FloatingActionButton } from "material-ui";
+import { FloatingActionButton, MenuItem, SelectField } from "material-ui";
+
+import MenuItemCustom from "../MenuItem/MenuItem";
 
 export default class JobForm extends React.Component {
   constructor(props) {
@@ -17,7 +19,8 @@ export default class JobForm extends React.Component {
       jobDescription: "",
       startDate: null,
       hourlyRate: 0,
-      clients : []
+      clients: [],
+      client: ''
     };
 
     this.handleOpenModal = this.handleOpenModal.bind(this);
@@ -25,9 +28,10 @@ export default class JobForm extends React.Component {
     this.handleDateChange = this.handleDateChange.bind(this);
     this.formatDate = this.formatDate.bind(this);
     this.handleGetClients = this.handleGetClients.bind(this);
+    this.handleClientSelect = this.handleClientSelect.bind(this);
   }
 
-  componentDidMount(){
+  componentDidMount() {
     this.handleGetClients();
   }
 
@@ -55,19 +59,38 @@ export default class JobForm extends React.Component {
 
   // Formate Datepicker's date to something for useable
   formatDate(date) {
-    let formatedDate = `${date.getMonth()}/${date.getDate()}/${date.getFullYear()}`;
+    let formatedDate = `${date.getMonth()+1}/${date.getDate()}/${date.getFullYear()}`;
     return formatedDate;
   }
 
+  handleGetClients() {
+    axios
+      .get("http://localhost:3005/api/clients")
+      .then(clients => {
+        this.setState({ clients: clients.data });
+      })
+      .catch(e => {
+        console.log(e);
+      });
+  }
 
-  handleGetClients(){
-    axios.get('http://localhost:3005/api/clients').then((clients) => {
-      this.setState({clients : clients.data});
-    }).catch((e) => {console.log(e)});
+  handleClientSelect(event, index, value) {
+    this.setState({ client: value });
+    console.log(this.state.client);
   }
 
   render() {
-    let clientArr = this.state.clients.map()
+    let clientArr = this.state.clients.map(client => {
+      return (
+        <div key={client.client_id}>
+          <MenuItemCustom
+            primaryText={client.client_name}
+            value={client.client_id}
+          />
+        </div>
+      );
+    });
+
     return (
       <div>
         <FloatingActionButton
@@ -78,6 +101,14 @@ export default class JobForm extends React.Component {
           <ContentAdd />
           <Dialog modal={true} open={this.state.modalOpen}>
             <form className="job-entry-form">
+
+              <SelectField
+                hintText="Select Client"
+                floatingLabelText="Select Client"
+                value={this.state.client} onChange={(event, index, value)=>this.handleClientSelect(event, index, value)}>
+                {clientArr}
+              </SelectField>
+
               <TextField
                 value={this.state.jobName}
                 onChange={e => this.handleTextChange(e)}

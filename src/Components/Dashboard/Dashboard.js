@@ -27,7 +27,9 @@ export class Dashboard extends React.Component {
   }
 
   render() {
+
     let { user_name, picture } = this.props.user;
+
     return (
       <div className="Dashboard">
         <div className="menu-section">
