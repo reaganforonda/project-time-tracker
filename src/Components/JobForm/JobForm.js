@@ -1,4 +1,5 @@
 import React from "react";
+import axios from 'axios';
 import Dialog from "material-ui/Dialog";
 import TextField from "material-ui/TextField";
 import DatePicker from "material-ui/DatePicker";
@@ -15,13 +16,19 @@ export default class JobForm extends React.Component {
       jobName: "",
       jobDescription: "",
       startDate: null,
-      hourlyRate: 0
+      hourlyRate: 0,
+      clients : []
     };
 
     this.handleOpenModal = this.handleOpenModal.bind(this);
     this.handleCancelModalClick = this.handleCancelModalClick.bind(this);
     this.handleDateChange = this.handleDateChange.bind(this);
     this.formatDate = this.formatDate.bind(this);
+    this.handleGetClients = this.handleGetClients.bind(this);
+  }
+
+  componentDidMount(){
+    this.handleGetClients();
   }
 
   handleCancelModalClick() {
@@ -39,7 +46,7 @@ export default class JobForm extends React.Component {
   }
 
   handleDateChange(e, date) {
-    this.setState({ startDate: date });
+    this.setState({ startDate: this.formatDate(date) });
   }
 
   handleOpenModal() {
@@ -52,7 +59,15 @@ export default class JobForm extends React.Component {
     return formatedDate;
   }
 
+
+  handleGetClients(){
+    axios.get('http://localhost:3005/api/clients').then((clients) => {
+      this.setState({clients : clients.data});
+    }).catch((e) => {console.log(e)});
+  }
+
   render() {
+    let clientArr = this.state.clients.map()
     return (
       <div>
         <FloatingActionButton
@@ -97,12 +112,12 @@ export default class JobForm extends React.Component {
               />
               <div>
                 <RaisedButton
+                  label="CANCEL"
                   secondary={true}
                   onClick={() => this.handleCancelModalClick()}
-                >
-                  Cancel
-                </RaisedButton>
-                <RaisedButton primary={true}>Confirm</RaisedButton>
+                />
+
+                <RaisedButton label="CONFIRM" primary={true} />
               </div>
             </form>
           </Dialog>

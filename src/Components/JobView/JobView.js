@@ -21,11 +21,8 @@ export class JobView extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      clients: [],
-      client: "",
       jobs: [],
       clockedInJob : []
-
     };
 
     this.handleAddJobClick = this.handleAddJobClick.bind(this);
@@ -89,17 +86,7 @@ export class JobView extends React.Component {
       .catch(e => console.log(e));
   }
 
-
-
-
-
-
-
   render() {
-
-
-
-
 
     let { picture, user_name } = this.props.user;
 
