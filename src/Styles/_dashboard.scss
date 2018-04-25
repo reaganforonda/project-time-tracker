@@ -17,3 +17,9 @@ $width: calc(100vw - #{$menuWidth});
 .header-bar{
     margin-bottom: $margin;    
 }
+
+.action-button{
+    position: absolute;
+    right: 10px;
+    bottom: 10px;
+}

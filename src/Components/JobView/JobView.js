@@ -1,4 +1,5 @@
 import React from "react";
+import JobForm from '../JobForm/JobForm';
 import Menu from "../Menu/Menu";
 import Job from "../Job/Job";
 import axios from "axios";
@@ -20,14 +21,10 @@ export class JobView extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      modalOpen: false,
-      jobName: "",
-      jobDescription: "",
-      startDate: null,
-      hourlyRate: 0,
       clients: [],
       client: "",
       jobs: [],
+      clockedInJob : []
 
     };
 
@@ -92,12 +89,18 @@ export class JobView extends React.Component {
       .catch(e => console.log(e));
   }
 
+
+
+
+
+
+
   render() {
 
 
 
 
-    
+
     let { picture, user_name } = this.props.user;
 
     let allJobs = this.state.jobs.map(job => {
@@ -107,19 +110,6 @@ export class JobView extends React.Component {
         </div>
       );
     });
-
-
-
-
-
-
-
-    const clients = [
-      <MenuItem key={1} value={"dookie"} primaryText="Client 1" />,
-      <MenuItem key={2} value={2} primaryText="Client 2" />,
-      <MenuItem key={3} value={3} primaryText="Client 3" />,
-      <MenuItem key={4} value={4} primaryText="Client 4" />
-    ];
 
     return (
       <div>
@@ -138,67 +128,9 @@ export class JobView extends React.Component {
             {allJobs}
           </div>
         </div>
-
+    
         <div className="floating-action">
-          <FloatingActionButton
-            onClick={() => this.handleAddJobClick()}
-            mini={false}
-            disabled={false}
-          >
-            <ContentAdd />
-
-            <Dialog modal={true} open={this.state.modalOpen}>
-              <form className="job-entry-form">
-                <SelectField
-                  onChange={this.handleSelectClients}
-                  value={this.state.client}
-                  floatingLabelText="Select Client"
-                >
-                  {clients}
-                </SelectField>
-
-                <TextField
-                  value={this.state.jobName}
-                  onChange={e => this.handleTextChange(e)}
-                  name="jobName"
-                  hintText="Job Name"
-                  floatingLabelText="Job Name"
-                />
-
-                <TextField
-                  value={this.state.jobDescription}
-                  onChange={e => this.handleTextChange(e)}
-                  name="jobDescription"
-                  hintText="Job Description"
-                  floatingLabelText="Job Description"
-                />
-
-                <DatePicker
-                  autoOk={true}
-                  // value={this.state.startDate}
-                  onChange={this.handleDateChange}
-                  name="startDate"
-                  hintText="Job Start Date"
-                  floatingLabelText="Job Start Date"
-                />
-
-                <TextField
-                  type="number"
-                  value={this.state.hourlyRate}
-                  onChange={e => this.handleTextChange(e)}
-                  name="hourlyRate"
-                  hintText="Hourly Rate"
-                  floatingLabelText="Hourly Rate"
-                />
-                <div>
-                  <RaisedButton onClick={() => this.handleCancelModalClick()}>
-                    Cancel
-                  </RaisedButton>
-                  <RaisedButton>Confirm</RaisedButton>
-                </div>
-              </form>
-            </Dialog>
-          </FloatingActionButton>
+          <JobForm/>
         </div>
       </div>
     );

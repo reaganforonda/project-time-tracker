@@ -1,6 +1,6 @@
 import React from "react";
 import Menu from "../Menu/Menu";
-import Jobs from "../Jobs/Jobs";
+
 import axios from "axios";
 import SelectField from "material-ui/SelectField";
 import MenuItem from "material-ui/MenuItem";
@@ -18,6 +18,7 @@ import AppBar from 'material-ui/AppBar';
 import { getUser, getAllClients } from "../../ducks/reducer";
 import { connect } from "react-redux";
 
+import JobForm from '../JobForm/JobForm';
 import JobView from '../JobView/JobView';
 import EntryView from '../EntryView/EntryView';
 import ClientsView from '../ClientView/ClientView';
@@ -27,17 +28,20 @@ export class Dashboard extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = {};
+    this.state = {
+      openModal: false,
+      pathname : ''
+    };
+
   }
 
   componentDidMount() {
     this.props.getUser();
+    this.setState({pathname : this.props.location.pathname})
   }
 
   render() {
-    console.log(this.props.user);
     let { user_name, picture } = this.props.user;
-    
     return (
       <div className="Dashboard">
         <div className="menu-section">
@@ -57,7 +61,7 @@ export class Dashboard extends React.Component {
         </div>
 
         <div className="footer-dashboard" />
-        
+ 
         </div>
     );
   }
