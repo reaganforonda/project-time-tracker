@@ -1,6 +1,6 @@
 import React from "react";
 import JobForm from '../JobForm/JobForm';
-import Menu from "../Menu/Menu";
+
 import Job from "../Job/Job";
 import axios from "axios";
 import SelectField from "material-ui/SelectField";
