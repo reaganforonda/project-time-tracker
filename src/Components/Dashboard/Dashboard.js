@@ -3,7 +3,9 @@ import Menu from "../Menu/Menu";
 import axios from "axios";
 import { withRouter, Switch, Route } from "react-router-dom";
 import AppBar from 'material-ui/AppBar';
-import { getUser, getAllClients } from "../../ducks/reducer";
+import {getUser} from '../../ducks/userReducer'
+import {getAllClients} from '../../ducks/clientReducer';
+
 import { connect } from "react-redux";
 import JobView from '../JobView/JobView';
 import EntryView from '../EntryView/EntryView';
@@ -57,7 +59,7 @@ export class Dashboard extends React.Component {
 
 function mapStateToProps(state) {
   return {
-    user: state.user
+    user: state.userReducer.user
   };
 }
 

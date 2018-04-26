@@ -14,7 +14,9 @@ import {
   SelectField
 } from "material-ui";
 
-import { getUser, getAllClients } from "../../ducks/reducer";
+import {getUser} from '../../ducks/userReducer';
+import {getAllClients} from '../../ducks/clientReducer';
+
 import { connect } from "react-redux";
 
 export class JobView extends React.Component {
@@ -125,8 +127,8 @@ export class JobView extends React.Component {
 
 function mapStateToProps(state) {
   return {
-    user: state.user,
-    clients: state.clients
+    user: state.userReducer.user,
+    clients: state.clientReducer.clients
   };
 }
 
