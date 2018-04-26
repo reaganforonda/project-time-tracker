@@ -62,7 +62,7 @@ export class ClientForm extends React.Component {
   // TODO: COUNTRY
   handleAddClient() {
     let client = {
-      user_id: this.props.user_id,
+      user_id: this.props.user.user_id,
       client_name: this.state.clientName,
       address_one: this.state.address_one,
       address_two: this.state.address_two,
@@ -101,6 +101,7 @@ export class ClientForm extends React.Component {
   }
 
   render() {
+    
     return (
       <div>
         <FloatingActionButton

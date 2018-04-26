@@ -14,7 +14,9 @@ module.exports = {
 
     addClient : (req, res) => {
         const dbInstance = req.app.get('db');
+        console.log(req.body);
         const {user_id, client_name, address_one, address_two, city, state, country, phone, website, zip} = req.body;
+        
 
         dbInstance.ADD_CLIENT([user_id, client_name, address_one, address_two, city, state, country, phone, website, zip]).then((client) => {
             res.status(200).send(client);
@@ -28,7 +30,7 @@ module.exports = {
         const dbInstance = req.app.get('db');
 
         const {userid, clientid} = req.params;
-        console.log(userid, clientid);
+        
 
         dbInstance.DELETE_CLIENT([clientid, userid]).then((result) => {
             res.status(200).send(result);
