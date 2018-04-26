@@ -13,9 +13,14 @@ export default class Entries extends React.Component{
 
     render(){
         return (
-            <div className='enteries-container'>
-                <Paper>
-                    HELLO WORLD
+            <div>
+                <Paper zDepth={3} className='enteries-container'>
+                    <p>{this.props.jobname}</p>
+                    <p>{this.props.clientName}</p>
+                    <p>{this.props.date}</p>
+                    <p>{this.props.startTime}</p>
+                    <p>{this.props.endTime}</p>
+                    <p>{this.props.duration}</p>
                 </Paper>
             </div>
         )

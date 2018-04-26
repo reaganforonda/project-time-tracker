@@ -1,0 +1,22 @@
+$margin: 15px;
+$padding: 15px;
+$height: 60px;
+$button-margin: 20px;
+$font-size: 15px;
+
+
+.enteries-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-left: $padding;
+    padding-right: $padding;
+    margin-top: $margin;
+    margin-bottom: $margin;
+    height: $height;
+    
+}
+
+.enteries-container p{
+    font-size: $font-size;
+}
