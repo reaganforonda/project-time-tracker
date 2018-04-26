@@ -28,6 +28,7 @@ module.exports = {
         const dbInstance = req.app.get('db');
 
         const {userid, clientid} = req.params;
+        console.log(userid, clientid);
 
         dbInstance.DELETE_CLIENT([clientid, userid]).then((result) => {
             res.status(200).send(result);

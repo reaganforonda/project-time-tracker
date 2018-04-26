@@ -10,8 +10,6 @@ import {
   MenuItem,
   SelectField
 } from "material-ui";
-import { connect } from "react-redux";
-
 import {
   updateAddressOne,
   updateAddressTwo,
@@ -22,6 +20,8 @@ import {
   updateZip,
   updateWebsite
 } from "../../ducks/clientReducer";
+import axios from "axios";
+import { connect } from "react-redux";
 
 export class ClientForm extends React.Component {
   constructor(props) {
@@ -42,6 +42,8 @@ export class ClientForm extends React.Component {
     this.handleOpenModal = this.handleOpenModal.bind(this);
     this.handleTextChange = this.handleTextChange.bind(this);
     this.handleCancelModalClick = this.handleCancelModalClick.bind(this);
+    this.handleAddClient = this.handleAddClient.bind(this);
+    this.handleResetState = this.handleResetState.bind(this);
   }
 
   handleTextChange(e) {
@@ -53,6 +55,38 @@ export class ClientForm extends React.Component {
   }
 
   handleCancelModalClick() {
+    this.handleResetState();
+  }
+
+  // TODO: Change user id to actual user logged in
+  // TODO: COUNTRY
+  handleAddClient() {
+    let client = {
+      user_id: this.props.user_id,
+      client_name: this.state.clientName,
+      address_one: this.state.address_one,
+      address_two: this.state.address_two,
+      city: this.state.city,
+      state: this.state.state,
+      phone: this.state.phone,
+      country: "United States",
+      website: this.state.website,
+      zip: this.state.zipcode
+    };
+
+    axios
+      .post("http://localhost:3005/api/client/", client)
+      .then(result => {
+        console.log(result);
+      })
+      .catch(e => {
+        console.log(e);
+      });
+
+    this.handleResetState();
+  }
+
+  handleResetState() {
     this.setState({
       modalOpen: false,
       clientName: "",
@@ -116,7 +150,7 @@ export class ClientForm extends React.Component {
               <TextField
                 type="text"
                 value={this.state.state}
-                maxlength="2"
+                maxLength="2"
                 onChange={e => this.handleTextChange(e)}
                 name="state"
                 hintText="State"
@@ -157,7 +191,7 @@ export class ClientForm extends React.Component {
                   onClick={() => this.handleCancelModalClick()}
                 />
 
-                <RaisedButton label="CONFIRM" primary={true} />
+                <RaisedButton onClick={()=>this.handleAddClient()} label="CONFIRM" primary={true} />
               </div>
             </form>
           </Dialog>
@@ -168,7 +202,9 @@ export class ClientForm extends React.Component {
 }
 
 function mapStateToProps(state) {
-  return {};
+  return {
+    user: state.userReducer.user
+  };
 }
 
 export default connect(mapStateToProps, {

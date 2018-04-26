@@ -9,7 +9,6 @@ import {
   RaisedButton,
   FloatingActionButton,
   MenuItem,
-  Snackbar,
   SelectField,
 } from "material-ui";
 
@@ -164,7 +163,7 @@ export default class EntryForm extends React.Component {
             </form>
           </Dialog>
           <div>
-            <Snackbar/>
+            
           </div>
         </FloatingActionButton>
       </div>

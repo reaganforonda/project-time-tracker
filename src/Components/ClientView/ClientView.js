@@ -19,6 +19,10 @@ export default class ClientView extends React.Component {
     this.getAllClients();
   }
 
+  componentDidUpdate(){
+    this.getAllClients();
+  }
+
   getAllClients() {
     axios
       .get("http://localhost:3005/api/clients")
@@ -35,6 +39,7 @@ export default class ClientView extends React.Component {
       return (
         <div key={client.client_id}>
           <Clients
+          clientId = {client.client_id}
             name={client.client_name}
             addressOne={client.address_one}
             addressTwo={client.address_two}
