@@ -16,9 +16,9 @@ const JOB_INITIAL_STATE = {
 const GET_ALL_JOBS = "GET_ALL_JOBS";
 const ADD_JOB = "ADD_JOB";
 
-export function getAllJobs() {
-  let jobsData = axios
-    .get("/api/jobs")
+export function getAllActiveJobs() {
+  let openJobsData = axios
+    .get("/api/jobs/open")
     .then(jobs => {
       return jobs.data;
     })
@@ -28,18 +28,19 @@ export function getAllJobs() {
 
   return {
     type: GET_ALL_JOBS,
-    payload: jobsData
+    payload: openJobsData
   };
 }
 
 export function addJob(){
-
+// TODO:
 }
 
 export default function jobReducer(state = JOB_INITIAL_STATE, action) {
   switch (action.type) {
       case GET_ALL_JOBS:
       let obj = Object.assign({}, state, {jobs : action.payload});
+      console.log(obj);
       return (
           obj.jobs
       ) 

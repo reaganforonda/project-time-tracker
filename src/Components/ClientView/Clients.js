@@ -9,12 +9,20 @@ import {
   RaisedButton
 } from "material-ui";
 
+import axios from 'axios';
+
 export default class Clients extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = {};
+    
   }
+
+
+  handleDeleteClient(){
+    axios.
+  }
+
 
   render() {
     return (
@@ -41,3 +49,6 @@ export default class Clients extends React.Component {
     );
   }
 }
+
+
+

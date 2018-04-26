@@ -10,8 +10,20 @@ import {
   MenuItem,
   SelectField
 } from "material-ui";
+import { connect } from "react-redux";
 
-export default class ClientForm extends React.Component {
+import {
+  updateAddressOne,
+  updateAddressTwo,
+  updateCity,
+  updateClientName,
+  updateState,
+  updatePhone,
+  updateZip,
+  updateWebsite
+} from "../../ducks/clientReducer";
+
+export class ClientForm extends React.Component {
   constructor(props) {
     super(props);
 
@@ -22,7 +34,7 @@ export default class ClientForm extends React.Component {
       address_two: "",
       city: "",
       state: "",
-      zipcode: '',
+      zipcode: "",
       website: "",
       phone: ""
     };
@@ -48,7 +60,7 @@ export default class ClientForm extends React.Component {
       address_two: "",
       city: "",
       state: "",
-      zipcode: '',
+      zipcode: "",
       website: "",
       phone: ""
     });
@@ -104,7 +116,7 @@ export default class ClientForm extends React.Component {
               <TextField
                 type="text"
                 value={this.state.state}
-                maxlength = "2"
+                maxlength="2"
                 onChange={e => this.handleTextChange(e)}
                 name="state"
                 hintText="State"
@@ -154,3 +166,18 @@ export default class ClientForm extends React.Component {
     );
   }
 }
+
+function mapStateToProps(state) {
+  return {};
+}
+
+export default connect(mapStateToProps, {
+  updateClientName,
+  updateAddressOne,
+  updateAddressTwo,
+  updateCity,
+  updateState,
+  updateZip,
+  updatePhone,
+  updateWebsite
+})(ClientForm);

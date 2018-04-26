@@ -22,5 +22,18 @@ module.exports = {
             console.log(`Error : ${e}`);
             res.sendStatus(500);
         })
+    },
+
+    deleteClient : (req, res) => {
+        const dbInstance = req.app.get('db');
+
+        const {userid, clientid} = req.params;
+
+        dbInstance.DELETE_CLIENT([clientid, userid]).then((result) => {
+            res.status(200).send(result);
+        }).catch((e)=> {
+            console.log(`Error: ${e}`);
+            res.sendStatus(500);
+        })
     }
 }
