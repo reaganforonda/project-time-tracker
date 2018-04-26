@@ -1,12 +1,7 @@
 import React from "react";
 import axios from "axios";
-import Dialog from "material-ui/Dialog";
-import TextField from "material-ui/TextField";
-import DatePicker from "material-ui/DatePicker";
 import ContentAdd from "material-ui/svg-icons/content/add";
-import RaisedButton from "material-ui/RaisedButton";
-import { FloatingActionButton, MenuItem, SelectField } from "material-ui";
-
+import { Dialog, TextField, DatePicker, RaisedButton, FloatingActionButton, MenuItem, Snackbar, SelectField } from "material-ui";
 import MenuItemCustom from "../MenuItem/MenuItem";
 
 export default class JobForm extends React.Component {
@@ -57,7 +52,7 @@ export default class JobForm extends React.Component {
     this.setState({ modalOpen: true });
   }
 
-  // Formate Datepicker's date to something for useable
+  // Formate Datepicker's date to something for useable for postgres sql
   formatDate(date) {
     let formatedDate = `${date.getMonth()+1}/${date.getDate()}/${date.getFullYear()}`;
     return formatedDate;
@@ -153,6 +148,7 @@ export default class JobForm extends React.Component {
             </form>
           </Dialog>
         </FloatingActionButton>
+
       </div>
     );
   }

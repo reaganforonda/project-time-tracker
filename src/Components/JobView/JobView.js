@@ -1,18 +1,18 @@
 import React from "react";
-import JobForm from '../JobForm/JobForm';
-
+import JobForm from "../JobForm/JobForm";
 import Job from "../Job/Job";
 import axios from "axios";
-import SelectField from "material-ui/SelectField";
-import MenuItem from "material-ui/MenuItem";
-import FloatingActionButton from "material-ui/FloatingActionButton";
 import ContentAdd from "material-ui/svg-icons/content/add";
-import Dialog from "material-ui/Dialog";
-import TextField from "material-ui/TextField";
-import DatePicker from "material-ui/DatePicker";
-import RaisedButton from "material-ui/RaisedButton";
 import { withRouter, Link } from "react-router-dom";
-import DropMenu from "../DropMenu/DropMenu";
+import {
+  RaisedButton,
+  DatePicker,
+  TextField,
+  Dialog,
+  FloatingActionButton,
+  MenuItem,
+  SelectField
+} from "material-ui";
 
 import { getUser, getAllClients } from "../../ducks/reducer";
 import { connect } from "react-redux";
@@ -22,7 +22,7 @@ export class JobView extends React.Component {
     super(props);
     this.state = {
       jobs: [],
-      clockedInJob : []
+      clockedInJob: []
     };
 
     this.handleAddJobClick = this.handleAddJobClick.bind(this);
@@ -87,13 +87,12 @@ export class JobView extends React.Component {
   }
 
   render() {
-
     let { picture, user_name } = this.props.user;
 
     let allJobs = this.state.jobs.map(job => {
       return (
         <div key={job.job_id}>
-          <Job client={job.client_name} name={job.job_name} clockedIn={false}/>
+          <Job client={job.client_name} name={job.job_name} clockedIn={false} />
         </div>
       );
     });
@@ -115,9 +114,9 @@ export class JobView extends React.Component {
             {allJobs}
           </div>
         </div>
-    
+
         <div className="floating-action">
-          <JobForm/>
+          <JobForm />
         </div>
       </div>
     );

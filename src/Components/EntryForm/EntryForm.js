@@ -9,7 +9,8 @@ import {
   RaisedButton,
   FloatingActionButton,
   MenuItem,
-  SelectField
+  Snackbar,
+  SelectField,
 } from "material-ui";
 
 export default class EntryForm extends React.Component {
@@ -21,7 +22,7 @@ export default class EntryForm extends React.Component {
       startDate: "",
       startTime: "",
       endTime: "",
-      Duration: 0,
+      duration: 0,
       hourlyRate: 0,
       comment: ""
     };
@@ -33,6 +34,8 @@ export default class EntryForm extends React.Component {
     this.handleCancelModalClick = this.handleCancelModalClick.bind(this);
     this.handleTimeSelectStart = this.handleTimeSelectStart.bind(this);
     this.handleTimeSelectEnd = this.handleTimeSelectEnd.bind(this);
+
+    this.calculateDuration = this.calculateDuration.bind(this);
   }
 
   handleTextChange(e) {
@@ -49,11 +52,11 @@ export default class EntryForm extends React.Component {
   }
 
   handleTimeSelectStart(e, date) {
-    this.setState({ startTime: this.formatTime(date) });
+    this.setState({ startTime: date });
   }
 
   handleTimeSelectEnd(e, date) {
-    this.setState({ endTime: this.formatTime(date) });
+    this.setState({ endTime:date });
   }
 
   // Formate Datepicker's date to something for useable
@@ -67,6 +70,24 @@ export default class EntryForm extends React.Component {
     let formatedTime = `${date.getHours()}:${date.getMinutes()}`;
     console.log(formatedTime)
     return formatedTime;
+  }
+
+  // Calculate duration by converting start time and end time into minutes
+  // use ~ ~ to turn text into number by flipping the bits
+  calculateDuration(){
+    let startInMinutes = (~~this.state.startTime.getHours()*60) + (~~this.state.startTime.getMinutes());
+    let endInMinutes = (~~this.state.endTime.getHours()*60) + (~~this.state.endTime.getMinutes());
+    let duration = 0;
+
+    try {
+      if( startInMinutes > endInMinutes) throw "Start Time Can't Be After End Time";
+      duration =  (endInMinutes - startInMinutes)/60;
+    
+    } catch (err) {
+      alert(`Error : ${err}`)
+    }
+    
+    console.log(duration);
   }
 
   handleCancelModalClick() {
@@ -138,10 +159,13 @@ export default class EntryForm extends React.Component {
                   onClick={() => this.handleCancelModalClick()}
                 />
 
-                <RaisedButton label="CONFIRM" primary={true} />
+                <RaisedButton onClick={()=>this.calculateDuration()} label="CONFIRM" primary={true} />
               </div>
             </form>
           </Dialog>
+          <div>
+            <Snackbar/>
+          </div>
         </FloatingActionButton>
       </div>
     );

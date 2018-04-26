@@ -33,7 +33,7 @@ export default class Clients extends React.Component {
             <p>{this.props.phone}</p>
           </CardText>
           <CardText>
-            <RaisedButton label="DELETE" />
+            <RaisedButton secondary={true} label="DELETE" />
             <RaisedButton label="EDIT" />
           </CardText>
         </Card>
