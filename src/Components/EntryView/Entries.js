@@ -1,5 +1,5 @@
 import React from 'react';
-import {Paper} from 'material-ui';
+import {Paper, RaisedButton} from 'material-ui';
 
 
 export default class Entries extends React.Component{
@@ -21,6 +21,8 @@ export default class Entries extends React.Component{
                     <p>{this.props.startTime}</p>
                     <p>{this.props.endTime}</p>
                     <p>{this.props.duration}</p>
+                    <RaisedButton label="Edit"/>
+                    <RaisedButton label="Delete"/>
                 </Paper>
             </div>
         )

@@ -104,7 +104,7 @@ export  class EntryForm extends React.Component {
       alert(`Error : ${err}`);
     }
 
-    console.log(duration);
+    return duration
   }
 
   handleCancelModalClick() {
@@ -125,6 +125,9 @@ export  class EntryForm extends React.Component {
   }
 
   handleAddEntry() {
+
+    console.log(this.calculateDuration())
+
     let entry = {
       user_id : this.props.user.user_id,
       job_id : this.state.job.job_id,
