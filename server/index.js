@@ -10,7 +10,8 @@ const express = require("express"),
   Auth0Strategy = require("passport-auth0");
 
 const jobsController = require("./controllers/jobsController"),
-  clientController = require("./controllers/clientController");
+  clientController = require("./controllers/clientController"),
+  entryController = require('./controllers/entryController');
 
 const app = express();
 
@@ -147,6 +148,10 @@ app.get('/api/jobs/:clientId', )
 app.get('/api/clients', clientController.getAllClients);
 app.post('/api/client/', clientController.addClient);
 app.delete('/api/client/:userid/:clientid', clientController.deleteClient);
+
+
+// ###### ENDPOINTS - Enteries ######
+app.post('/api/entry/add', entryController.addEntry)
 
 app.listen(CONNECTION_PORT, () => {
   console.log(`Creeping on Port: ${CONNECTION_PORT}`);

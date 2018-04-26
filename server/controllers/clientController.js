@@ -19,7 +19,7 @@ module.exports = {
         
 
         dbInstance.ADD_CLIENT([user_id, client_name, address_one, address_two, city, state, country, phone, website, zip]).then((client) => {
-            res.status(200).send(client);
+            res.status(200).send(client[0]);
         }).catch((e) => {
             console.log(`Error : ${e}`);
             res.sendStatus(500);

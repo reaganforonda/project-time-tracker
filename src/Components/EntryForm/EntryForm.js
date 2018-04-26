@@ -11,8 +11,10 @@ import {
   MenuItem,
   SelectField
 } from "material-ui";
+import { connect } from "react-redux";
 
-export default class EntryForm extends React.Component {
+
+export  class EntryForm extends React.Component {
   constructor(props) {
     super(props);
 
@@ -41,6 +43,7 @@ export default class EntryForm extends React.Component {
     this.handleAddEntry = this.handleAddEntry.bind(this);
     this.getAllJobs = this.getAllJobs.bind(this);
     this.hanldeJobSelect = this.hanldeJobSelect.bind(this);
+    this.handleAddEntry = this.handleAddEntry.bind(this);
   }
 
   componentDidMount() {
@@ -55,19 +58,19 @@ export default class EntryForm extends React.Component {
   handleDateChange(e, date) {
     console.log(date);
     this.setState({ startDate: this.formatDate(date) });
-  }
+  };
 
   handleOpenModal() {
     this.setState({ modalOpen: true });
-  }
+  };
 
   handleTimeSelectStart(e, date) {
     this.setState({ startTime: date });
-  }
+  };
 
   handleTimeSelectEnd(e, date) {
     this.setState({ endTime: date });
-  }
+  };
 
   // Formate Datepicker's date to something for useable
   formatDate(date) {
@@ -75,13 +78,13 @@ export default class EntryForm extends React.Component {
       1}/${date.getDate()}/${date.getFullYear()}`;
     console.log(formatedDate);
     return formatedDate;
-  }
+  };
 
   formatTime(date) {
     let formatedTime = `${date.getHours()}:${date.getMinutes()}`;
     console.log(formatedTime);
     return formatedTime;
-  }
+  };
 
   // Calculate duration by converting start time and end time into minutes
   // use ~ ~ to turn text into number by flipping the bits
@@ -122,8 +125,28 @@ export default class EntryForm extends React.Component {
   }
 
   handleAddEntry() {
-    let entry = {};
-  }
+    let entry = {
+      user_id : this.props.user.user_id,
+      job_id : this.state.job.job_id,
+      client_id : this.state.job.client_id,
+      entry_date : this.state.startDate,
+      start_time : this.formatTime(this.state.startTime),
+      end_time : this.formatTime(this.state.endTime),
+      duration : this.calculateDuration(),
+      comment : this.state.comment,
+      billed : false
+    };
+
+    axios.post('http://localhost:3005/api/entry/add', entry).then((result) => {
+      console.log(entry)
+    }).catch((e) => {
+      console.log(e);
+    })
+
+
+
+    this.handleResetState();
+  };
 
   getAllJobs() {
     axios
@@ -134,7 +157,7 @@ export default class EntryForm extends React.Component {
       .catch(e => {
         console.log(`Error: ${e}`);
       });
-  }
+  };
 
   hanldeJobSelect = (event, index, value) => {
     this.setState({ job: value });
@@ -146,7 +169,7 @@ export default class EntryForm extends React.Component {
         <MenuItem
           key={job.job_id}
           primaryText={job.job_name}
-          value={job.job_id}
+          value={job}
         />
       );
     });
@@ -219,7 +242,7 @@ export default class EntryForm extends React.Component {
                 />
 
                 <RaisedButton
-                  onClick={() => this.calculateDuration()}
+                  onClick={() => this.handleAddEntry()}
                   label="CONFIRM"
                   primary={true}
                 />
@@ -232,3 +255,11 @@ export default class EntryForm extends React.Component {
     );
   }
 }
+
+function mapStateToProps(state) {
+  return {
+    user : state.userReducer.user
+  }
+}
+
+export default connect(mapStateToProps, null)(EntryForm);

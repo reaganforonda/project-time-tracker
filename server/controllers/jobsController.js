@@ -43,7 +43,7 @@ module.exports = {
         dbInstance.GET_ALL_JOBS_IN_PROGRESS().then((jobs) => {
             res.status(200).send(jobs);
         }).catch((e) => {
-            consle.log(`Errors : ${e}`);
+            console.log(`Errors : ${e}`);
             res.sendStatus(500);
         })
     },
