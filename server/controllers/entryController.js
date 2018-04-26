@@ -9,5 +9,17 @@ module.exports = {
             console.log(`Error: ${e}`);
             res.sendStatus(500);
         })
+    },
+
+    getAllEnteries : (req, res) => {
+        const dbInstance = req.app.get('db');
+        const {userid} = req.params
+
+        dbInstance.GET_ENTRY_USER_ID([userid]).then((enteries) => {
+            res.status(200).send(enteries);
+        }).catch((e) => {
+            console.log(`Error: ${e}`);
+            res.sendStatus(500);
+        })
     }
 }

@@ -20,8 +20,10 @@ export default class ClientView extends React.Component {
   }
 
   componentDidUpdate(){
-    this.getAllClients();
+    
   }
+
+  // TODO: Fix to get only clients related to user
 
   getAllClients() {
     axios
