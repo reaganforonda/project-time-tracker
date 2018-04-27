@@ -137,12 +137,18 @@ app.get("/logout", function(req, res) {
   res.redirect("http://localhost:3000");
 });
 
+// #############################
 // ###### ENDPOINTS - JOB ######
+// #############################
 app.post('/api/job', jobsController.addJob);
-app.get('/api/jobs', jobsController.getAllJobs)
-app.get('/api/jobs/open', jobsController.getAllOpenJobs)
+
+app.get('/api/jobs/open/:userId', jobsController.getAllOpenJobs)
 app.get('/api/jobs/:userId', jobsController.getJobsByUserID)
-app.get('/api/jobs/:clientId', )
+
+
+
+
+
 
 // ###### ENDPOINTS - Client ######
 app.get('/api/clients', clientController.getAllClients);

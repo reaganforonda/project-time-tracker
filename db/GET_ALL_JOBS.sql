@@ -1,3 +1,4 @@
 SELECT *
 FROM
-jobs;
+jobs
+WHERE user_id=$1

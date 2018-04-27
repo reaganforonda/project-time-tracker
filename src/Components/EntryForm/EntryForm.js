@@ -152,8 +152,9 @@ export  class EntryForm extends React.Component {
   };
 
   getAllJobs() {
+    let userId = this.props.user.user_id;
     axios
-      .get(`http://localhost:3005/api/jobs/open`)
+      .get(`http://localhost:3005/api/jobs/${userId}`)
       .then(jobs => {
         this.setState({ jobs: jobs.data });
       })

@@ -17,6 +17,7 @@ module.exports = {
 
     getAllJobs : (req, res) => {
         const dbInstance = req.app.get('db');
+        const {userId} = req.params
 
         dbInstance.GET_ALL_JOBS().then((result) => {
             res.status(200).send(result);
@@ -39,10 +40,12 @@ module.exports = {
 
     getAllOpenJobs : (req, res) => {
         const dbInstance = req.app.get('db');
+        const {userId} = req.params;
 
-        dbInstance.GET_ALL_JOBS_IN_PROGRESS().then((jobs) => {
+        dbInstance.GET_ALL_JOBS_IN_PROGRESS([userId]).then((jobs) => {
             res.status(200).send(jobs);
         }).catch((e) => {
+
             console.log(`Errors : ${e}`);
             res.sendStatus(500);
         })
@@ -50,8 +53,13 @@ module.exports = {
 
     getJobsByUserID : (req, res) => {
         const dbInstance = req.app.get('db');
-        const user_id = req.params
+        const {userId} = req.params
 
-        dbInstance.GET_JOBS_USERID()
-    }
+        dbInstance.GET_JOBS_USERID([userId]).then((jobs)=> {
+                res.status(200).send(jobs);
+        }).catch((e) => {
+            console.log(`Errors; ${e}`);
+            res.sendStatus(500);
+        })
+    },
 }

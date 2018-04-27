@@ -16,6 +16,7 @@ import {
 
 import {getUser} from '../../ducks/userReducer';
 import {getAllClients} from '../../ducks/clientReducer';
+import {updateClockIn} from '../../ducks/jobReducer';
 
 import { connect } from "react-redux";
 
@@ -80,8 +81,10 @@ export class JobView extends React.Component {
   }
 
   getAllActiveJobs() {
+    let userId = this.props.user.user_id;
+    
     axios
-      .get("http://localhost:3005/api/jobs/open")
+      .get(`http://localhost:3005/api/jobs/open/${userId}`)
       .then(jobs => {
         this.setState({ jobs: jobs.data });
       })
@@ -94,7 +97,7 @@ export class JobView extends React.Component {
     let allJobs = this.state.jobs.map(job => {
       return (
         <div key={job.job_id}>
-          <Job client={job.client_name} name={job.job_name} clockedIn={false} />
+          <Job clientName={job.client_name} jobName={job.job_name} />
         </div>
       );
     });
@@ -132,6 +135,6 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps, { getUser, getAllClients })(
+export default connect(mapStateToProps, { updateClockIn, getUser, getAllClients })(
   withRouter(JobView)
 );

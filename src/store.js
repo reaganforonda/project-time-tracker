@@ -12,7 +12,6 @@ const reducer = combineReducers({
 })
 
 let middleware = promiseMiddleware();
-console.log(reducer);
 
 export default createStore(reducer, applyMiddleware(middleware));
 
