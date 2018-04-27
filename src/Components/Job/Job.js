@@ -2,14 +2,10 @@ import React from "react";
 import RaisedButton from "material-ui/RaisedButton";
 import Paper from "material-ui/Paper";
 
-import {connect} from 'react-redux';
-
-import {updateClockIn, clockIn, clockOut} from '../../ducks/jobReducer'
-
-export function Job(props) {
+export default function Job(props) {
 
 let timeStamp = new Date();
-console.log(props.clockedIn)
+
   return (
     
     <div>
@@ -18,9 +14,9 @@ console.log(props.clockedIn)
         <p>{props.clientName}</p>
         <div>
           {!props.clockedIn ? (
-            <RaisedButton  onClick={()=>props.clockIn()} className='job-button'label="Clock In" primary={true} />
+            <RaisedButton onClick={()=>props.clockIn(props.job)} className='job-button'label="Clock In" primary={true} />
           ) : (
-            <RaisedButton className='job-button'label="Clock Out" secondary={true} />
+            <RaisedButton onClick={()=>props.clockOut(props.job)} className='job-button'label="Clock Out" secondary={true} />
           )}
           <RaisedButton className='job-button' label="View Enteries" />
         </div>
@@ -29,10 +25,3 @@ console.log(props.clockedIn)
   );
 }
 
-function mapStateToProps(state) {
-  return {
-    clockedIn : state.jobReducer.clockedIn
-  }
-}
-
-export default connect(mapStateToProps, {clockIn, clockOut, updateClockIn})(Job);

@@ -14,18 +14,19 @@ import {
   SelectField
 } from "material-ui";
 
-import {getUser} from '../../ducks/userReducer';
-import {getAllClients} from '../../ducks/clientReducer';
-import {updateClockIn} from '../../ducks/jobReducer';
+import { getUser } from "../../ducks/userReducer";
+import { getAllClients } from "../../ducks/clientReducer";
+import { updateClockIn } from "../../ducks/jobReducer";
 
 import { connect } from "react-redux";
+const _ = require("lodash");
 
 export class JobView extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       jobs: [],
-      clockedInJob: []
+      job: {}
     };
 
     this.handleAddJobClick = this.handleAddJobClick.bind(this);
@@ -36,6 +37,8 @@ export class JobView extends React.Component {
 
     this.handleSelectClients = this.handleSelectClients.bind(this);
     this.getAllActiveJobs = this.getAllActiveJobs.bind(this);
+    this.handleClockIn = this.handleClockIn.bind(this);
+    this.handleClockOut = this.handleClockOut.bind(this);
   }
 
   componentDidMount() {
@@ -82,7 +85,7 @@ export class JobView extends React.Component {
 
   getAllActiveJobs() {
     let userId = this.props.user.user_id;
-    
+
     axios
       .get(`http://localhost:3005/api/jobs/open/${userId}`)
       .then(jobs => {
@@ -91,13 +94,47 @@ export class JobView extends React.Component {
       .catch(e => console.log(e));
   }
 
+  handleClockIn(job) {
+    let jobID = job.job_id;
+
+    let temp = [];
+    let clockInJob = {};
+    if (!this.state.job.job_id) {
+      for (var i = 0; i < this.state.jobs.length; i++) {
+        if (this.state.jobs[i].job_id === jobID) {
+          clockInJob = Object.assign({}, clockInJob, this.state.jobs[i]);
+          temp = this.state.jobs.splice(i, 1);
+        }
+      }
+
+      this.setState({ job: clockInJob });
+    }
+  }
+
+  handleClockOut(job){
+    let temp = Object.assign({},temp, {});
+    this.setState({job : temp});
+
+    let tempJobs = this.state.jobs
+    tempJobs.push(job);
+    console.log(tempJobs)
+
+    this.setState({jobs : tempJobs})
+  }
+
   render() {
     let { picture, user_name } = this.props.user;
 
     let allJobs = this.state.jobs.map(job => {
       return (
         <div key={job.job_id}>
-          <Job clientName={job.client_name} jobName={job.job_name} />
+          <Job
+            clientName={job.client_name}
+            jobName={job.job_name}
+            job={job}
+            clockIn={this.handleClockIn}
+            clockedIn={false}
+          />
         </div>
       );
     });
@@ -109,6 +146,9 @@ export class JobView extends React.Component {
             <div className="clockedIn">
               <h1>On The Clock</h1>
             </div>
+            {this.state.job.job_id ? (
+              <Job job={this.state.job} clockedIn={true} clockOut={this.handleClockOut} clientName={this.state.job.client_name} jobName={this.state.job.job_name}/>
+            ) : null}
             <div />
           </div>
 
@@ -135,6 +175,8 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps, { updateClockIn, getUser, getAllClients })(
-  withRouter(JobView)
-);
+export default connect(mapStateToProps, {
+  updateClockIn,
+  getUser,
+  getAllClients
+})(withRouter(JobView));

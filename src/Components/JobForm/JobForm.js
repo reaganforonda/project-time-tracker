@@ -12,8 +12,11 @@ import {
   SelectField
 } from "material-ui";
 
+import {connect} from 'react-redux';
+import {getAllActiveJobs} from '../../ducks/jobReducer'
 
-export default class JobForm extends React.Component {
+
+export class JobForm extends React.Component {
   constructor(props) {
     super(props);
 
@@ -200,3 +203,11 @@ this.handleResetState();
     );
   }
 }
+
+function mapStateToProps(state){
+  return {
+    
+  }
+}
+
+export default connect(mapStateToProps, {getAllActiveJobs})(JobForm)

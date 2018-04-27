@@ -13,20 +13,21 @@ const JOB_INITIAL_STATE = {
   rate: 0,
   description: "",
   jobs: [],
+  jobOnClock : {},
   clockInTime : '',
   clockOutTime: '',
   clockedIn : false,
-
+  newJob : {}
 };
 
 const GET_ALL_JOBS = "GET_ALL_JOBS";
-const ADD_JOB = "ADD_JOB";
 const UPDATE_CLOCK_IN_TIME = "UPDATE_CLOCK_IN_TIME";
 const UPDATE_CLOCK_OUT_TIME = "UPDATE_CLOCK_OUT_TIME";
 const CLOCK_IN_JOB = "CLOCK_IN_JOB";
 const CLOCK_OUT_JOB = "CLOCK_OUT_JOB"
 
-const GET_ACTIVE_JOBS_PENDING = "GET_ACTIVE_JOBS_PENDING";
+const GET_ACTIVE_JOBS = "GET_ACTIVE_JOBS"
+const ADD_JOB = "ADD_JOB";
 
 
 
@@ -34,24 +35,24 @@ const GET_ACTIVE_JOBS_PENDING = "GET_ACTIVE_JOBS_PENDING";
 
 // GET ALL ACTIVE JOBS - USING LOGGED IN USER ID
 export function getAllActiveJobs(userId) {
-  let openJobsData = axios
-    .get(`/api/jobs/open/${userId}`)
-    .then(jobs => {
-      return jobs.data;
-    })
-    .catch(e => {
-      console.log(`Error: ${e}`);
-    });
-
   return {
-    type: GET_ALL_JOBS,
-    payload: openJobsData
-  };
+    type : GET_ACTIVE_JOBS,
+    payload : jobServices.getAllActiveJobs(userId)
+  }
 }
 
-export function addJob(){
-// TODO:
+export function addJob(job) { 
+  return {
+    type : ADD_JOB,
+    payload : jobServices.addJob(job)
+  }
 }
+
+
+// ########
+
+
+
 
 
 export function updateClockIn(clockInTime){
@@ -79,13 +80,13 @@ export function clockOut(){
 }
 
 export default function jobReducer(state = JOB_INITIAL_STATE, action) {
-  console.log(state.clockedIn)
+
   switch (action.type) {
-      case GET_ALL_JOBS:
-      let obj = Object.assign({}, state, {jobs : action.payload});
-      return (
-          obj.jobs
-      )
+      case GET_ACTIVE_JOBS:
+      return Object.assign({}, state, {jobs : action.payload})
+
+      case ADD_JOB:
+      return Object.assign({}, state, {newJob : action.payload})
       
       case UPDATE_CLOCK_IN_TIME:
       return Object.assign({}, state, {clockInTime : action.payload});
@@ -95,6 +96,7 @@ export default function jobReducer(state = JOB_INITIAL_STATE, action) {
 
       case CLOCK_OUT_JOB:
       return Object.assign({}, state, {clockedIn : action.payload})
+
 
       
     default:
