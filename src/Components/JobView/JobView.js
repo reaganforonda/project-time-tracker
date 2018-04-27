@@ -15,10 +15,11 @@ import {
 } from "material-ui";
 
 import { getUser } from "../../ducks/userReducer";
-import { getAllClients } from "../../ducks/clientReducer";
+// import { getAllClients } from "../../ducks/clientReducer"; TODO: REMOVE
 import { updateClockIn } from "../../ducks/jobReducer";
 
 import { connect } from "react-redux";
+import { DH_CHECK_P_NOT_PRIME } from "constants";
 const _ = require("lodash");
 
 export class JobView extends React.Component {
@@ -26,7 +27,7 @@ export class JobView extends React.Component {
     super(props);
     this.state = {
       jobs: [],
-      job: {}
+      job: {},
     };
 
     this.handleAddJobClick = this.handleAddJobClick.bind(this);
@@ -43,8 +44,13 @@ export class JobView extends React.Component {
 
   componentDidMount() {
     this.props.getUser();
-    this.props.getAllClients();
+    // this.props.getAllClients(); TODO: REMOVE
     this.getAllActiveJobs();
+
+  }
+
+  componentWillMount(){
+
   }
 
   handleAddJobClick() {
@@ -111,16 +117,18 @@ export class JobView extends React.Component {
     }
   }
 
-  handleClockOut(job){
-    let temp = Object.assign({},temp, {});
-    this.setState({job : temp});
+  handleClockOut(job) {
+    let temp = Object.assign({}, temp, {});
+    this.setState({ job: temp });
 
-    let tempJobs = this.state.jobs
+    let tempJobs = this.state.jobs;
     tempJobs.push(job);
-    console.log(tempJobs)
+    console.log(tempJobs);
 
-    this.setState({jobs : tempJobs})
+    this.setState({ jobs: tempJobs });
   }
+
+  
 
   render() {
     let { picture, user_name } = this.props.user;
@@ -139,15 +147,23 @@ export class JobView extends React.Component {
       );
     });
 
+    
     return (
       <div>
         <div className="job-container">
           <div className="clock-in-container">
             <div className="clockedIn">
               <h1>On The Clock</h1>
+              
             </div>
             {this.state.job.job_id ? (
-              <Job job={this.state.job} clockedIn={true} clockOut={this.handleClockOut} clientName={this.state.job.client_name} jobName={this.state.job.job_name}/>
+              <Job
+                job={this.state.job}
+                clockedIn={true}
+                clockOut={this.handleClockOut}
+                clientName={this.state.job.client_name}
+                jobName={this.state.job.job_name}
+              />
             ) : null}
             <div />
           </div>
@@ -177,6 +193,5 @@ function mapStateToProps(state) {
 
 export default connect(mapStateToProps, {
   updateClockIn,
-  getUser,
-  getAllClients
+  getUser
 })(withRouter(JobView));

@@ -83,7 +83,7 @@ export default function jobReducer(state = JOB_INITIAL_STATE, action) {
 
   switch (action.type) {
       case GET_ACTIVE_JOBS:
-      return Object.assign({}, state, {jobs : action.payload})
+      console.log(action.payload)
 
       case ADD_JOB:
       return Object.assign({}, state, {newJob : action.payload})
