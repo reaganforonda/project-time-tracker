@@ -28,7 +28,7 @@ export class JobView extends React.Component {
     this.state = {
       jobs: [],
       job: {},
-      startTime : '',
+      startTime: "",
       activeEntry: {}
     };
 
@@ -50,12 +50,9 @@ export class JobView extends React.Component {
 
   componentDidMount() {
     this.getAllActiveJobs();
-
   }
 
-  componentWillMount(){
-
-  }
+  componentWillMount() {}
 
   handleAddJobClick() {
     this.setState({ modalOpen: true });
@@ -77,10 +74,6 @@ export class JobView extends React.Component {
 
   handleDateChange(e, date) {
     this.setState({ startDate: this.formatDate(date) });
-  }
-
-  handleJobSubmit() {
-    // TODO: ALSO BIND THIS THING!!!
   }
 
   // Formate Datepicker's date to something more useable
@@ -106,7 +99,6 @@ export class JobView extends React.Component {
 
   handleClockIn(job) {
     let jobID = job.job_id;
-    
 
     let temp = [];
     let clockInJob = {};
@@ -133,12 +125,10 @@ export class JobView extends React.Component {
     this.setState({ jobs: tempJobs });
 
     this.updateEntry(this.state.activeEntry);
-
-
   }
 
   // Get time as soon as the user hit clock in
-  getClockTime(){
+  getClockTime() {
     let timestamp = new Date();
 
     return timestamp;
@@ -150,21 +140,19 @@ export class JobView extends React.Component {
       1}/${date.getDate()}/${date.getFullYear()}`;
 
     return formatedDate;
-  };
+  }
 
   formatTime(date) {
     let formatedTime = `${date.getHours()}:${date.getMinutes()}`;
     console.log(formatedTime);
     return formatedTime;
-  };
-
+  }
 
   calculateDuration(endTime) {
     let startInMinutes =
       ~~this.state.startTime.getHours() * 60 +
       ~~this.state.startTime.getMinutes();
-    let endInMinutes =
-      ~~endTime.getHours() * 60 + ~~endTime.getMinutes();
+    let endInMinutes = ~~endTime.getHours() * 60 + ~~endTime.getMinutes();
     let duration = 0;
 
     try {
@@ -175,51 +163,55 @@ export class JobView extends React.Component {
       alert(`Error : ${err}`);
     }
 
-    return duration
-  };
-
-
-  addNewEntry(job){
-    let time = this.getClockTime();
-    this.setState({startTime : time});
-    let entry_date = this.formatDate(time);
-    let start_time = this.formatTime(time);
-    
-    
-    let entry = {
-      user_id : this.props.user.user_id,
-      job_id : job.job_id,
-      client_id : job.client_id,
-      entry_date : entry_date,
-      start_time : start_time,
-      billed : false
-    }
-
-    axios.post(`http://localhost:3005/api/entry/add`, entry).then((result) => {
-      this.setState({activeEntry : result.data})  
-    console.log(this.state.activeEntry)
-    }).catch((e) => {
-      console.log(`Error in adding new Entry: ${e}`)
-    })
-
-
-    
+    return duration;
   }
 
-  updateEntry(activeEntry) { 
-    let time =  this.getClockTime();
+  addNewEntry(job) {
+    let time = this.getClockTime();
+    this.setState({ startTime: time });
+    let entry_date = this.formatDate(time);
+    let start_time = this.formatTime(time);
+
+    let entry = {
+      user_id: this.props.user.user_id,
+      job_id: job.job_id,
+      client_id: job.client_id,
+      entry_date: entry_date,
+      start_time: start_time,
+      billed: false
+    };
+
+    axios
+      .post(`http://localhost:3005/api/entry/add`, entry)
+      .then(result => {
+        this.setState({ activeEntry: result.data });
+      })
+      .catch(e => {
+        console.log(`Error in adding new Entry: ${e}`);
+      });
+  }
+
+  updateEntry(activeEntry) {
+    let time = this.getClockTime();
     let end_time = this.formatTime(time);
 
     let duration = this.calculateDuration(time);
 
-    let updateEntry = {duration : duration, end_time :end_time}
-    
-    axios.put(`http://localhost:3005/api/entry/update/${activeEntry.job_id}/${activeEntry.user_id}/${activeEntry.entry_id}`, updateEntry).then((result) => {
-      console.log(result.data)
-    }).catch((e) => {
-      console.log(`Error in updating Entry: ${e}`)
-    })
-    
+    let updateEntry = { duration: duration, end_time: end_time };
+
+    axios
+      .put(
+        `http://localhost:3005/api/entry/update/${activeEntry.job_id}/${
+          activeEntry.user_id
+        }/${activeEntry.entry_id}`,
+        updateEntry
+      )
+      .then(result => {
+        console.log(result.data);
+      })
+      .catch(e => {
+        console.log(`Error in updating Entry: ${e}`);
+      });
   }
 
   render() {
@@ -239,14 +231,12 @@ export class JobView extends React.Component {
       );
     });
 
-    
     return (
       <div>
         <div className="job-container">
           <div className="clock-in-container">
             <div className="clockedIn">
               <h1>On The Clock</h1>
-              
             </div>
             {this.state.job.job_id ? (
               <Job
@@ -284,5 +274,5 @@ function mapStateToProps(state) {
 }
 
 export default connect(mapStateToProps, {
-  updateClockIn,
+  updateClockIn
 })(withRouter(JobView));

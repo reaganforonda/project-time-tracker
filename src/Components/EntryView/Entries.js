@@ -11,18 +11,20 @@ export default class Entries extends React.Component{
         }
     }
 
+    
+
     render(){
         return (
             <div>
                 <Paper zDepth={3} className='enteries-container'>
-                    <p>{this.props.jobname}</p>
-                    <p>{this.props.clientName}</p>
-                    <p>{this.props.date}</p>
-                    <p>{this.props.startTime}</p>
-                    <p>{this.props.endTime}</p>
-                    <p>{this.props.duration}</p>
+                    <p>Job Name: {this.props.jobname}</p>
+                    <p>Client: {this.props.clientName}</p>
+                    <p>Date: {this.props.date}</p>
+                    <p>Start Time: {this.props.startTime}</p>
+                    <p>End Time: {this.props.endTime}</p>
+                    <p>Duration: {this.props.duration}</p>
                     <RaisedButton label="Edit"/>
-                    <RaisedButton label="Delete"/>
+                    <RaisedButton onClick={()=> this.props.delete(this.props.entry)} label="Delete"/>
                 </Paper>
             </div>
         )

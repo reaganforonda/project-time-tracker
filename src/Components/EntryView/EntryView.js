@@ -15,6 +15,7 @@ export class EntryView extends React.Component {
     };
 
     this.getAllEntries = this.getAllEntries.bind(this);
+    this.handleDeleteEntry = this.handleDeleteEntry.bind(this);
   }
 
   componentDidMount() {
@@ -24,14 +25,27 @@ export class EntryView extends React.Component {
   componentDidUpdate() {}
 
   getAllEntries() {
-    let userid = this.props.user.user_id;
-    this.props.getAllEntries(userid);
+    axios.get(`http://localhost:3005/api/entry/${this.props.user.user_id}`).then((enteries) => {
+      this.setState({enteries : enteries.data})
+    }).catch((e) => {
+      console.log(e);
+    })
+  }
+
+  handleDeleteEntry(entry) {
+    axios.delete(`http://localhost:3005/api/entry/delete/${this.props.user.user_id}/${entry.entry_id}`).then((result) => {
+      console.log(result.data);
+    }).catch((e) => {
+      console.log(`Error while deleting entry: ${e}`);
+    })
+
+    this.getAllEntries();
   }
 
 
   render() {
 
-    console.log(this.props.entries);
+
     let entryArr = this.state.enteries.map(entry => {
       return (
         <div key={entry.entry_id}>
@@ -42,6 +56,8 @@ export class EntryView extends React.Component {
             startTime={entry.start_time}
             endTime={entry.end_time}
             duration={entry.duration}
+            delete = {this.handleDeleteEntry}
+            entry = {entry}
           />
         </div>
       );
