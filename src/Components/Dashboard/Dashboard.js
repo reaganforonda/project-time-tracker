@@ -40,6 +40,7 @@ export class Dashboard extends React.Component {
           <AppBar/>
         </div>
 
+      
         <div className="dashboard-container">
           <Switch>
             <Route path="/dashboard/jobview" component={JobView} />

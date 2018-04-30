@@ -15,11 +15,11 @@ import {
 } from "material-ui";
 
 import { getUser } from "../../ducks/userReducer";
-// import { getAllClients } from "../../ducks/clientReducer"; TODO: REMOVE
 import { updateClockIn } from "../../ducks/jobReducer";
 
 import { connect } from "react-redux";
 import { DH_CHECK_P_NOT_PRIME } from "constants";
+
 const _ = require("lodash");
 
 export class JobView extends React.Component {
@@ -28,6 +28,8 @@ export class JobView extends React.Component {
     this.state = {
       jobs: [],
       job: {},
+      startTime : '',
+      activeEntry: {}
     };
 
     this.handleAddJobClick = this.handleAddJobClick.bind(this);
@@ -40,11 +42,13 @@ export class JobView extends React.Component {
     this.getAllActiveJobs = this.getAllActiveJobs.bind(this);
     this.handleClockIn = this.handleClockIn.bind(this);
     this.handleClockOut = this.handleClockOut.bind(this);
+    this.formatDate = this.formatDate.bind(this);
+    this.getClockTime = this.getClockTime.bind(this);
+    this.formatTime = this.formatTime.bind(this);
+    this.addNewEntry = this.addNewEntry.bind(this);
   }
 
   componentDidMount() {
-    // this.props.getUser(); TODO: REMOVE
-    // this.props.getAllClients(); TODO: REMOVE
     this.getAllActiveJobs();
 
   }
@@ -102,6 +106,7 @@ export class JobView extends React.Component {
 
   handleClockIn(job) {
     let jobID = job.job_id;
+    
 
     let temp = [];
     let clockInJob = {};
@@ -115,7 +120,7 @@ export class JobView extends React.Component {
       this.setState({ job: clockInJob });
     }
 
-
+    this.addNewEntry(job);
   }
 
   handleClockOut(job) {
@@ -126,13 +131,95 @@ export class JobView extends React.Component {
     tempJobs.push(job);
 
     this.setState({ jobs: tempJobs });
+
+    this.updateEntry(this.state.activeEntry);
+
+
   }
 
   // Get time as soon as the user hit clock in
-  getClockInTIme(){
+  getClockTime(){
     let timestamp = new Date();
 
     return timestamp;
+  }
+
+  // Formate Datepicker's date to something for useable
+  formatDate(date) {
+    let formatedDate = `${date.getMonth() +
+      1}/${date.getDate()}/${date.getFullYear()}`;
+
+    return formatedDate;
+  };
+
+  formatTime(date) {
+    let formatedTime = `${date.getHours()}:${date.getMinutes()}`;
+    console.log(formatedTime);
+    return formatedTime;
+  };
+
+
+  calculateDuration(endTime) {
+    let startInMinutes =
+      ~~this.state.startTime.getHours() * 60 +
+      ~~this.state.startTime.getMinutes();
+    let endInMinutes =
+      ~~endTime.getHours() * 60 + ~~endTime.getMinutes();
+    let duration = 0;
+
+    try {
+      if (startInMinutes > endInMinutes)
+        throw "Start Time Can't Be After End Time";
+      duration = (endInMinutes - startInMinutes) / 60;
+    } catch (err) {
+      alert(`Error : ${err}`);
+    }
+
+    return duration
+  };
+
+
+  addNewEntry(job){
+    let time = this.getClockTime();
+    this.setState({startTime : time});
+    let entry_date = this.formatDate(time);
+    let start_time = this.formatTime(time);
+    
+    
+    let entry = {
+      user_id : this.props.user.user_id,
+      job_id : job.job_id,
+      client_id : job.client_id,
+      entry_date : entry_date,
+      start_time : start_time,
+      billed : false
+    }
+
+    axios.post(`http://localhost:3005/api/entry/add`, entry).then((result) => {
+      this.setState({activeEntry : result.data})  
+    console.log(this.state.activeEntry)
+    }).catch((e) => {
+      console.log(`Error in adding new Entry: ${e}`)
+    })
+
+
+    
+  }
+
+  updateEntry(activeEntry) { 
+    let time =  this.getClockTime();
+    let end_time = this.formatTime(time);
+
+    let duration = this.calculateDuration(time);
+
+    let updateEntry = {duration : duration, end_time :end_time}
+    
+    axios.put(`http://localhost:3005/api/entry/update/${activeEntry.job_id}/${activeEntry.user_id}/${activeEntry.entry_id}`, updateEntry).then((result) => {
+      console.log(result.data)
+    }).catch((e) => {
+      console.log(`Error in updating Entry: ${e}`)
+    })
+    
   }
 
   render() {

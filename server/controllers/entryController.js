@@ -21,5 +21,33 @@ module.exports = {
             console.log(`Error: ${e}`);
             res.sendStatus(500);
         })
+    },
+
+    getEntryById : (req, res) => {
+        const dbInstance = req.app.get('db');
+        const {jobid, userid, entryid} = req.params;
+
+        dbInstance.GET_ENTRY_ID([jobid, userid, entryid]).then((entry) => {
+            res.status(200).send(entry);
+        }).catch((e) => {
+            console.log(`Error: ${e}`);
+            res.sendStatus(500);
+        })
+    },
+
+    updateEntry : (req, res) => {
+        const dbInstance = req.app.get('db');
+        const {jobid, userid, entryid} = req.params;
+        const {end_time, duration} = req.body;
+
+        dbInstance.UPDATE_ENTRY([end_time, duration, userid, jobid, entryid]).then((result) => {
+            res.status(200).send(result)
+        }).catch((e) => {
+            console.log(`Error: ${e}`);
+            res.sendStatus(500);
+        })
+
+
+        
     }
 }

@@ -72,7 +72,7 @@ this.handleResetState();
   // TODO: Change this so it only get clients related to the logged in User
   handleGetClients() {
     axios
-      .get("http://localhost:3005/api/clients")
+      .get(`http://localhost:3005/api/clients/${this.props.user.user_id}`)
       .then(clients => {
         this.setState({ clients: clients.data });
       })
@@ -88,7 +88,6 @@ this.handleResetState();
   handleAddJob(){
     let job = {
       client_id : this.state.client,
-      //TODO: Change this so that it's actually the user logged in
       // TODO: Look at completed ? Should i be auto set to false?
       user_id : this.props.user.user_id,
       job_name : this.state.jobName,

@@ -156,7 +156,10 @@ app.delete('/api/client/:userid/:clientid', clientController.deleteClient);
 // ###### ENDPOINTS - Enteries ######
 app.post('/api/entry/add', entryController.addEntry)
 app.get('/api/entry/:userid', entryController.getAllEnteries)
+app.get('/api/entry/:jobid/:userid/:entryid'), entryController.getEntryById
+app.put(`/api/entry/update/:jobid/:userid/:entryid`, entryController.updateEntry)
 
 app.listen(CONNECTION_PORT, () => {
   console.log(`Creeping on Port: ${CONNECTION_PORT}`);
 });
+21
