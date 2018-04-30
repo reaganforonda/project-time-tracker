@@ -32,7 +32,7 @@ export default class BillingItem extends React.Component {
         onCheck = {this.handlCheckBox}
         />
         <Paper>
-          <p>DON'T BRO ME IF YOU DON'T KNOW ME</p>
+          <h1>{this.props.user.user_name}</h1>
         </Paper>
       </div>
     );

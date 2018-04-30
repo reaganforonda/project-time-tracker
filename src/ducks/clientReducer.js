@@ -25,9 +25,9 @@ const UPDATE_ZIP = "UPDATE_ZIP";
 const UPDATE_WEBSITE = "UPDATE_WEBSITE";
 const UPDATE_PHONE = "UPDATE_PHONE";
 
-export function getAllClients() {
+export function getAllClients(userid) {
   let clientsData = axios
-    .get("/api/clients")
+    .get(`/api/clients/${userid}`)
     .then(clients => {
       return clients.data;
     })
@@ -103,7 +103,7 @@ export function addNewClient() {}
 export default function reducer(state = INITIAL_STATE, action) {
   switch (action.type) {
     case GET_ALL_CLIENTS:
-      return [...state.clients, action.payload];
+      return Object.assign({}, state, {clients : [...INITIAL_STATE.clients, action.payload]});
 
       case UPDATE_CLIENT_NAME:
       return Object.assign({}, state, {client_name : action.payload});

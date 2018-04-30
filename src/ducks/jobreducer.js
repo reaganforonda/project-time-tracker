@@ -35,9 +35,19 @@ const ADD_JOB = "ADD_JOB";
 
 // GET ALL ACTIVE JOBS - USING LOGGED IN USER ID
 export function getAllActiveJobs(userId) {
+
+  
+  let jobsData = axios.get(`http://localhost:3005/api/jobs/open/${userId}`).then((jobs) => {
+      return jobs.data
+  }).catch((e) => {
+      console.log(`Error: ${e}`);
+  });
+
+
+
   return {
     type : GET_ACTIVE_JOBS,
-    payload : jobServices.getAllActiveJobs(userId)
+    payload : jobsData
   }
 }
 
@@ -64,7 +74,6 @@ export function updateClockIn(clockInTime){
 }
 
 export function clockIn(){
-  console.log("Hit Me");
   return {
     type : CLOCK_IN_JOB,
     payload : true

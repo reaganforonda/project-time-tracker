@@ -146,8 +146,6 @@ export  class EntryForm extends React.Component {
       console.log(e);
     })
 
-
-
     this.handleResetState();
   };
 

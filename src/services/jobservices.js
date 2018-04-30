@@ -9,7 +9,7 @@ export function getAllActiveJobs(userId) {
         console.log(`Error: ${e}`);
     });
 
-    console.log(jobsData);
+
     return jobsData;
 
 }

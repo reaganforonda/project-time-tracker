@@ -98,6 +98,8 @@ export class ClientForm extends React.Component {
       website: "",
       phone: ""
     });
+
+    this.props.getClients();
   }
 
   render() {

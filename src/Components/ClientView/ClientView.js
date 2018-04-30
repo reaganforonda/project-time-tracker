@@ -3,8 +3,11 @@ import axios from "axios";
 
 import ClientForm from "../ClientForm/ClientForm";
 import Clients from "./Clients";
+import { connect } from "react-redux";
 
-export default class ClientView extends React.Component {
+import {getAllClients} from '../../ducks/clientReducer'
+
+export class ClientView extends React.Component {
   constructor(props) {
     super(props);
 
@@ -19,15 +22,9 @@ export default class ClientView extends React.Component {
     this.getAllClients();
   }
 
-  componentDidUpdate(){
-    
-  }
-
-  // TODO: Fix to get only clients related to user
-
   getAllClients() {
     axios
-      .get("http://localhost:3005/api/clients")
+      .get(`http://localhost:3005/api/clients/${this.props.user.user_id}`)
       .then(clients => {
         this.setState({ clients: clients.data });
       })
@@ -59,9 +56,18 @@ export default class ClientView extends React.Component {
         <div className="clientlist-container" />
         {clientArr}
         <div className="floating-action">
-          <ClientForm />
+          <ClientForm getClients={this.getAllClients}/>
         </div>
       </div>
     );
   }
 }
+
+function mapStateToProps(state){ 
+  return {
+    user : state.userReducer.user,
+    clients: state.clientReducer.clients
+  }
+}
+
+export default connect(mapStateToProps, {getAllClients})(ClientView);

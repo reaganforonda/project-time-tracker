@@ -3,12 +3,14 @@ import userReducer from './ducks/userReducer';
 import jobReducer from './ducks/jobReducer';
 import clientReducer from './ducks/clientReducer';
 import promiseMiddleware from 'redux-promise-middleware';
+import entryReducer from './ducks/entryReducer';
 
 // TODO: Add remaining reducers
 const reducer = combineReducers({
     userReducer : userReducer,
     jobReducer : jobReducer,
-    clientReducer : clientReducer
+    clientReducer : clientReducer,
+    entryReducer : entryReducer
 })
 
 let middleware = promiseMiddleware();

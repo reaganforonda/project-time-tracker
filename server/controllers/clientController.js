@@ -3,8 +3,9 @@ const axios = require('axios');
 module.exports = {
     getAllClients : (req, res) => {
         const dbInstance = req.app.get('db');
+        const {userid} = req.params
 
-        dbInstance.GET_ALL_CLIENTS().then((clients) => {
+        dbInstance.GET_ALL_CLIENTS([userid]).then((clients) => {
             res.status(200).send(clients)
         }).catch((e)=> {
             console.log(`Error: ${e}`);

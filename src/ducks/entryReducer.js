@@ -11,7 +11,8 @@ const ENTRY_INTIAL_STATE = {
     end_time : '',
     duration : '',
     comment : '',
-    billed : false
+    billed : false,
+    enteries : []
 
 }
 
@@ -26,6 +27,7 @@ const UPDATE_DURATION = "UPDATE_DURATION";
 const UPDATE_COMMENT = "UPDATE_COMMENT";
 const UPDATE_BILLED = "UPDATE_BILLED";
 const ADD_NEW_ENTRY = "ADD_NEW_ENTRY";
+const GET_ALL_ENTRIES = "GET_ALL_ENTRIES";
 
 export function updateClientID(client_id) {
     return {
@@ -76,9 +78,89 @@ export function updateEndTime(end_time) {
     }
 }
 
-export function duration (duration){
+export function updateDuration (duration){
     return {
         type : UPDATE_DURATION,
         payload : duration
+
+    }
+};
+
+export function updateComment(comment) {
+    return {
+        type : UPDATE_COMMENT,
+        payload : comment
+    }
+};
+
+export function updateBilled (billed) {
+    return {
+        type : UPDATE_BILLED,
+        payload : billed
+    }
+}
+
+export function addNewEntry (job) {
+    return {
+        type : ADD_NEW_ENTRY,
+        payload : entryServices.addEntry(job)
+    }
+}
+
+export function getAllEntries(userid){
+    let enteries = [];
+    
+    axios
+      .get(`http://localhost:3005/api/entry/${userid}`)
+      .then(enteries => {      
+        enteries = enteries.data
+      })
+      .catch(e => {
+        console.log(e);
+      });
+
+      return {
+          type: GET_ALL_ENTRIES,
+          payload : enteries
+      }
+}
+
+export default function entryReducer(state = ENTRY_INTIAL_STATE, action) {
+    switch(action.type) {
+        case UPDATE_CLIENT_ID:
+        return Object.assign({}, state, {client_id : action.payload});
+
+        case UPDATE_JOB_ID:
+        return Object.assign({}, state, {job_id : action.payload});
+
+        case UPDATE_JOB_NAME:
+        return Object.assign({}, state, {job_name : action.payload});
+
+        case UPDATE_CLIENT_NAME:
+        return Object.assign({}, state, {client_name : action.payload});
+
+        case UPDATE_ENTRY_DATE:
+        return Object.assign({}, state, {entry_date : action.payload});
+
+        case UPDATE_START_TIME: 
+        return Object.assign({}, state, {start_time : action.payload});
+
+        case UPDATE_END_TIME:
+        return Object.assign({}, state, {end_time : action.payload});
+
+        case UPDATE_DURATION:
+        return Object.assign({}, state, {duration : action.payload});
+
+        case UPDATE_COMMENT:
+        return Object.assign({}, state, {billed : action.payload});
+
+        case ADD_NEW_ENTRY:
+        return Object.assign({}, state, {entry : action.payload})
+
+        case GET_ALL_ENTRIES:
+        return Object.assign({}, state, {enteries : action.payload});
+
+        default:
+        return state
     }
 }

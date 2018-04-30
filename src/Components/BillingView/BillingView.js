@@ -3,13 +3,16 @@ import Menu from "../Menu/Menu";
 
 import { RaisedButton } from "material-ui";
 import BillingItem from "./BillingItem";
+import {connect} from 'react-redux';
 
-export default class BillingView extends React.Component {
+
+export class BillingView extends React.Component {
   render() {
     let arr = [];
     for (var i = 0; i < 15; i++) {
-      arr.push(<BillingItem />);
+      arr.push(<BillingItem user={this.props.user}/>);
     }
+
     return (
       <div className="billing-view-container">
         <div className="billing-view-top-menu">
@@ -27,3 +30,12 @@ export default class BillingView extends React.Component {
     );
   }
 }
+
+function mapStateToProps(state) {
+  return {
+    user : state.userReducer.user
+  }
+}
+
+
+export default connect(mapStateToProps, null)(BillingView)

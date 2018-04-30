@@ -5,6 +5,8 @@ import EntryForm from "../EntryForm/EntryForm";
 import Entries from "./Entries";
 import { connect } from "react-redux";
 
+import {getAllEntries} from '../../ducks/entryReducer'
+
 export class EntryView extends React.Component {
   constructor(props) {
     super(props);
@@ -21,20 +23,15 @@ export class EntryView extends React.Component {
 
   componentDidUpdate() {}
 
-// TODO: Change to actual user id
   getAllEntries() {
     let userid = this.props.user.user_id;
-    console.log(userid);
-    axios
-      .get(`http://localhost:3005/api/entry/${userid}`)
-      .then(enteries => {
-        this.setState({ enteries: enteries.data });
-      })
-      .catch(e => {
-        console.log(e);
-      });
+    this.props.getAllEntries(userid);
   }
+
+
   render() {
+
+    console.log(this.props.entries);
     let entryArr = this.state.enteries.map(entry => {
       return (
         <div key={entry.entry_id}>
@@ -50,8 +47,6 @@ export class EntryView extends React.Component {
       );
     });
 
-    console.log(this.state.enteries);
-
     return (
       <div className="entryview-container">
         <div className="Entry-List-container" />
@@ -66,8 +61,9 @@ export class EntryView extends React.Component {
 
 function mapStateToProps(state) {
   return {
-    user: state.userReducer.user
+    user: state.userReducer.user,
+    entries : state.entryReducer.entries
   };
 }
 
-export default connect(mapStateToProps, null)(EntryView);
+export default connect(mapStateToProps, {getAllEntries})(EntryView);

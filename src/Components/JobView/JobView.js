@@ -43,7 +43,7 @@ export class JobView extends React.Component {
   }
 
   componentDidMount() {
-    this.props.getUser();
+    // this.props.getUser(); TODO: REMOVE
     // this.props.getAllClients(); TODO: REMOVE
     this.getAllActiveJobs();
 
@@ -112,9 +112,10 @@ export class JobView extends React.Component {
           temp = this.state.jobs.splice(i, 1);
         }
       }
-
       this.setState({ job: clockInJob });
     }
+
+
   }
 
   handleClockOut(job) {
@@ -123,12 +124,16 @@ export class JobView extends React.Component {
 
     let tempJobs = this.state.jobs;
     tempJobs.push(job);
-    console.log(tempJobs);
 
     this.setState({ jobs: tempJobs });
   }
 
-  
+  // Get time as soon as the user hit clock in
+  getClockInTIme(){
+    let timestamp = new Date();
+
+    return timestamp;
+  }
 
   render() {
     let { picture, user_name } = this.props.user;
@@ -193,5 +198,4 @@ function mapStateToProps(state) {
 
 export default connect(mapStateToProps, {
   updateClockIn,
-  getUser
 })(withRouter(JobView));

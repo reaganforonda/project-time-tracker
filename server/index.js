@@ -146,12 +146,9 @@ app.get('/api/jobs/open/:userId', jobsController.getAllOpenJobs)
 app.get('/api/jobs/:userId', jobsController.getJobsByUserID)
 
 
-
-
-
-
 // ###### ENDPOINTS - Client ######
-app.get('/api/clients', clientController.getAllClients);
+// app.get('/api/clients/', clientController.getAllClients); TODO: Remove
+app.get('/api/clients/:userid', clientController.getAllClients);
 app.post('/api/client/', clientController.addClient);
 app.delete('/api/client/:userid/:clientid', clientController.deleteClient);
 

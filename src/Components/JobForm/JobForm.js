@@ -90,7 +90,7 @@ this.handleResetState();
       client_id : this.state.client,
       //TODO: Change this so that it's actually the user logged in
       // TODO: Look at completed ? Should i be auto set to false?
-      user_id : 1,
+      user_id : this.props.user.user_id,
       job_name : this.state.jobName,
       start_date : this.state.startDate,
       completed : false,
@@ -206,7 +206,7 @@ this.handleResetState();
 
 function mapStateToProps(state){
   return {
-    
+    user : state.userReducer.user
   }
 }
 
