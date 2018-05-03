@@ -44,17 +44,17 @@ VALUES
 INSERT INTO jobs
 (client_id, user_id, job_name, start_date, end_date, completed, rate, description)
 VALUES
-(1, 1, 'Website Project', '4/1/2018', null, FALSE, 50, 'Build new website');
+(2, 1, 'Website Project', '4/1/2018', null, FALSE, 50, 'Build new website');
 
 INSERT INTO jobs
 (client_id, user_id, job_name, start_date, end_date, completed, rate, description)
 VALUES
-(2, 1, 'Back-end Project', '12/1/2018', null, FALSE, 90, 'Build Back End Server');
+(5, 1, 'Back-end Project', '12/1/2018', null, FALSE, 90, 'Build Back End Server');
 
 INSERT INTO jobs
 (client_id, user_id, job_name, start_date, end_date, completed, rate, description)
 VALUES
-(2, 1, 'Shoes Website', '1/1/2018', '3/31/18', TRUE, 90, 'Build E-Commerce Website');
+(3, 1, 'Shoes Website', '1/1/2018', '3/31/18', TRUE, 90, 'Build E-Commerce Website');
 
 INSERT INTO jobs
 (client_id, user_id, job_name, start_date, end_date, completed, rate, description)

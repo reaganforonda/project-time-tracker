@@ -16,6 +16,7 @@ export class EntryView extends React.Component {
 
     this.getAllEntries = this.getAllEntries.bind(this);
     this.handleDeleteEntry = this.handleDeleteEntry.bind(this);
+    this.handleEditEntry = this.handleEditEntry.bind(this);
   }
 
   componentDidMount() {
@@ -42,10 +43,11 @@ export class EntryView extends React.Component {
     this.getAllEntries();
   }
 
+  handleEditEntry(entry){
+    <EntryForm/>
+  }
 
   render() {
-
-
     let entryArr = this.state.enteries.map(entry => {
       return (
         <div key={entry.entry_id}>
@@ -58,6 +60,7 @@ export class EntryView extends React.Component {
             duration={entry.duration}
             delete = {this.handleDeleteEntry}
             entry = {entry}
+            edit = {this.handleEditEntry}
           />
         </div>
       );

@@ -29,11 +29,12 @@ export class JobView extends React.Component {
       jobs: [],
       job: {},
       startTime: "",
-      activeEntry: {}
+      activeEntry: {},
+      modalOpen : false
     };
 
     this.handleAddJobClick = this.handleAddJobClick.bind(this);
-    this.handleCancelModalClick = this.handleCancelModalClick.bind(this);
+    // this.handleCancelModalClick = this.handleCancelModalClick.bind(this); TODO: Remove
     this.handleTextChange = this.handleTextChange.bind(this);
     this.handleDateChange = this.handleDateChange.bind(this);
     this.formatDate = this.formatDate.bind(this);
@@ -46,6 +47,7 @@ export class JobView extends React.Component {
     this.getClockTime = this.getClockTime.bind(this);
     this.formatTime = this.formatTime.bind(this);
     this.addNewEntry = this.addNewEntry.bind(this);
+
   }
 
   componentDidMount() {
@@ -58,15 +60,16 @@ export class JobView extends React.Component {
     this.setState({ modalOpen: true });
   }
 
-  handleCancelModalClick() {
-    this.setState({
-      modalOpen: false,
-      jobName: "",
-      jobDescription: "",
-      startDate: null,
-      hourlyRate: 0
-    });
-  }
+  // TODO: REMOVE
+  // handleCancelModalClick() {
+  //   this.setState({
+  //     modalOpen: false,
+  //     jobName: "",
+  //     jobDescription: "",
+  //     startDate: null,
+  //     hourlyRate: 0
+  //   });
+  // }
 
   handleTextChange(e) {
     this.setState({ [e.target.name]: e.target.value });
@@ -196,8 +199,9 @@ export class JobView extends React.Component {
     let end_time = this.formatTime(time);
 
     let duration = this.calculateDuration(time);
+    let total = duration * this.state.job.rate;
 
-    let updateEntry = { duration: duration, end_time: end_time };
+    let updateEntry = { duration: duration, end_time: end_time, total};
 
     axios
       .put(
@@ -214,6 +218,8 @@ export class JobView extends React.Component {
       });
   }
 
+  
+
   render() {
     let { picture, user_name } = this.props.user;
 
@@ -226,6 +232,7 @@ export class JobView extends React.Component {
             job={job}
             clockIn={this.handleClockIn}
             clockedIn={false}
+            
           />
         </div>
       );
@@ -245,6 +252,7 @@ export class JobView extends React.Component {
                 clockOut={this.handleClockOut}
                 clientName={this.state.job.client_name}
                 jobName={this.state.job.job_name}
+                
               />
             ) : null}
             <div />

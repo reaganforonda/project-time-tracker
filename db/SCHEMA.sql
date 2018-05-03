@@ -62,6 +62,7 @@ CREATE TABLE enteries
     start_time TIME,
     end_time TIME,
     duration FLOAT,
+    total DECIMAL,
     comment TEXT,
     billed BOOLEAN
 );

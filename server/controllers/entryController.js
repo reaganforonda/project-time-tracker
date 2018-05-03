@@ -10,7 +10,8 @@ module.exports = {
       end_time,
       duration,
       comment,
-      billed
+      billed,
+      total
     } = req.body;
 
     dbInstance
@@ -23,7 +24,8 @@ module.exports = {
         end_time,
         duration,
         comment,
-        billed
+        billed,
+        total
       ])
       .then(entry => {
         res.status(200).send(entry[0]);
@@ -67,10 +69,10 @@ module.exports = {
   updateEntry: (req, res) => {
     const dbInstance = req.app.get("db");
     const { jobid, userid, entryid } = req.params;
-    const { end_time, duration } = req.body;
+    const { end_time, duration, total } = req.body;
 
     dbInstance
-      .UPDATE_ENTRY([end_time, duration, userid, jobid, entryid])
+      .UPDATE_ENTRY([end_time, duration, userid, jobid, entryid, total])
       .then(result => {
         res.status(200).send(result);
       })

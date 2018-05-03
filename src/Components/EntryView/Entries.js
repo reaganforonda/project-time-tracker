@@ -23,7 +23,7 @@ export default class Entries extends React.Component{
                     <p>Start Time: {this.props.startTime}</p>
                     <p>End Time: {this.props.endTime}</p>
                     <p>Duration: {this.props.duration}</p>
-                    <RaisedButton label="Edit"/>
+                    <RaisedButton onClick={()=>this.props.edit()} label="Edit"/>
                     <RaisedButton onClick={()=> this.props.delete(this.props.entry)} label="Delete"/>
                 </Paper>
             </div>

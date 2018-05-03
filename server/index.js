@@ -161,6 +161,7 @@ app.post('/api/entry/add', entryController.addEntry)
 
 app.get('/api/entry/:userid', entryController.getAllEnteries)
 
+
 app.put(`/api/entry/update/:jobid/:userid/:entryid`, entryController.updateEntry)
 
 app.delete('/api/entry/delete/:userid/:entryid', entryController.deleteEntry)
