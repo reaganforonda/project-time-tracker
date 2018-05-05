@@ -4,7 +4,7 @@ import { Dialog, Paper } from "material-ui";
 
 import { connect } from "react-redux";
 import { openModal, closeModal } from "../../ducks/jobReducer";
-import { resetState, getEnteriesByJobId } from "../../ducks/entryReducer";
+import { getTotalHrs, resetState, getTotal, getEnteriesByJobId } from "../../ducks/entryReducer";
 
 export class Job extends React.Component {
   constructor(props) {
@@ -20,6 +20,9 @@ export class Job extends React.Component {
       this.props.user.user_id,
       this.props.job.job_id
     );
+    this.props.getTotal(this.props.user.user_id, this.props.job.job_id);
+    this.props.getTotalHrs(this.props.user.user_id, this.props.job.job_id)
+    
   }
 
   handleCloseEnteries(){
@@ -36,6 +39,9 @@ export class Job extends React.Component {
             <p>{entry.entry_date}</p>
             <p>{entry.start_time}</p>
             <p>{entry.end_time}</p>
+            <p>{entry.duration} hrs</p>
+            <p>${entry.total}</p>
+
           </Paper>
         </div>
       )
@@ -69,8 +75,8 @@ export class Job extends React.Component {
             >
               <Dialog modal={true} open={this.props.open}>
               <div>
-                <h2>Total Hrs: </h2>
-                <h2>Total Billing: </h2>
+                <h2>Total Hrs: {this.props.totalHrs}</h2>
+                <h2>Total Billing: ${this.props.total}</h2>
                 {arr}
               </div>
               <div>
@@ -93,7 +99,9 @@ function mapStateToProps(state) {
   return {
     user: state.userReducer.user,
     open: state.jobReducer.open,
-    entries: state.entryReducer.entries
+    entries: state.entryReducer.entries,
+    total : state.entryReducer.total,
+    totalHrs : state.entryReducer.totalHrs
   };
 }
 
@@ -101,5 +109,7 @@ export default connect(mapStateToProps, {
   getEnteriesByJobId,
   openModal,
   closeModal,
-  resetState
+  resetState,
+  getTotal,
+  getTotalHrs
 })(Job);

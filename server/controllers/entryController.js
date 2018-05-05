@@ -104,5 +104,29 @@ module.exports = {
       console.log(`Error with GET request for Entries by Job Id : ${e}`);
       res.sendStatus(500);
     })
+  },
+
+  getTotalByJobId : (req, res) => {
+    const dbInstance = req.app.get('db');
+    const {userid, jobid} = req.params;
+
+    dbInstance.GET_ENTRY_TOTAL_JOBID([jobid, userid]).then((result) => {
+      res.status(200).send(result)
+    }).catch((e) => {
+      console.log(`Error with GET request for Total of Entries: ${e}`);
+      res.sendStatus(500);
+    })
+  },
+
+  getTotalHrsByJobId : (req, res) => {
+    const dbInstance = req.app.get('db');
+    const {userid, jobid} = req.params;
+
+    dbInstance.GET_ENTRY_TOTAL_HRS([userid, jobid]).then((result) => {
+      res.status(200).send(result)
+    }).catch((e) => {
+      console.log(`Error with GET request for Total Hrs: ${e}`);
+      res.sendStatus(500);
+    })
   }
 }

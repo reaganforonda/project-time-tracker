@@ -43,6 +43,7 @@ export class EntryForm extends React.Component {
     this.getAllJobs = this.getAllJobs.bind(this);
     this.hanldeJobSelect = this.hanldeJobSelect.bind(this);
     this.handleAddEntry = this.handleAddEntry.bind(this);
+    this.handleRounding = this.handleRounding.bind(this);
   }
 
   componentDidMount() {
@@ -134,7 +135,7 @@ export class EntryForm extends React.Component {
       start_time: this.formatTime(this.state.startTime),
       end_time: this.formatTime(this.state.endTime),
       duration: duration,
-      total : duration * this.state.job.rate,
+      total : this.handleRounding(duration * this.state.job.rate, 2),
       comment: this.state.comment,
       billed: false
     };
@@ -166,6 +167,15 @@ export class EntryForm extends React.Component {
   hanldeJobSelect = (event, index, value) => {
     this.setState({ job: value });
   };
+
+  handleRounding(number, precision) {
+    let shift = function(number, precision) {
+      let numArray = ('' + number).split("e");
+      return +(numArray[0] + "e" + (numArray[1] ? (+numArray[1] + precision) : precision));
+    };
+
+    return shift(Math.round(shift(number, +precision)), -precision)
+  }
 
   render() {
     let jobArr = this.state.jobs.map(job => {

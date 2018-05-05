@@ -161,6 +161,8 @@ app.post('/api/entry/add', entryController.addEntry)
 
 app.get('/api/entry/:userid', entryController.getAllEnteries)
 app.get('/api/entry/:userid/:jobid', entryController.getEntriesByJobId)
+app.get('/api/entry/total/:userid/:jobid', entryController.getTotalByJobId)
+app.get('/api/entry/hrs/total/:userid/:jobid', entryController.getTotalHrsByJobId)
 
 app.put(`/api/entry/update/:jobid/:userid/:entryid`, entryController.updateEntry)
 
