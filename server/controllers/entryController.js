@@ -92,5 +92,17 @@ module.exports = {
           console.log(`Error: ${e}`);
           res.sendStatus(500);
       })
+  },
+
+  getEntriesByJobId : (req, res) => {
+    const dbInstance = req.app.get('db');
+    const {userid, jobid} = req.params;
+
+    dbInstance.GET_ENTRIES_BY_JOB_ID([userid, jobid]).then((result) => {
+      res.status(200).send(result)
+    }).catch((e) => {
+      console.log(`Error with GET request for Entries by Job Id : ${e}`);
+      res.sendStatus(500);
+    })
   }
 }

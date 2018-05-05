@@ -160,7 +160,7 @@ app.delete('/api/client/:userid/:clientid', clientController.deleteClient);
 app.post('/api/entry/add', entryController.addEntry)
 
 app.get('/api/entry/:userid', entryController.getAllEnteries)
-
+app.get('/api/entry/:userid/:jobid', entryController.getEntriesByJobId)
 
 app.put(`/api/entry/update/:jobid/:userid/:entryid`, entryController.updateEntry)
 

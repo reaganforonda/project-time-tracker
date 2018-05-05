@@ -12,7 +12,7 @@ const ENTRY_INTIAL_STATE = {
     duration : '',
     comment : '',
     billed : false,
-    enteries : []
+    entries : []
 
 }
 
@@ -28,6 +28,8 @@ const UPDATE_COMMENT = "UPDATE_COMMENT";
 const UPDATE_BILLED = "UPDATE_BILLED";
 const ADD_NEW_ENTRY = "ADD_NEW_ENTRY";
 const GET_ALL_ENTRIES = "GET_ALL_ENTRIES";
+const GET_ENTRIES_BY_JOB_ID = "GET_ENTRIES_BY_JOB_ID";
+const RESET_STATE = "RESET_STATE";
 
 export function updateClientID(client_id) {
     return {
@@ -112,7 +114,7 @@ export function getAllEntries(userid){
     
     axios
       .get(`http://localhost:3005/api/entry/${userid}`)
-      .then(enteries => {      
+      .then(enteries => {   
         enteries = enteries.data
       })
       .catch(e => {
@@ -124,6 +126,28 @@ export function getAllEntries(userid){
           payload : enteries
       }
 }
+
+export function getEnteriesByJobId(userid, jobid) {
+
+    let entries = axios.get(`http://localhost:3005/api/entry/${userid}/${jobid}`).then((result) => {
+        return  result.data
+    }).catch(e=> {
+        console.log(e);
+    });
+
+    return {
+        type : GET_ENTRIES_BY_JOB_ID,
+        payload : entries
+    }
+}
+
+export function resetState(){
+    return {
+        type: RESET_STATE,
+        payload: ENTRY_INTIAL_STATE
+    }
+}
+
 
 export default function entryReducer(state = ENTRY_INTIAL_STATE, action) {
     switch(action.type) {
@@ -158,7 +182,13 @@ export default function entryReducer(state = ENTRY_INTIAL_STATE, action) {
         return Object.assign({}, state, {entry : action.payload})
 
         case GET_ALL_ENTRIES:
-        return Object.assign({}, state, {enteries : action.payload});
+        return Object.assign({}, state, {entries : action.payload});
+
+        case GET_ENTRIES_BY_JOB_ID  + "_FULFILLED":
+        return Object.assign({}, state, {entries : action.payload})
+
+        case RESET_STATE:
+        return Object.assign({}, action.payload)
 
         default:
         return state

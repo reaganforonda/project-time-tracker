@@ -15,10 +15,9 @@ import {
 } from "material-ui";
 
 import { getUser } from "../../ducks/userReducer";
-import { updateClockIn } from "../../ducks/jobReducer";
-
 import { connect } from "react-redux";
 import { DH_CHECK_P_NOT_PRIME } from "constants";
+import {getEnteriesByJobId} from '../../ducks/entryReducer'
 
 const _ = require("lodash");
 
@@ -30,7 +29,7 @@ export class JobView extends React.Component {
       job: {},
       startTime: "",
       activeEntry: {},
-      modalOpen : false
+      modalOpen: false
     };
 
     this.handleAddJobClick = this.handleAddJobClick.bind(this);
@@ -47,7 +46,6 @@ export class JobView extends React.Component {
     this.getClockTime = this.getClockTime.bind(this);
     this.formatTime = this.formatTime.bind(this);
     this.addNewEntry = this.addNewEntry.bind(this);
-
   }
 
   componentDidMount() {
@@ -201,7 +199,7 @@ export class JobView extends React.Component {
     let duration = this.calculateDuration(time);
     let total = duration * this.state.job.rate;
 
-    let updateEntry = { duration: duration, end_time: end_time, total};
+    let updateEntry = { duration: duration, end_time: end_time, total };
 
     axios
       .put(
@@ -216,9 +214,8 @@ export class JobView extends React.Component {
       .catch(e => {
         console.log(`Error in updating Entry: ${e}`);
       });
+     
   }
-
-  
 
   render() {
     let { picture, user_name } = this.props.user;
@@ -232,7 +229,6 @@ export class JobView extends React.Component {
             job={job}
             clockIn={this.handleClockIn}
             clockedIn={false}
-            
           />
         </div>
       );
@@ -252,7 +248,6 @@ export class JobView extends React.Component {
                 clockOut={this.handleClockOut}
                 clientName={this.state.job.client_name}
                 jobName={this.state.job.job_name}
-                
               />
             ) : null}
             <div />
@@ -281,6 +276,4 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps, {
-  updateClockIn
-})(withRouter(JobView));
+export default connect(mapStateToProps, {getEnteriesByJobId})(withRouter(JobView));

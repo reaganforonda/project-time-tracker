@@ -1,45 +1,105 @@
 import React from "react";
 import RaisedButton from "material-ui/RaisedButton";
-import Paper from "material-ui/Paper";
-import { Dialog } from "material-ui";
+import { Dialog, Paper } from "material-ui";
 
-import {connect} from 'react-redux';
-import {openModal, closeModal} from '../../ducks/jobReducer'
+import { connect } from "react-redux";
+import { openModal, closeModal } from "../../ducks/jobReducer";
+import { resetState, getEnteriesByJobId } from "../../ducks/entryReducer";
 
-export function Job(props) {
+export class Job extends React.Component {
+  constructor(props) {
+    super(props);
+    this.handleViewEnteries = this.handleViewEnteries.bind(this);
+    this.handleCloseEnteries = this.handleCloseEnteries.bind(this);
+  }
 
-let timeStamp = new Date();
+  handleViewEnteries() {
 
-  return (
-    
-    <div>
-      <Paper zDepth={3} className="single-job-container">
-        <p>{props.jobName}</p>
-        <p>{props.clientName}</p>
-        <div>
-          {!props.clockedIn ? (
-            <RaisedButton onClick={()=>props.clockIn(props.job)} className='job-button'label="Clock In" primary={true} />
-          ) : (
-            <RaisedButton onClick={()=>props.clockOut(props.job)} className='job-button'label="Clock Out" secondary={true} />
-          )}
-          <RaisedButton  onClick={()=>props.openModal()} className='job-button' label="View Enteries">
-              <Dialog modal={true} open={props.open}>
+    this.props.openModal();
+    this.props.getEnteriesByJobId(
+      this.props.user.user_id,
+      this.props.job.job_id
+    );
+  }
 
+  handleCloseEnteries(){
+    this.props.closeModal();
+    this.props.resetState();
+  }
 
-              <RaisedButton onClick={()=>props.closeModal()} label='Close'/>
-                
-              </Dialog>
-          </RaisedButton>
+  render() {
+
+    let arr = this.props.entries.map(entry => {
+      return (
+        <div key={entry.entry_id}>
+          <Paper zDepth={1}>
+            <p>{entry.entry_date}</p>
+            <p>{entry.start_time}</p>
+            <p>{entry.end_time}</p>
+          </Paper>
         </div>
-      </Paper>
-    </div>
-  );
+      )
+    })
+
+    return (
+      <div>
+        <Paper zDepth={3} className="single-job-container">
+          <p>{this.props.jobName}</p>
+          <p>{this.props.clientName}</p>
+          <div>
+            {!this.props.clockedIn ? (
+              <RaisedButton
+                onClick={() => this.props.clockIn(this.props.job)}
+                className="job-button"
+                label="Clock In"
+                primary={true}
+              />
+            ) : (
+              <RaisedButton
+                onClick={() => this.props.clockOut(this.props.job)}
+                className="job-button"
+                label="Clock Out"
+                secondary={true}
+              />
+            )}
+            <RaisedButton
+              onClick={() => this.handleViewEnteries()}
+              className="job-button"
+              label="View Enteries"
+            >
+              <Dialog modal={true} open={this.props.open}>
+              <div>
+                <h2>Total Hrs: </h2>
+                <h2>Total Billing: </h2>
+                {arr}
+              </div>
+              <div>
+                
+              </div>
+                <RaisedButton
+                  onClick={() => this.handleCloseEnteries()}
+                  label="Close"
+                />
+              </Dialog>
+            </RaisedButton>
+          </div>
+        </Paper>
+      </div>
+    );
+  }
 }
 
 function mapStateToProps(state) {
   return {
-    open : state.jobReducer.open
-  }
+    user: state.userReducer.user,
+    open: state.jobReducer.open,
+    entries: state.entryReducer.entries
+  };
 }
 
-export default connect (mapStateToProps, {openModal, closeModal})(Job);
+export default connect(mapStateToProps, {
+  getEnteriesByJobId,
+  openModal,
+  closeModal,
+  resetState
+})(Job);
