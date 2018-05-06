@@ -102,8 +102,8 @@ export function addNewClient() {}
 
 export default function reducer(state = INITIAL_STATE, action) {
   switch (action.type) {
-    case GET_ALL_CLIENTS:
-      return Object.assign({}, state, {clients : [...INITIAL_STATE.clients, action.payload]});
+    case GET_ALL_CLIENTS + "_FULFILLED":
+      return Object.assign({}, state, {clients : action.payload});
 
       case UPDATE_CLIENT_NAME:
       return Object.assign({}, state, {client_name : action.payload});

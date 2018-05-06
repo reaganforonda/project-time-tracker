@@ -1,17 +1,40 @@
 import React from "react";
 import Menu from "../Menu/Menu";
 
-import { RaisedButton } from "material-ui";
+import { Paper, RaisedButton } from "material-ui";
 import BillingItem from "./BillingItem";
-import {connect} from 'react-redux';
+import { connect } from "react-redux";
 
+import { getAllClients } from "../../ducks/billingReducer";
 
 export class BillingView extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      clients: []
+    };
+
+    this.getAllClients = this.getAllClients.bind(this);
+  }
+
+  componentDidMount() {
+    this.getAllClients();
+  }
+
+  getAllClients() {
+    this.props.getAllClients(this.props.user.user_id);
+    this.setState({ clients: this.props.clients });
+  }
+
   render() {
-    let arr = [];
-    for (var i = 0; i < 15; i++) {
-      arr.push(<BillingItem user={this.props.user}/>);
-    }
+    let clientArr = this.state.clients.map(client => {
+      return (
+        <div kye={client.clien_id}>
+          <Paper>{client.client_name}</Paper>
+        </div>
+      );
+    });
 
     return (
       <div className="billing-view-container">
@@ -20,8 +43,7 @@ export class BillingView extends React.Component {
           <RaisedButton label="Upload Invoice" />
           <RaisedButton label="Email Client" />
         </div>
-        <div className="billing-items-container">Stuff Goes Here</div>
-        {arr}
+        <div className="billing-items-container">{clientArr}</div>
 
         <div className="billing-view-footer>">
           <RaisedButton label="Preview Invoice" />
@@ -33,9 +55,9 @@ export class BillingView extends React.Component {
 
 function mapStateToProps(state) {
   return {
-    user : state.userReducer.user
-  }
+    user: state.userReducer.user,
+    clients: state.billingReducer.clients
+  };
 }
 
-
-export default connect(mapStateToProps, null)(BillingView)
+export default connect(mapStateToProps, { getAllClients })(BillingView);

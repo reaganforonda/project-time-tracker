@@ -39,7 +39,6 @@ export default class Clients extends React.Component {
             <p>{this.props.phone}</p>
           </CardText>
           <CardText>
-            <RaisedButton secondary={true} label="DELETE"/>
             <RaisedButton label="SET INACTIVE"/>
             <RaisedButton label="EDIT" />
           </CardText>

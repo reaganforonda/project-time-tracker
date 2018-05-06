@@ -26,7 +26,7 @@ export class EntryForm extends React.Component {
       comment: "",
       jobs: [],
       job: "",
-      edit : false
+      edit: false
     };
 
     this.handleTextChange = this.handleTextChange.bind(this);
@@ -55,7 +55,6 @@ export class EntryForm extends React.Component {
   }
 
   handleDateChange(e, date) {
-
     this.setState({ startDate: this.formatDate(date) });
   }
 
@@ -123,9 +122,7 @@ export class EntryForm extends React.Component {
   }
 
   handleAddEntry() {
-
     let duration = this.calculateDuration();
-
 
     let entry = {
       user_id: this.props.user.user_id,
@@ -135,7 +132,7 @@ export class EntryForm extends React.Component {
       start_time: this.formatTime(this.state.startTime),
       end_time: this.formatTime(this.state.endTime),
       duration: duration,
-      total : this.handleRounding(duration * this.state.job.rate, 2),
+      total: this.handleRounding(duration * this.state.job.rate, 2),
       comment: this.state.comment,
       billed: false
     };
@@ -144,6 +141,7 @@ export class EntryForm extends React.Component {
       .post("http://localhost:3005/api/entry/add", entry)
       .then(result => {
         console.log(entry);
+        this.props.getAllEntries();
       })
       .catch(e => {
         console.log(e);
@@ -170,11 +168,15 @@ export class EntryForm extends React.Component {
 
   handleRounding(number, precision) {
     let shift = function(number, precision) {
-      let numArray = ('' + number).split("e");
-      return +(numArray[0] + "e" + (numArray[1] ? (+numArray[1] + precision) : precision));
+      let numArray = ("" + number).split("e");
+      return +(
+        numArray[0] +
+        "e" +
+        (numArray[1] ? +numArray[1] + precision : precision)
+      );
     };
 
-    return shift(Math.round(shift(number, +precision)), -precision)
+    return shift(Math.round(shift(number, +precision)), -precision);
   }
 
   render() {

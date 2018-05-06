@@ -14,7 +14,8 @@ const ENTRY_INTIAL_STATE = {
   billed: false,
   entries: [],
   total: 0,
-  totalHrs : 0
+  totalHrs: 0,
+  entry: {}
 };
 
 const UPDATE_CLIENT_ID = "UPDATE_CLIENT_ID";
@@ -32,7 +33,7 @@ const GET_ALL_ENTRIES = "GET_ALL_ENTRIES";
 const GET_ENTRIES_BY_JOB_ID = "GET_ENTRIES_BY_JOB_ID";
 const RESET_STATE = "RESET_STATE";
 const GET_TOTAL = "GET_TOTAL";
-const GET_HRS = "GET_HRS"
+const GET_HRS = "GET_HRS";
 
 export function updateClientID(client_id) {
   return {
@@ -169,19 +170,22 @@ export function getTotal(userid, jobid) {
 }
 
 export function getTotalHrs(userid, jobid) {
-    let totalHrs = axios.get(`http://localhost:3005/api/entry/hrs/total/${userid}/${jobid}`).then((result=> {
-        console.log(result.data)    
-    return result.data[0].sum
-    })).catch((e) => {
-        console.log(e);
-    }) 
+  let totalHrs = axios
+    .get(`http://localhost:3005/api/entry/hrs/total/${userid}/${jobid}`)
+    .then(result => {
+      console.log(result.data);
+      return result.data[0].sum;
+    })
+    .catch(e => {
+      console.log(e);
+    });
 
-    return {
-        type: GET_HRS,
-        payload : totalHrs
-    }
-    
+  return {
+    type: GET_HRS,
+    payload: totalHrs
+  };
 }
+
 
 export default function entryReducer(state = ENTRY_INTIAL_STATE, action) {
   switch (action.type) {
@@ -227,8 +231,8 @@ export default function entryReducer(state = ENTRY_INTIAL_STATE, action) {
     case GET_TOTAL + "_FULFILLED":
       return Object.assign({}, state, { total: action.payload });
 
-      case GET_HRS + "_FULFILLED":
-      return Object.assign({}, state, {totalHrs : action.payload})
+    case GET_HRS + "_FULFILLED":
+      return Object.assign({}, state, { totalHrs: action.payload });
 
     default:
       return state;

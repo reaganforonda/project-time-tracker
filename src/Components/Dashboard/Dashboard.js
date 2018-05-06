@@ -1,7 +1,7 @@
 import React from "react";
 import Menu from "../Menu/Menu";
 import axios from "axios";
-import { withRouter, Switch, Route } from "react-router-dom";
+import { Link, withRouter, Switch, Route } from "react-router-dom";
 import AppBar from 'material-ui/AppBar';
 import {getUser} from '../../ducks/userReducer'
 import {getAllClients} from '../../ducks/clientReducer';
@@ -11,6 +11,7 @@ import JobView from '../JobView/JobView';
 import EntryView from '../EntryView/EntryView';
 import ClientsView from '../ClientView/ClientView';
 import BillingView from '../BillingView/BillingView';
+import UserView from '../User/UserView';
 
 export class Dashboard extends React.Component {
   constructor(props) {
@@ -34,7 +35,10 @@ export class Dashboard extends React.Component {
     return (
       <div className="Dashboard">
         <div className="menu-section">
-          <Menu img={picture} userName={user_name}/>
+        {
+          this.props.user.user_id ? <Link to='/dashboard/userview' ><Menu img={picture} userName={user_name}/></Link> : 
+          <Link to='/' ><Menu img={picture} userName={user_name}/></Link>
+        }
         </div>
         <div className='header-bar'>
           <AppBar/>
@@ -47,6 +51,7 @@ export class Dashboard extends React.Component {
             <Route path="/dashboard/entryview" component={EntryView} />
             <Route path="/dashboard/clientsview" component={ClientsView} />
             <Route path="/dashboard/billingview" component={BillingView} />
+            <Route path='/dashboard/userview' component={UserView}/>
           </Switch>
         </div>
 

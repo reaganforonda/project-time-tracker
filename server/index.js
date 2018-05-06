@@ -4,7 +4,7 @@ const express = require("express"),
   massive = require("massive"),
   bodyParser = require("body-parser"),
   cors = require("cors"),
-  controller = require("./controllers/controller"),
+  userController = require("./controllers/userController"),
   session = require("express-session"),
   passport = require("passport"),
   Auth0Strategy = require("passport-auth0");
@@ -147,10 +147,11 @@ app.get('/api/jobs/:userId', jobsController.getJobsByUserID)
 
 
 // ###### ENDPOINTS - Client ######
-// app.get('/api/clients/', clientController.getAllClients); TODO: Remove
+
 app.get('/api/clients/:userid', clientController.getAllClients);
 app.post('/api/client/', clientController.addClient);
 app.delete('/api/client/:userid/:clientid', clientController.deleteClient);
+// TODO: UPDATE CLIETN
 
 
 
@@ -165,12 +166,16 @@ app.get('/api/entry/total/:userid/:jobid', entryController.getTotalByJobId)
 app.get('/api/entry/hrs/total/:userid/:jobid', entryController.getTotalHrsByJobId)
 
 app.put(`/api/entry/update/:jobid/:userid/:entryid`, entryController.updateEntry)
+app.put('/api/entry/fullupdate/:userid/:entryid/:jobid', entryController.updateFullEntry);
 
 app.delete('/api/entry/delete/:userid/:entryid', entryController.deleteEntry)
+
+
+// ###### ENDPOINTS - User ######
+app.put('/api/user/update/:userid', userController.updateUserInfo)
 
 
 // START SERVER
 app.listen(CONNECTION_PORT, () => {
   console.log(`Creeping on Port: ${CONNECTION_PORT}`);
 });
-21

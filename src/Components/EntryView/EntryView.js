@@ -16,7 +16,7 @@ export class EntryView extends React.Component {
 
     this.getAllEntries = this.getAllEntries.bind(this);
     this.handleDeleteEntry = this.handleDeleteEntry.bind(this);
-    this.handleEditEntry = this.handleEditEntry.bind(this);
+    
   }
 
   componentDidMount() {
@@ -36,16 +36,13 @@ export class EntryView extends React.Component {
   handleDeleteEntry(entry) {
     axios.delete(`http://localhost:3005/api/entry/delete/${this.props.user.user_id}/${entry.entry_id}`).then((result) => {
       console.log(result.data);
+      this.getAllEntries();
     }).catch((e) => {
       console.log(`Error while deleting entry: ${e}`);
     })
-
-    this.getAllEntries();
   }
 
-  handleEditEntry(entry){
-    <EntryForm/>
-  }
+
 
   render() {
     let entryArr = this.state.enteries.map(entry => {
@@ -71,7 +68,7 @@ export class EntryView extends React.Component {
         <div className="Entry-List-container" />
             {entryArr}
         <div className="floating-action">
-          <EntryForm />
+          <EntryForm getEntries={this.getAllEntries}/>
         </div>
       </div>
     );
