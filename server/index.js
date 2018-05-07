@@ -144,6 +144,7 @@ app.post('/api/job', jobsController.addJob);
 
 app.get('/api/jobs/open/:userId', jobsController.getAllOpenJobs)
 app.get('/api/jobs/:userId', jobsController.getJobsByUserID)
+app.get('/api/jobs/billing/:userid', jobsController.getJobsForBilling)
 
 
 // ###### ENDPOINTS - Client ######

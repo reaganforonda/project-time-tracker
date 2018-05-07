@@ -4,37 +4,36 @@ import Menu from "../Menu/Menu";
 import { Paper, RaisedButton } from "material-ui";
 import BillingItem from "./BillingItem";
 import { connect } from "react-redux";
-
-import { getAllClients } from "../../ducks/billingReducer";
+import {getBilling} from '../../ducks/billingReducer'
 
 export class BillingView extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      clients: []
+      billing : []
     };
 
-    this.getAllClients = this.getAllClients.bind(this);
+    this.getBilling = this.getBilling.bind(this);
   }
 
   componentDidMount() {
-    this.getAllClients();
+    this.getBilling();
   }
 
-  getAllClients() {
-    this.props.getAllClients(this.props.user.user_id);
-    this.setState({ clients: this.props.clients });
+  getBilling() {
+    this.props.getBilling(this.props.user.user_id);
   }
+
 
   render() {
-    let clientArr = this.state.clients.map(client => {
+    let arr = this.props.billing.map((value) => {
       return (
-        <div kye={client.clien_id}>
-          <Paper>{client.client_name}</Paper>
+        <div key={value.job_id}>
+<BillingItem jobId={value.job_id} jobName={value.job_name} totaHrs={value.total_hrs} total={value.total}/>
         </div>
-      );
-    });
+      )
+    })
 
     return (
       <div className="billing-view-container">
@@ -43,7 +42,7 @@ export class BillingView extends React.Component {
           <RaisedButton label="Upload Invoice" />
           <RaisedButton label="Email Client" />
         </div>
-        <div className="billing-items-container">{clientArr}</div>
+        <div className="billing-items-container">{arr}</div>
 
         <div className="billing-view-footer>">
           <RaisedButton label="Preview Invoice" />
@@ -56,8 +55,8 @@ export class BillingView extends React.Component {
 function mapStateToProps(state) {
   return {
     user: state.userReducer.user,
-    clients: state.billingReducer.clients
+    billing : state.billingReducer.billing
   };
 }
 
-export default connect(mapStateToProps, { getAllClients })(BillingView);
+export default connect(mapStateToProps, {getBilling })(BillingView);

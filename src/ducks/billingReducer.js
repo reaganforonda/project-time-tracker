@@ -1,31 +1,31 @@
 import axios from "axios";
 
 const BILLING_INITIAL_STATE = {
-    clients : [],
-    jobs : [],
-    entries : []
+  billing: []
 };
 
-const GET_ALL_CLIENTS = "GET_ALL_CLIENTS";
-const GET_ALL_JOBS = "GET_ALL_JOBS";
-const GET_ALL_ENTRIES = "GET_ALL_ENTRIES";
+const GET_BILLING = "GET_BILLING";
 
-export function getAllClients(user_id) {
-    let clients = axios.get(`/api/clients/${user_id}`).then((clients) => {
-        console.log(clients.data);
-        return clients.data
+export function getBilling(user_id) {
+  let billing = axios
+    .get(`http://localhost:3005/api/jobs/billing/${user_id}`)
+    .then(result => {
+      return result.data;
+    })
+    .catch(e => {
+      console.log(`Error at Reducer: ${e}`);
     });
 
-    return {
-        type : GET_ALL_CLIENTS,
-        payload : clients
-    }
+  return {
+    type: GET_BILLING,
+    payload: billing
+  };
 }
 
 export default function reduce(state = BILLING_INITIAL_STATE, action) {
   switch (action.type) {
-    case GET_ALL_CLIENTS + "_FULFILLED":
-    return Object.assign({}, state, {clients : action.payload})
+    case GET_BILLING + "_FULFILLED":
+      return Object.assign({}, state, { billing: action.payload });
 
     default:
       return state;

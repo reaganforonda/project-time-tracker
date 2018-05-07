@@ -62,4 +62,16 @@ module.exports = {
             res.sendStatus(500);
         })
     },
+
+    getJobsForBilling : (req, res) => {
+        const dbInstance = req.app.get('db');
+        const {userid} = req.params
+
+        dbInstance.GET_JOB_TOTALS([userid]).then((result) => {
+            res.status(200).send(result);
+        }).catch((e) => {
+            console.log(`Error while trying to get totals for billing: ${e}`);
+            res.sendStatus(500);
+        })
+    }
 }
