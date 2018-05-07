@@ -77,6 +77,6 @@ CREATE TABLE billing
     invoice_date Date,
     total DECIMAL,
     due_date DATE,
-    invoice_number INTEGER
+    invoice_number VARCHAR(45)
 )
 

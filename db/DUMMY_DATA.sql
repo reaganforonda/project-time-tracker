@@ -9,34 +9,34 @@ VALUES
 -- Dummy Data for Clients
 
 INSERT INTO clients
-(user_id, client_name, address_one, address_two, city, state, country, phone, website, zip)
+(user_id, client_name, address_one, address_two, city, state, country, phone, website, zip, active)
 VALUES
-(1, 'DevMountain Provo', '560 S 100 W St in Provo', '', 'Provo', 'UT', 'United States', '844-433-8686', 'https://devmountain.com/', 84601);
+(1, 'DevMountain Provo', '560 S 100 W St in Provo', '', 'Provo', 'UT', 'United States', '844-433-8686', 'https://devmountain.com/', 84601, true);
 
 INSERT INTO clients
-(user_id, client_name, address_one, address_two, city, state, country, phone, website, zip)
+(user_id, client_name, address_one, address_two, city, state, country, phone, website, zip, active)
 VALUES
-(1, 'Au Cheval', '800 W Randolph Street', '', 'Chicago', 'IL', 'United States', '312-555-5555', 'https://www.auchevalchicago.com/', 60607);
+(1, 'Au Cheval', '800 W Randolph Street', '', 'Chicago', 'IL', 'United States', '312-555-5555', 'https://www.auchevalchicago.com/', 60607, true);
 
 INSERT INTO clients
-(user_id, client_name, address_one, address_two, city, state, country, phone, website, zip)
+(user_id, client_name, address_one, address_two, city, state, country, phone, website, zip, active)
 VALUES
-(1, 'Smith and Sons', '1000 W Fulton Market', '', 'Chicago', 'IL', 'United States', '312-733-9420', 'https://www.swiftandsonschicago.com/', 60607);
+(1, 'Smith and Sons', '1000 W Fulton Market', '', 'Chicago', 'IL', 'United States', '312-733-9420', 'https://www.swiftandsonschicago.com/', 60607, true);
 
 INSERT INTO clients
-(user_id, client_name, address_one, address_two, city, state, country, phone, website, zip)
+(user_id, client_name, address_one, address_two, city, state, country, phone, website, zip, active)
 VALUES
-(1, 'Elske', '1350 W Randolph St', '', 'Chicago', 'IL', 'United States', '312-733-1314', 'https://elskerestaurant.com/', 60607);
+(1, 'Elske', '1350 W Randolph St', '', 'Chicago', 'IL', 'United States', '312-733-1314', 'https://elskerestaurant.com/', 60607, true);
 
 INSERT INTO clients
-(user_id, client_name, address_one, address_two, city, state, country, phone, website, zip)
+(user_id, client_name, address_one, address_two, city, state, country, phone, website, zip, active)
 VALUES
-(1, 'Boka', '1729 N Halsted St', '', 'Chicago', 'IL', 'United States', '312-337-6070', 'https://www.bokachicago.com', 60614);
+(1, 'Boka', '1729 N Halsted St', '', 'Chicago', 'IL', 'United States', '312-337-6070', 'https://www.bokachicago.com', 60614, true);
 
 INSERT INTO clients
-(user_id, client_name, address_one, address_two, city, state, country, phone, website, zip)
+(user_id, client_name, address_one, address_two, city, state, country, phone, website, zip, active)
 VALUES
-(1, 'Kumas Corner', '2900 W Belmont Ave', '', 'Chicago', 'IL', 'United States', '773-604-8769', 'https://kumascorner.com/', 60618);
+(1, 'Kumas Corner', '2900 W Belmont Ave', '', 'Chicago', 'IL', 'United States', '773-604-8769', 'https://kumascorner.com/', 60618, true);
 
 
 -- DUMMY DATA FOR JOBS

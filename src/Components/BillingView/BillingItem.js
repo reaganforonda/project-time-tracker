@@ -1,5 +1,5 @@
 import React from "react";
-import { Paper, Checkbox } from "material-ui";
+import { Paper, TextField, FlatButton, RaisedButton, Dialog } from "material-ui";
 
 import ActionFavorite from "material-ui/svg-icons/action/favorite";
 import ActionFavoriteBorder from "material-ui/svg-icons/action/favorite-border";
@@ -7,47 +7,45 @@ import Visibility from "material-ui/svg-icons/action/visibility";
 import VisibilityOff from "material-ui/svg-icons/action/visibility-off";
 import { connect } from "react-redux";
 
-import {selectedForBilling} from '../../ducks/billingReducer'
+import { selectedForBilling } from "../../ducks/billingReducer";
 
 export class BillingItem extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-      checked: false,
-      billEnteries : [],
-      selectJob : {},
-      disabled : false
-    };
+    this.state = { open: false };
 
-    this.handlCheckBox = this.handlCheckBox.bind(this);
+    this.handleOpenModal = this.handleOpenModal.bind(this);
+    this.handleCloseModal = this.handleCloseModal.bind(this);
   }
 
-  handlCheckBox(){
-    let oldState = this.state.checked;
-    let newState = !oldState
-    this.setState({checked : newState})
-    
-    if(newState) {
-      this.setState({selectJob : Object.assign({}, this.state.selectJob, this.props.job)})
-      this.props.selectedForBilling(this.state.selectJob);
-    } 
+  handleOpenModal() {
+    this.setState({ open: true });
+  }
+
+  handleCloseModal() {
+    this.setState({ open: false });
   }
 
   render() {
-
     return (
       <div>
-        <Checkbox 
-        checked={this.state.checked}
-        onCheck = {()=>this.handlCheckBox()}
-        />
         <Paper>
-          <p>{this.props.jobId}</p> 
+          <p>{this.props.jobId}</p>
           <p>{this.props.jobName}</p>
           <p>{this.props.totalHrs}</p>
           <p>{this.props.total}</p>
-          
+          <FlatButton
+            onClick={() => this.handleOpenModal()}
+            label="Select For Billing"
+          >
+            <Dialog modal={true} open={this.state.open}>
+              <TextField errorText='Required' hintText='Enter Invoice Number' floatingLabelText='Enter Invoice Number'/>
+              <RaisedButton onClick={()=>this.handleCloseModal()} label="Cancel" />
+              <RaisedButton job={this.props.job} label="Preview" />
+              <RaisedButton job={this.props.job} label="Generate PDF" />
+            </Dialog>
+          </FlatButton>
         </Paper>
       </div>
     );
@@ -56,10 +54,9 @@ export class BillingItem extends React.Component {
 
 function mapStateToProps(state) {
   return {
-    user : state.userReducer.user,
-    selectedJob : state.billingReducer.selectedJob
-
-  }
+    user: state.userReducer.user,
+    selectedJob: state.billingReducer.selectedJob
+  };
 }
 
-export default connect(mapStateToProps, {selectedForBilling})(BillingItem);
+export default connect(mapStateToProps, {})(BillingItem);
