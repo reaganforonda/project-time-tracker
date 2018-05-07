@@ -5,14 +5,19 @@ import ActionFavorite from "material-ui/svg-icons/action/favorite";
 import ActionFavoriteBorder from "material-ui/svg-icons/action/favorite-border";
 import Visibility from "material-ui/svg-icons/action/visibility";
 import VisibilityOff from "material-ui/svg-icons/action/visibility-off";
+import { connect } from "react-redux";
 
-export default class BillingItem extends React.Component {
+import {selectedForBilling} from '../../ducks/billingReducer'
+
+export class BillingItem extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
       checked: false,
-      billEnteries : []
+      billEnteries : [],
+      selectJob : {},
+      disabled : false
     };
 
     this.handlCheckBox = this.handlCheckBox.bind(this);
@@ -20,19 +25,25 @@ export default class BillingItem extends React.Component {
 
   handlCheckBox(){
     let oldState = this.state.checked;
-    this.setState({checked : !oldState})
+    let newState = !oldState
+    this.setState({checked : newState})
     
+    if(newState) {
+      this.setState({selectJob : Object.assign({}, this.state.selectJob, this.props.job)})
+      this.props.selectedForBilling(this.state.selectJob);
+    } 
   }
 
   render() {
+
     return (
       <div>
         <Checkbox 
         checked={this.state.checked}
-        onCheck = {this.handlCheckBox}
+        onCheck = {()=>this.handlCheckBox()}
         />
         <Paper>
-          <p>{this.props.jobId}</p>
+          <p>{this.props.jobId}</p> 
           <p>{this.props.jobName}</p>
           <p>{this.props.totalHrs}</p>
           <p>{this.props.total}</p>
@@ -42,3 +53,13 @@ export default class BillingItem extends React.Component {
     );
   }
 }
+
+function mapStateToProps(state) {
+  return {
+    user : state.userReducer.user,
+    selectedJob : state.billingReducer.selectedJob
+
+  }
+}
+
+export default connect(mapStateToProps, {selectedForBilling})(BillingItem);

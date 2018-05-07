@@ -4,14 +4,15 @@ import Menu from "../Menu/Menu";
 import { Paper, RaisedButton } from "material-ui";
 import BillingItem from "./BillingItem";
 import { connect } from "react-redux";
-import {getBilling} from '../../ducks/billingReducer'
+import { getBilling } from "../../ducks/billingReducer";
+import { Link } from "react-router-dom";
 
 export class BillingView extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      billing : []
+      billing: []
     };
 
     this.getBilling = this.getBilling.bind(this);
@@ -25,15 +26,22 @@ export class BillingView extends React.Component {
     this.props.getBilling(this.props.user.user_id);
   }
 
-
   render() {
-    let arr = this.props.billing.map((value) => {
+
+    
+    let arr = this.props.billing.map(value => {
       return (
         <div key={value.job_id}>
-<BillingItem jobId={value.job_id} jobName={value.job_name} totaHrs={value.total_hrs} total={value.total}/>
+          <BillingItem
+            job={value}
+            jobId={value.job_id}
+            jobName={value.job_name}
+            totaHrs={value.total_hrs}
+            total={value.total}
+          />
         </div>
-      )
-    })
+      );
+    });
 
     return (
       <div className="billing-view-container">
@@ -45,7 +53,9 @@ export class BillingView extends React.Component {
         <div className="billing-items-container">{arr}</div>
 
         <div className="billing-view-footer>">
-          <RaisedButton label="Preview Invoice" />
+          <Link to="/invoiceview" target="_blank">
+            <RaisedButton label="Preview Invoice" />
+          </Link>
         </div>
       </div>
     );
@@ -55,8 +65,9 @@ export class BillingView extends React.Component {
 function mapStateToProps(state) {
   return {
     user: state.userReducer.user,
-    billing : state.billingReducer.billing
+    billing: state.billingReducer.billing,
+    selectedJob: state.billingReducer.selectedJob
   };
 }
 
-export default connect(mapStateToProps, {getBilling })(BillingView);
+export default connect(mapStateToProps, { getBilling })(BillingView);

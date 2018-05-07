@@ -7,17 +7,15 @@ import JobView from "./Components/JobView/JobView";
 import EntryView from "./Components/EntryView/EntryView";
 import ClientsView from "./Components/ClientView/ClientView";
 import BillingView from "./Components/BillingView/BillingView";
+import InvoiceView from './Components/InvoiceView/InvoiceView'
 
 export default function Routing(props) {
   return (
     <Switch>
       <Route exact path="/" component={landing} />
-      <Route path="/dashboard" component={dashboard}>
-        {/* <Route path="/jobview" component={JobView} />
-        <Route path="/entryview" component={EntryView} />
-        <Route path="/clientsview" component={ClientsView} />
-        <Route path="/billingview" component={BillingView} /> */}
-      </Route>
+      <Route path="/dashboard" component={dashboard}/>
+      <Route path='/invoiceview' component={InvoiceView}/>
+      
     </Switch>
   );
 }

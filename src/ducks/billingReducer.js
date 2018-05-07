@@ -1,10 +1,12 @@
 import axios from "axios";
 
 const BILLING_INITIAL_STATE = {
-  billing: []
+  billing: [],
+  selectedJob : {}
 };
 
 const GET_BILLING = "GET_BILLING";
+const SELECT_FOR_BILLING = "SELECT_FOR_BILLING"
 
 export function getBilling(user_id) {
   let billing = axios
@@ -22,10 +24,22 @@ export function getBilling(user_id) {
   };
 }
 
+export function selectedForBilling(job) {
+    console.log(job)
+    return {
+        type : SELECT_FOR_BILLING,
+        payload : job
+    }
+}
+
 export default function reduce(state = BILLING_INITIAL_STATE, action) {
   switch (action.type) {
     case GET_BILLING + "_FULFILLED":
       return Object.assign({}, state, { billing: action.payload });
+
+      case SELECT_FOR_BILLING:
+        console.log(action.payload);
+      return Object.assign({}, state, {selectedJob : action.payload})
 
     default:
       return state;

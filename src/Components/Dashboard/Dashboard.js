@@ -12,6 +12,7 @@ import EntryView from '../EntryView/EntryView';
 import ClientsView from '../ClientView/ClientView';
 import BillingView from '../BillingView/BillingView';
 import UserView from '../User/UserView';
+import InvoiceView from '../InvoiceView/InvoiceView';
 
 export class Dashboard extends React.Component {
   constructor(props) {
@@ -52,6 +53,7 @@ export class Dashboard extends React.Component {
             <Route path="/dashboard/clientsview" component={ClientsView} />
             <Route path="/dashboard/billingview" component={BillingView} />
             <Route path='/dashboard/userview' component={UserView}/>
+            <Route path='/invoiceview' component={InvoiceView}/>
           </Switch>
         </div>
 
