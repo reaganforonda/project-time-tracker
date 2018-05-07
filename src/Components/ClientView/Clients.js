@@ -63,6 +63,8 @@ export default class Clients extends React.Component {
       zip: this.state.zip
     };
 
+    console.log(client);
+
     axios
       .put(
         `http://localhost:3005/api/client/update/${this.props.client.user_id}/${

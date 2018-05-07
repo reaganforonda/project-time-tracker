@@ -151,7 +151,7 @@ app.get('/api/jobs/:userId', jobsController.getJobsByUserID)
 app.get('/api/clients/:userid', clientController.getAllClients);
 app.post('/api/client/', clientController.addClient);
 app.delete('/api/client/:userid/:clientid', clientController.deleteClient);
-app.put(`/api/client/update/:userid/clientid`, clientController.updateClient);
+app.put('/api/client/update/:userid/:clientid', clientController.updateClient);
 
 
 

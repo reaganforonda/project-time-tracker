@@ -1,58 +1,113 @@
-const axios = require('axios');
+const axios = require("axios");
 
 module.exports = {
-    getAllClients : (req, res) => {
-        const dbInstance = req.app.get('db');
-        const {userid} = req.params
+  getAllClients: (req, res) => {
+    const dbInstance = req.app.get("db");
+    const { userid } = req.params;
 
-        dbInstance.GET_ALL_CLIENTS([userid]).then((clients) => {
-            res.status(200).send(clients)
-        }).catch((e)=> {
-            console.log(`Error: ${e}`);
-            res.sendStatus(500);
-        })
-    },
+    dbInstance
+      .GET_ALL_CLIENTS([userid])
+      .then(clients => {
+        res.status(200).send(clients);
+      })
+      .catch(e => {
+        console.log(`Error: ${e}`);
+        res.sendStatus(500);
+      });
+  },
 
-    addClient : (req, res) => {
-        const dbInstance = req.app.get('db');
-        console.log(req.body);
-        const {user_id, client_name, address_one, address_two, city, state, country, phone, website, zip} = req.body;
-        
+  addClient: (req, res) => {
+    const dbInstance = req.app.get("db");
 
-        dbInstance.ADD_CLIENT([user_id, client_name, address_one, address_two, city, state, country, phone, website, zip]).then((client) => {
-            res.status(200).send(client[0]);
-        }).catch((e) => {
-            console.log(`Error : ${e}`);
-            res.sendStatus(500);
-        })
-    },
+    const {
+      user_id,
+      client_name,
+      address_one,
+      address_two,
+      city,
+      state,
+      country,
+      phone,
+      website,
+      zip
+    } = req.body;
 
-    deleteClient : (req, res) => {
-        const dbInstance = req.app.get('db');
+    dbInstance
+      .ADD_CLIENT([
+        user_id,
+        client_name,
+        address_one,
+        address_two,
+        city,
+        state,
+        country,
+        phone,
+        website,
+        zip
+      ])
+      .then(client => {
+        res.status(200).send(client[0]);
+      })
+      .catch(e => {
+        console.log(`Error : ${e}`);
+        res.sendStatus(500);
+      });
+  },
 
-        const {userid, clientid} = req.params;
-        
+  deleteClient: (req, res) => {
+    const dbInstance = req.app.get("db");
 
-        dbInstance.DELETE_CLIENT([clientid, userid]).then((result) => {
-            res.status(200).send(result);
-        }).catch((e)=> {
-            console.log(`Error: ${e}`);
-            res.sendStatus(500);
-        })
-    },
-    
-    updateClient : (req, res) => {
-        const dbInstance = req.app.get('db');
+    const { userid, clientid } = req.params;
 
-        const {userid, clientid} = req.params;
+    dbInstance
+      .DELETE_CLIENT([clientid, userid])
+      .then(result => {
+        res.status(200).send(result);
+      })
+      .catch(e => {
+        console.log(`Error: ${e}`);
+        res.sendStatus(500);
+      });
+  },
 
-        const {client_name, address_one , address_two, city, state, country, phone, website, zip} = req.body;
+  updateClient: (req, res) => {
+    const dbInstance = req.app.get("db");
 
-        dbInstance.UPDATE_CLIENT_INFO([userid, clientid, client_name, address_one , address_two, city, state, country, phone, website, zip]).then((result) => {
-            res.status(200).send(result);
-        }).catch((e) => {
-            console.log(`Error PUT while trying to update client info: ${e}`);
-            res.sendStatus(500);
-        })
-    }
-}
+    const { userid, clientid } = req.params;
+
+    console.log(req.body);
+    const {
+      client_name,
+      address_one,
+      address_two,
+      city,
+      state,
+      country,
+      phone,
+      website,
+      zip
+    } = req.body;
+
+    dbInstance
+      .UPDATE_CLIENT_INFO([
+        userid,
+        clientid,
+        client_name,
+        address_one,
+        address_two,
+        city,
+        state,
+        country,
+        phone,
+        website,
+        zip
+      ])
+      .then(result => {
+        res.status(200).send(result);
+      })
+      .catch(e => {
+        console.log(`Error PUT while trying to update client info: ${e}`);
+        res.sendStatus(500);
+      });
+  }
+};
