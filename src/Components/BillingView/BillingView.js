@@ -53,9 +53,7 @@ export class BillingView extends React.Component {
         <div className="billing-items-container">{arr}</div>
 
         <div className="billing-view-footer>">
-          <Link to="/invoiceview" target="_blank">
-            <RaisedButton label="Preview Invoice" />
-          </Link>
+
         </div>
       </div>
     );

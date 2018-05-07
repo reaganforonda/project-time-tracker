@@ -5,8 +5,6 @@ import ClientForm from "../ClientForm/ClientForm";
 import Clients from "./Clients";
 import { connect } from "react-redux";
 
-import {getAllClients} from '../../ducks/clientReducer'
-
 export class ClientView extends React.Component {
   constructor(props) {
     super(props);
@@ -75,4 +73,4 @@ function mapStateToProps(state){
   }
 }
 
-export default connect(mapStateToProps, {getAllClients})(ClientView);
+export default connect(mapStateToProps, {})(ClientView);

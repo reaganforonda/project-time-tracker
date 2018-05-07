@@ -5,7 +5,6 @@ import EntryForm from "../EntryForm/EntryForm";
 import Entries from "./Entries";
 import { connect } from "react-redux";
 
-import {getAllEntries} from '../../ducks/entryReducer'
 
 export class EntryView extends React.Component {
   constructor(props) {
@@ -84,4 +83,4 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps, {getAllEntries})(EntryView);
+export default connect(mapStateToProps, {})(EntryView);

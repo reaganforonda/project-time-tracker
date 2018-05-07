@@ -53,7 +53,7 @@ export class Dashboard extends React.Component {
             <Route path="/dashboard/clientsview" component={ClientsView} />
             <Route path="/dashboard/billingview" component={BillingView} />
             <Route path='/dashboard/userview' component={UserView}/>
-            <Route path='/invoiceview' component={InvoiceView}/>
+            <Route path='/dashboard/invoiceview' component={InvoiceView}/>
           </Switch>
         </div>
 

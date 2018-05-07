@@ -15,7 +15,6 @@ export default function Routing(props) {
       <Route exact path="/" component={landing} />
       <Route path="/dashboard" component={dashboard}/>
       <Route path='/invoiceview' component={InvoiceView}/>
-      
     </Switch>
   );
 }
