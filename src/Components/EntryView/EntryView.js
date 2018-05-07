@@ -23,7 +23,9 @@ export class EntryView extends React.Component {
     this.getAllEntries();
   }
 
-  componentDidUpdate() {}
+  componentDidUpdate() {
+    this.getAllEntries()
+  }
 
   getAllEntries() {
     axios.get(`http://localhost:3005/api/entry/${this.props.user.user_id}`).then((enteries) => {

@@ -69,7 +69,7 @@ this.handleResetState();
     return formatedDate;
   }
 
-  // TODO: Change this so it only get clients related to the logged in User
+  
   handleGetClients() {
     axios
       .get(`http://localhost:3005/api/clients/${this.props.user.user_id}`)
@@ -102,6 +102,8 @@ this.handleResetState();
     }).catch((e) => {
       console.log(`${e}`)
     })
+
+    this.props.getAllActiveJobs();
   }
 
   handleOnConfirm(){

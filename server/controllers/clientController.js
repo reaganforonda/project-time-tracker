@@ -29,7 +29,8 @@ module.exports = {
       country,
       phone,
       website,
-      zip
+      zip,
+      active
     } = req.body;
 
     dbInstance
@@ -43,7 +44,8 @@ module.exports = {
         country,
         phone,
         website,
-        zip
+        zip,
+        active
       ])
       .then(client => {
         res.status(200).send(client[0]);
@@ -85,7 +87,8 @@ module.exports = {
       country,
       phone,
       website,
-      zip
+      zip,
+      active
     } = req.body;
 
     dbInstance
@@ -100,7 +103,8 @@ module.exports = {
         country,
         phone,
         website,
-        zip
+        zip,
+        active
       ])
       .then(result => {
         res.status(200).send(result);

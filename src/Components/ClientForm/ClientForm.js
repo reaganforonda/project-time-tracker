@@ -36,7 +36,8 @@ export class ClientForm extends React.Component {
       state: "",
       zipcode: "",
       website: "",
-      phone: ""
+      phone: "",
+      country : ''
     };
 
     this.handleOpenModal = this.handleOpenModal.bind(this);
@@ -58,8 +59,8 @@ export class ClientForm extends React.Component {
     this.handleResetState();
   }
 
-  // TODO: Change user id to actual user logged in
-  // TODO: COUNTRY
+  
+  
   handleAddClient() {
     let client = {
       user_id: this.props.user.user_id,
@@ -69,9 +70,11 @@ export class ClientForm extends React.Component {
       city: this.state.city,
       state: this.state.state,
       phone: this.state.phone,
-      country: "United States",
+      country: this.state.country, 
       website: this.state.website,
-      zip: this.state.zipcode
+      zip: this.state.zipcode,
+      active : true
+      
     };
 
     axios
@@ -96,7 +99,8 @@ export class ClientForm extends React.Component {
       state: "",
       zipcode: "",
       website: "",
-      phone: ""
+      phone: "",
+      country : ''
     });
 
     this.props.getClients();
@@ -167,6 +171,15 @@ export class ClientForm extends React.Component {
                 name="zipcode"
                 hintText="Zip Code"
                 floatingLabelText="Zip Code"
+              />
+
+                            <TextField
+                type='text'
+                value={this.state.country}
+                onChange={e => this.handleTextChange(e)}
+                name="country"
+                hintText="Country"
+                floatingLabelText="Country"
               />
 
               <TextField

@@ -52,7 +52,6 @@ export class JobView extends React.Component {
     this.getAllActiveJobs();
   }
 
-  componentWillMount() {}
 
   handleAddJobClick() {
     this.setState({ modalOpen: true });
@@ -252,7 +251,7 @@ export class JobView extends React.Component {
         </div>
 
         <div className="floating-action">
-          <JobForm />
+          <JobForm getAllActiveJobs={this.getAllActiveJobs}/>
         </div>
       </div>
     );

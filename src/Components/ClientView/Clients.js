@@ -8,7 +8,8 @@ import {
   CardText,
   RaisedButton,
   Dialog,
-  TextField
+  TextField,
+  Checkbox
 } from "material-ui";
 import { Link } from "react-router-dom";
 
@@ -29,13 +30,23 @@ export default class Clients extends React.Component {
       country: this.props.client.country,
       phone: this.props.client.phone,
       website: this.props.client.website,
-      zip: this.props.client.zip
+      zip: this.props.client.zip,
+      active : this.props.client.active,
+      checked : !this.props.client.active
+
     };
 
     this.handleCancel = this.handleCancel.bind(this);
     this.handleOpenEdit = this.handleOpenEdit.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
+    this.handleCheckBox = this.handleCheckBox.bind(this);
     this.handleUpdateClient = this.handleUpdateClient.bind(this);
+  }
+
+  handleCheckBox(){
+    let oldState = this.state.checked;
+    this.setState({checked : !oldState});
+    this.setState({active : oldState})
   }
 
   handleCancel() {
@@ -60,7 +71,8 @@ export default class Clients extends React.Component {
       country: this.state.country,
       phone: this.state.phone,
       website: this.state.website,
-      zip: this.state.zip
+      zip: this.state.zip,
+      active : this.state.active
     };
 
     console.log(client);
@@ -95,11 +107,11 @@ export default class Clients extends React.Component {
             <p>
               {this.props.city}, {this.props.state} {this.props.zipcode}
             </p>
+            <p>{this.props.client.country}</p>
             <p>{this.props.website}</p>
             <p>{this.props.phone}</p>
           </CardText>
           <CardText>
-            <RaisedButton label="SET INACTIVE" />
             <RaisedButton onClick={() => this.handleOpenEdit()} label="EDIT" />
             <Dialog modal={true} open={this.state.openModal}>
               <TextField
@@ -165,6 +177,7 @@ export default class Clients extends React.Component {
                 hintText="zip"
                 floatingLabelText="Zip"
               />
+              <Checkbox checked={this.state.checked} onCheck={this.handleCheckBox} label='Set as Inactive'/>
               <RaisedButton
                 onClick={() => this.handleCancel()}
                 label="Cancel"
