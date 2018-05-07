@@ -14,6 +14,7 @@ import {
   SelectField
 } from "material-ui";
 
+
 import { getUser } from "../../ducks/userReducer";
 import { connect } from "react-redux";
 import { DH_CHECK_P_NOT_PRIME } from "constants";
@@ -33,7 +34,6 @@ export class JobView extends React.Component {
     };
 
     this.handleAddJobClick = this.handleAddJobClick.bind(this);
-    // this.handleCancelModalClick = this.handleCancelModalClick.bind(this); TODO: Remove
     this.handleTextChange = this.handleTextChange.bind(this);
     this.handleDateChange = this.handleDateChange.bind(this);
     this.formatDate = this.formatDate.bind(this);
@@ -57,17 +57,6 @@ export class JobView extends React.Component {
   handleAddJobClick() {
     this.setState({ modalOpen: true });
   }
-
-  // TODO: REMOVE
-  // handleCancelModalClick() {
-  //   this.setState({
-  //     modalOpen: false,
-  //     jobName: "",
-  //     jobDescription: "",
-  //     startDate: null,
-  //     hourlyRate: 0
-  //   });
-  // }
 
   handleTextChange(e) {
     this.setState({ [e.target.name]: e.target.value });
@@ -240,6 +229,7 @@ export class JobView extends React.Component {
           <div className="clock-in-container">
             <div className="clockedIn">
               <h1>On The Clock</h1>
+              
             </div>
             {this.state.job.job_id ? (
               <Job

@@ -39,7 +39,20 @@ module.exports = {
             console.log(`Error: ${e}`);
             res.sendStatus(500);
         })
-    }
-
+    },
     
+    updateClient : (req, res) => {
+        const dbInstance = req.app.get('db');
+
+        const {userid, clientid} = req.params;
+
+        const {client_name, address_one , address_two, city, state, country, phone, website, zip} = req.body;
+
+        dbInstance.UPDATE_CLIENT_INFO([userid, clientid, client_name, address_one , address_two, city, state, country, phone, website, zip]).then((result) => {
+            res.status(200).send(result);
+        }).catch((e) => {
+            console.log(`Error PUT while trying to update client info: ${e}`);
+            res.sendStatus(500);
+        })
+    }
 }

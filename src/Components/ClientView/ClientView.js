@@ -47,6 +47,7 @@ export class ClientView extends React.Component {
             zicode={client.zip}
             website={client.website}
             phone={client.phone}
+            client = {client}
           />
         </div>
       );

@@ -100,6 +100,7 @@ export function updatePhone(phone) {
 // TODO:
 export function addNewClient() {}
 
+
 export default function reducer(state = INITIAL_STATE, action) {
   switch (action.type) {
     case GET_ALL_CLIENTS + "_FULFILLED":
