@@ -11,6 +11,7 @@ const express = require("express"),
 
 const jobsController = require("./controllers/jobsController"),
   clientController = require("./controllers/clientController"),
+  billingController = require('./controllers/billingController'),
   entryController = require('./controllers/entryController');
 
 const app = express();
@@ -137,43 +138,35 @@ app.get("/logout", function(req, res) {
   res.redirect("http://localhost:3000");
 });
 
-// #############################
 // ###### ENDPOINTS - JOB ######
-// #############################
 app.post('/api/job', jobsController.addJob);
-
 app.get('/api/jobs/open/:userId', jobsController.getAllOpenJobs)
 app.get('/api/jobs/:userId', jobsController.getJobsByUserID)
 app.get('/api/jobs/billing/:userid', jobsController.getJobsForBilling)
 
 
 // ###### ENDPOINTS - Client ######
-
 app.get('/api/clients/:userid', clientController.getAllClients);
 app.post('/api/client/', clientController.addClient);
 app.delete('/api/client/:userid/:clientid', clientController.deleteClient);
 app.put('/api/client/update/:userid/:clientid', clientController.updateClient);
 
-
-
-
-
 // ###### ENDPOINTS - Enteries ######
 app.post('/api/entry/add', entryController.addEntry)
-
 app.get('/api/entry/:userid', entryController.getAllEnteries)
 app.get('/api/entry/:userid/:jobid', entryController.getEntriesByJobId)
 app.get('/api/entry/total/:userid/:jobid', entryController.getTotalByJobId)
 app.get('/api/entry/hrs/total/:userid/:jobid', entryController.getTotalHrsByJobId)
-
 app.put(`/api/entry/update/:jobid/:userid/:entryid`, entryController.updateEntry)
 app.put('/api/entry/fullupdate/:userid/:entryid/:jobid', entryController.updateFullEntry);
-
 app.delete('/api/entry/delete/:userid/:entryid', entryController.deleteEntry)
 
 
 // ###### ENDPOINTS - User ######
 app.put('/api/user/update/:userid', userController.updateUserInfo)
+
+// ###### ENDPOINTS - Billing ######
+app.get('/api/billing/invoiceid/:userid', billingController.getLastBillingNumber)
 
 
 // START SERVER

@@ -27,6 +27,10 @@ export class BillingItem extends React.Component {
     this.setState({ open: false });
   }
 
+  hanleSetInvoiceNumber(){
+    
+  }
+
   render() {
     return (
       <div>
