@@ -17,7 +17,8 @@ import {
   updateWebsite,
   updateState,
   updateZip,
-  updateCountry
+  updateCountry,
+  getUser
 } from "../../ducks/userReducer";
 
 export class UserView extends React.Component {
@@ -83,6 +84,7 @@ export class UserView extends React.Component {
 
     this.props.updateUserInfo(this.props.user.user_id, user);
     this.setState({ edit: false, disable: true });
+    
   }
 
   render() {
@@ -203,6 +205,7 @@ function mapStateToProps(state) {
 }
 
 export default connect(mapStateToProps, {
+    getUser,
   updateFirstName,
   updateUserInfo,
   updateLastName,
