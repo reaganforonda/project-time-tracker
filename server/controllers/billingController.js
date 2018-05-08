@@ -1,3 +1,8 @@
+const {
+    S3BUCKET,
+    S3REGION
+} = process.env
+
 module.exports = {
     getLastBillingNumber : (req, res)=> {
         const dbInstance = req.app.get('db');
@@ -21,6 +26,22 @@ module.exports = {
         }).catch((e) => {
             console.log(`Error adding billing at controller: ${e}`);
             res.sendStatus(500);
+        })
+    },
+
+    updateInvoiceLocation : (req, res) => {
+        const dbInstance = req.app.get('db');
+        const {userid, invoiceid} = req.params;
+        const {key} = req.body;
+        const file = key.replace(/\s/g, '+');
+        console.log(file)
+        const path = `https://${S3REGION}.amazonaws.com/${S3BUCKET}/${file}`;
+
+        dbInstance.UPDATE_INVOICE_PATH([userid, path, invoiceid]).then((result) => {
+            res.status(200).send(result);
+        }).catch((e) => {
+            console.log(`Error updating Invoice Location at controller: ${e}`);
+            res.sendStatus(500)
         })
     }
 }

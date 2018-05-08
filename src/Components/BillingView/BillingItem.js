@@ -1,17 +1,17 @@
 import React from "react";
 import {
   Paper,
-  TextField,
+  // TextField, TODO: REMOVE
   FlatButton,
   RaisedButton,
   Dialog,
   DatePicker
 } from "material-ui";
 
-import ActionFavorite from "material-ui/svg-icons/action/favorite";
-import ActionFavoriteBorder from "material-ui/svg-icons/action/favorite-border";
-import Visibility from "material-ui/svg-icons/action/visibility";
-import VisibilityOff from "material-ui/svg-icons/action/visibility-off";
+// import ActionFavorite from "material-ui/svg-icons/action/favorite"; TODO: REMOVE
+// import ActionFavoriteBorder from "material-ui/svg-icons/action/favorite-border"; TODO: REMOVE
+// import Visibility from "material-ui/svg-icons/action/visibility"; TODO: REMOVE
+// import VisibilityOff from "material-ui/svg-icons/action/visibility-off"; TODO: REMOVE
 import { connect } from "react-redux";
 
 import {

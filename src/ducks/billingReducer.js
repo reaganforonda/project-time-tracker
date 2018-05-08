@@ -8,7 +8,8 @@ const BILLING_INITIAL_STATE = {
   invoiceDate: "",
   dueDate: "",
   entries: [],
-  jobEndDate: ""
+  jobEndDate: "",
+  invoiceLocation : ''
 };
 
 const GET_BILLING = "GET_BILLING";
@@ -19,6 +20,7 @@ const UPDATE_INVOICE_DATE = "UPDATE_INVOICE_DATE";
 const UPDATE_DUE_DATE = "UPDATE_DUE_DATE";
 const GET_ENTRIES = "GET_ENTRIES";
 const UPDATE_JOB_END_DATE = "UPDATE_JOB_END_DATE";
+const UPDATE_INVOICE_LOCATION = "UPDATE_INVOICE_LOCATION"
 
 export function getBilling(user_id) {
   let billing = axios
@@ -103,6 +105,19 @@ export function updateJobEndDate(jobEndDate) {
   };
 }
 
+export function updateInvLocation(user_id, invoice_id, file) {
+  let location = axios.get(`http://localhost:3005/api/billing/update/invoice/${user_id}/${invoice_id}`, file).then((result) => {
+    return result.data
+  }).catch((e) => {
+    console.log(`Error GET request at reducer: ${e}`)
+  })
+
+  return {
+    type: UPDATE_INVOICE_LOCATION,
+    payload : location
+  }
+}
+
 
 export default function reduce(state = BILLING_INITIAL_STATE, action) {
   switch (action.type) {
@@ -130,6 +145,9 @@ export default function reduce(state = BILLING_INITIAL_STATE, action) {
 
     case UPDATE_JOB_END_DATE:
       return Object.assign({}, state, { jobEndDate: action.payload });
+
+      case UPDATE_INVOICE_LOCATION + "_FULFILLED":
+      return Object.assign({}, state, {invoiceLocation : action.payload})
 
     default:
       return state;

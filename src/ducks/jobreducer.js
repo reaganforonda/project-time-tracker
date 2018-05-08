@@ -20,9 +20,9 @@ const JOB_INITIAL_STATE = {
   open: false
 };
 
-const GET_ALL_JOBS = "GET_ALL_JOBS";
+// const GET_ALL_JOBS = "GET_ALL_JOBS"; TODO: REMOVE
 const UPDATE_CLOCK_IN_TIME = "UPDATE_CLOCK_IN_TIME";
-const UPDATE_CLOCK_OUT_TIME = "UPDATE_CLOCK_OUT_TIME";
+// const UPDATE_CLOCK_OUT_TIME = "UPDATE_CLOCK_OUT_TIME"; TODO: REMOVE
 const CLOCK_IN_JOB = "CLOCK_IN_JOB";
 const CLOCK_OUT_JOB = "CLOCK_OUT_JOB";
 
@@ -95,9 +95,6 @@ export function clockOut() {
 
 export default function jobReducer(state = JOB_INITIAL_STATE, action) {
   switch (action.type) {
-    case GET_ACTIVE_JOBS:
-      console.log(action.payload);
-
     case ADD_JOB:
       return Object.assign({}, state, { newJob: action.payload });
 

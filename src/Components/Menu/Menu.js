@@ -2,10 +2,10 @@ import React from "react";
 import Drawer from "material-ui/Drawer";
 import MenuItem from "material-ui/MenuItem";
 import Avatar from "material-ui/Avatar";
-import {Link} from 'react-router-dom';
+import {Link, withRouter} from 'react-router-dom';
 
-export default function Menu(props) {
-  
+export function Menu(props) {
+    
   return (
     <div className='menu'>
       
@@ -22,3 +22,5 @@ export default function Menu(props) {
     </div>
   );
 }
+
+export default withRouter(Menu);

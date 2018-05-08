@@ -178,6 +178,7 @@ app.put('/api/user/update/:userid', userController.updateUserInfo)
 // ###### ENDPOINTS - Billing ######
 app.get('/api/billing/invoiceid/:userid', billingController.getLastBillingNumber)
 app.post('/api/billing/add/:userid', billingController.addBilling)
+app.put('/api/billing/update/invoice/:userid/:invoiceid', billingController.updateInvoiceLocation)
 
 
 // START SERVER

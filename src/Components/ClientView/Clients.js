@@ -1,17 +1,17 @@
 import React from "react";
 import {
   Card,
-  CardActions,
+  // CardActions, TODO: REMOVE
   CardHeader,
-  CardMedia,
-  CardTitle,
+  // CardMedia, TODO: REMOVE
+  // CardTitle, TODO: REMOVE
   CardText,
   RaisedButton,
   Dialog,
   TextField,
   Checkbox
 } from "material-ui";
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom"; TODO: REMOVE
 
 import axios from "axios";
 

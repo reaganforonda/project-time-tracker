@@ -78,6 +78,7 @@ CREATE TABLE billing
     invoice_date Date,
     total DECIMAL,
     due_date DATE,
-    invoice_number VARCHAR(45)
+    invoice_number VARCHAR(45),
+    aws_file_location TEXT
 )
 

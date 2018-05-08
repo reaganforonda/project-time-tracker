@@ -1,24 +1,27 @@
-import React from 'react';
-import SelectField from 'material-ui/SelectField';
+// import React from 'react';
+// import SelectField from 'material-ui/SelectField';
 
-export default class ClientDropDown extends React.Component {
-    constructor(props){
-        super(props);
+// export default class ClientDropDown extends React.Component {
+//     constructor(props){
+//         super(props);
 
-        this.state = {
+//         this.state = {
 
-        }
-    }
+//         }
+//     }
 
 
-    render(){
-        return(
-            <div>
-                <SelectField floatingLabelText="Clients">
+//     render(){
+//         return(
+//             <div>
+//                 <SelectField floatingLabelText="Clients">
                     
-                </SelectField>
+//                 </SelectField>
 
-            </div>
-        )
-    }
-}
+//             </div>
+//         )
+//     }
+// }
+
+
+// TODO: REMOVE

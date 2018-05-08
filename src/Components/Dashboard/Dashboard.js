@@ -3,7 +3,7 @@ import Menu from "../Menu/Menu";
 import { Link, withRouter, Switch, Route } from "react-router-dom";
 import AppBar from 'material-ui/AppBar';
 import {getUser} from '../../ducks/userReducer'
-import {getAllClients} from '../../ducks/clientReducer';
+// import {getAllClients} from '../../ducks/clientReducer'; TODO: REMOVE
 
 import { connect } from "react-redux";
 import JobView from '../JobView/JobView';

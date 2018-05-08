@@ -1,14 +1,10 @@
 import React from "react";
 import ContentAdd from "material-ui/svg-icons/content/add";
 import {
-  DatePicker,
-  TimePicker,
   TextField,
   Dialog,
   RaisedButton,
-  FloatingActionButton,
-  MenuItem,
-  SelectField
+  FloatingActionButton
 } from "material-ui";
 import {
   updateAddressOne,

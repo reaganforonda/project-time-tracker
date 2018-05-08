@@ -2,25 +2,23 @@ import React from "react";
 import JobForm from "../JobForm/JobForm";
 import Job from "../Job/Job";
 import axios from "axios";
-import ContentAdd from "material-ui/svg-icons/content/add";
-import { withRouter, Link } from "react-router-dom";
-import {
-  RaisedButton,
-  DatePicker,
-  TextField,
-  Dialog,
-  FloatingActionButton,
-  MenuItem,
-  SelectField
-} from "material-ui";
+// import ContentAdd from "material-ui/svg-icons/content/add"; TODO: REMOVE
+import { withRouter} from "react-router-dom";
+// import {
+//   // RaisedButton,
+//   // DatePicker, TODO: REMOVE
+//   TextField,
+//   Dialog,
+//   FloatingActionButton,
+//   MenuItem,
+//   SelectField
+// } from "material-ui"; TODO: REMOVE
 
 
-import { getUser } from "../../ducks/userReducer";
+// import { getUser } from "../../ducks/userReducer"; TODO: REMOVE
 import { connect } from "react-redux";
-import { DH_CHECK_P_NOT_PRIME } from "constants";
+// import { DH_CHECK_P_NOT_PRIME } from "constants"; TODO: REMOVE
 import {getEnteriesByJobId} from '../../ducks/entryReducer'
-
-const _ = require("lodash");
 
 export class JobView extends React.Component {
   constructor(props) {
@@ -123,13 +121,13 @@ export class JobView extends React.Component {
     return timestamp;
   }
 
-  // Formate Datepicker's date to something for useable
-  formatDate(date) {
-    let formatedDate = `${date.getMonth() +
-      1}/${date.getDate()}/${date.getFullYear()}`;
+  // // Formate Datepicker's date to something for useable
+  // formatDate(date) {
+  //   let formatedDate = `${date.getMonth() +
+  //     1}/${date.getDate()}/${date.getFullYear()}`;
 
-    return formatedDate;
-  }
+  //   return formatedDate;
+  // } TODO: REMOVE DUPLICATE
 
   formatTime(date) {
     let formatedTime = `${date.getHours()}:${date.getMinutes()}`;
@@ -206,7 +204,7 @@ export class JobView extends React.Component {
   }
 
   render() {
-    let { picture, user_name } = this.props.user;
+    // let {user_name } = this.props.user; TODO: REMOVE
 
     let allJobs = this.state.jobs.map(job => {
       return (

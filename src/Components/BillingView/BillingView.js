@@ -1,5 +1,5 @@
 import React from "react";
-import Menu from "../Menu/Menu";
+// import Menu from "../Menu/Menu"; TODO: REMOVE
 import axios from "axios";
 
 import {
@@ -16,7 +16,7 @@ import BillingItem from "./BillingItem";
 import { connect } from "react-redux";
 import { getBilling, getLastBillingNumber } from "../../ducks/billingReducer";
 import { getAllClients } from "../../ducks/clientReducer";
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom"; TODO: REMOVE
 import Dropzone from "react-dropzone";
 
 export class BillingView extends React.Component {
@@ -34,6 +34,7 @@ export class BillingView extends React.Component {
       subject: "",
       bodyText: this.defaultBodyText(),
       emailSnackBar: false,
+      uploadSnackBar: false,
       signedUrl: "",
       selectedFile: {}
     };
@@ -134,17 +135,20 @@ export class BillingView extends React.Component {
       .then(result => {
         let signedURL = result.data;
 
-        axios.put(signedURL, file, options).then((result) => {
-          console.log(result)
-        }).catch((e) => {
-          console.log(`Error during PUT to Amazon S3: ${e}`)
-        })
+        axios
+          .put(signedURL, file, options)
+          .then(result => {
+            console.log(result);
+            this.setState({ uploadModalOpen: false, uploadSnackBar: true });
+          })
+          .catch(e => {
+            console.log(`Error during PUT to Amazon S3: ${e}`);
+          });
       })
       .catch(e => {
         console.log(`Error POST trying to get signed url : ${e}`);
       });
   }
-
 
   render() {
     let arr = this.props.billing.map(value => {
@@ -265,17 +269,21 @@ export class BillingView extends React.Component {
                   label="Submit"
                 />
               </div>
-              <Snackbar
-                open={this.state.emailSnackBar}
-                message="Email Sent"
-                autoHideDuration={3000}
-              />
             </Dialog>
           </RaisedButton>
         </div>
         <div className="billing-items-container">{arr}</div>
-
         <div className="billing-view-footer>" />
+        <Snackbar
+          open={this.state.emailSnackBar}
+          message="Email Sent"
+          autoHideDuration={3000}
+        />
+        <Snackbar
+          open={this.state.uploadSnackBar}
+          message="Upload Successful"
+          autoHideDuration={3000}
+        />
       </div>
     );
   }
