@@ -1,5 +1,6 @@
 import React from "react";
 import Menu from "../Menu/Menu";
+import axios from 'axios'
 
 import {
   Paper,
@@ -26,7 +27,11 @@ export class BillingView extends React.Component {
       uploadModalOpen: false,
       emailModalOpen: false,
       files: [],
-      selectedClient: ""
+      selectedClient: "",
+      fromEmail : this.props.user.email,
+      toEmail : '',
+      subject : '',
+      bodyText : ''
     };
 
     this.getBilling = this.getBilling.bind(this);
@@ -36,6 +41,7 @@ export class BillingView extends React.Component {
     this.handleUploadModalOpen = this.handleUploadModalOpen.bind(this);
     this.handleUploadModalClose = this.handleUploadModalClose.bind(this);
     this.handleClientSelect = this.handleClientSelect.bind(this);
+    this.handleEmailSend = this.handleEmailSend.bind(this);
   }
 
   componentDidMount() {
@@ -72,9 +78,30 @@ export class BillingView extends React.Component {
 
   handleClientSelect = (event, index, value) => {
     console.log(value);
-    this.setState({ selectedClient: value });
+    this.setState({selectedClient : value})
+    this.setState({ toEmail: value });
+
     
   };
+
+  handleInputChange(e) {
+    this.setState({[e.target.name] : e.target.value})
+  }
+
+  handleEmailSend() {
+    let email = {
+      toEmail : this.state.toEmail,
+      fromEmail : this.state.fromEmail,
+      subject : this.state.subject,
+      message : this.state.bodyText
+    }
+
+    axios.post('http://localhost:3005/api/email', email).then((result) => {
+      console.log(result)
+    }).catch((e) => {
+      console.log(`Error while trying to send email front end : ${e}`)
+    })
+  }
 
   render() {
     let arr = this.props.billing.map(value => {
@@ -139,13 +166,15 @@ export class BillingView extends React.Component {
                   </SelectField>
                 </div>
 
-                <TextField hintText="TO" underlineShow={false} />
+                <TextField name='toEmail' value={this.state.toEmail} onChange={(e)=>this.handleInputChange(e)} hintText="TO" underlineShow={false} />
                 <Divider />
-                <TextField hintText="FROM" underlineShow={false} />
+                <TextField name='fromEmail' value={this.state.fromEmail} onChange={(e)=>this.handleInputChange(e)} hintText="FROM" underlineShow={false} />
                 <Divider />
                 <TextField
                   hintText="SUBJECT"
-                  defaultValue={this.props.user.email}
+                  name='subject'
+                  onChange={(e)=>this.handleInputChange(e)}
+                  value={this.state.subject}
                   underlineShow={false}
                 />
                 <Divider />
@@ -162,7 +191,7 @@ export class BillingView extends React.Component {
                   onClick={() => this.handleEmailModalClose()}
                   label="Cancel"
                 />
-                <RaisedButton label="Submit" />
+                <RaisedButton onClick={()=>this.handleEmailSend()} label="Submit" />
               </div>
             </Dialog>
           </RaisedButton>

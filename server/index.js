@@ -11,6 +11,7 @@ const express = require("express"),
 
 const jobsController = require("./controllers/jobsController"),
   clientController = require("./controllers/clientController"),
+  mailController = require('./controllers/mailController')
   billingController = require('./controllers/billingController'),
   entryController = require('./controllers/entryController');
 
@@ -25,7 +26,7 @@ const {
   DOMAIN,
   CLIENT_ID,
   CLIENT_SECRET,
-  CALLBACK_URL
+  CALLBACK_URL,
 } = process.env;
 
 app.use(bodyParser.json());
@@ -101,7 +102,6 @@ passport.use(
 );
 
 passport.serializeUser((id, done) => {
-  // Putting info in session
   return done(null, id);
 });
 
@@ -138,6 +138,10 @@ app.get("/logout", function(req, res) {
   req.logOut();
   res.redirect("http://localhost:3000");
 });
+
+
+// ###### ENDPOINTS - EMAIL ######
+app.post(`/api/email`, mailController.sendEmail)
 
 // ###### ENDPOINTS - JOB ######
 app.post('/api/job', jobsController.addJob);
