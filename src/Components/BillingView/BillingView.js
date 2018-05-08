@@ -1,6 +1,6 @@
 import React from "react";
 import Menu from "../Menu/Menu";
-import axios from 'axios'
+import axios from "axios";
 
 import {
   Paper,
@@ -9,7 +9,8 @@ import {
   TextField,
   Divider,
   MenuItem,
-  SelectField
+  SelectField,
+  Snackbar
 } from "material-ui";
 import BillingItem from "./BillingItem";
 import { connect } from "react-redux";
@@ -28,10 +29,13 @@ export class BillingView extends React.Component {
       emailModalOpen: false,
       files: [],
       selectedClient: "",
-      fromEmail : this.props.user.email,
-      toEmail : '',
-      subject : '',
-      bodyText : ''
+      fromEmail: this.props.user.email,
+      toEmail: "",
+      subject: "",
+      bodyText: this.defaultBodyText(),
+      emailSnackBar: false,
+      signedUrl: "",
+      selectedFile: {}
     };
 
     this.getBilling = this.getBilling.bind(this);
@@ -42,12 +46,19 @@ export class BillingView extends React.Component {
     this.handleUploadModalClose = this.handleUploadModalClose.bind(this);
     this.handleClientSelect = this.handleClientSelect.bind(this);
     this.handleEmailSend = this.handleEmailSend.bind(this);
+    this.defaultBodyText = this.defaultBodyText.bind(this);
+    this.handleS3Upload = this.handleS3Upload.bind(this);
   }
 
   componentDidMount() {
     this.getBilling();
     this.props.getLastBillingNumber(this.props.user.user_id);
-    
+  }
+
+  defaultBodyText() {
+    let text = "Hello, Please find attached your invoice";
+
+    return text;
   }
 
   getBilling() {
@@ -73,35 +84,67 @@ export class BillingView extends React.Component {
 
   onDrop(files) {
     this.setState({ files });
-    console.log(this.state.files);
   }
 
   handleClientSelect = (event, index, value) => {
     console.log(value);
-    this.setState({selectedClient : value})
+    this.setState({ selectedClient: value });
     this.setState({ toEmail: value });
-
-    
   };
 
   handleInputChange(e) {
-    this.setState({[e.target.name] : e.target.value})
+    this.setState({ [e.target.name]: e.target.value });
   }
 
   handleEmailSend() {
     let email = {
-      toEmail : this.state.toEmail,
-      fromEmail : this.state.fromEmail,
-      subject : this.state.subject,
-      message : this.state.bodyText
-    }
+      toEmail: this.state.toEmail,
+      fromEmail: this.state.fromEmail,
+      subject: this.state.subject,
+      message: this.state.bodyText
+    };
 
-    axios.post('http://localhost:3005/api/email', email).then((result) => {
-      console.log(result)
-    }).catch((e) => {
-      console.log(`Error while trying to send email front end : ${e}`)
-    })
+    axios
+      .post("http://localhost:3005/api/email", email)
+      .then(result => {
+        console.log(result);
+        this.setState({ emailSnackBar: true });
+      })
+      .catch(e => {
+        console.log(`Error while trying to send email front end : ${e}`);
+      });
   }
+
+  handleS3Upload() {
+    let file = this.state.files[0];
+
+    let upload = {
+      filename: file.name,
+      filetype: file.type
+    };
+    var options = {
+      headers: {
+        "Content-type": file.type
+      }
+    };
+    console.log(upload);
+
+    axios
+      .post(`http://localhost:3005/api/s3/upload`, upload)
+      .then(result => {
+        let signedURL = result.data;
+
+        axios.put(signedURL, file, options).then((result) => {
+          console.log(result)
+        }).catch((e) => {
+          console.log(`Error during PUT to Amazon S3: ${e}`)
+        })
+      })
+      .catch(e => {
+        console.log(`Error POST trying to get signed url : ${e}`);
+      });
+  }
+
 
   render() {
     let arr = this.props.billing.map(value => {
@@ -128,6 +171,14 @@ export class BillingView extends React.Component {
       );
     });
 
+    let files = this.state.files.map(file => {
+      return (
+        <p key={file.name}>
+          {file.name} {file.size} bytes
+        </p>
+      );
+    });
+
     return (
       <div className="billing-view-container">
         <div className="billing-view-top-menu">
@@ -139,11 +190,17 @@ export class BillingView extends React.Component {
               <Dropzone onDrop={this.onDrop}>
                 <p>Drop Invoice or click to select files to upload</p>
               </Dropzone>
-
-              <RaisedButton
-                onClick={() => this.handleUploadModalClose()}
-                label="Close"
-              />
+              <div>{files}</div>
+              <div>
+                <RaisedButton
+                  onClick={() => this.handleUploadModalClose()}
+                  label="Close"
+                />
+                <RaisedButton
+                  onClick={() => this.handleS3Upload()}
+                  label="Submit"
+                />
+              </div>
             </Dialog>
           </RaisedButton>
 
@@ -160,20 +217,32 @@ export class BillingView extends React.Component {
                       this.handleClientSelect(event, index, value)
                     }
                     hintText="Select Client"
-                    floatingLabelText='Select Client'
+                    floatingLabelText="Select Client"
                   >
                     {clients}
                   </SelectField>
                 </div>
 
-                <TextField name='toEmail' value={this.state.toEmail} onChange={(e)=>this.handleInputChange(e)} hintText="TO" underlineShow={false} />
+                <TextField
+                  name="toEmail"
+                  value={this.state.toEmail}
+                  onChange={e => this.handleInputChange(e)}
+                  hintText="TO"
+                  underlineShow={false}
+                />
                 <Divider />
-                <TextField name='fromEmail' value={this.state.fromEmail} onChange={(e)=>this.handleInputChange(e)} hintText="FROM" underlineShow={false} />
+                <TextField
+                  name="fromEmail"
+                  value={this.state.fromEmail}
+                  onChange={e => this.handleInputChange(e)}
+                  hintText="FROM"
+                  underlineShow={false}
+                />
                 <Divider />
                 <TextField
                   hintText="SUBJECT"
-                  name='subject'
-                  onChange={(e)=>this.handleInputChange(e)}
+                  name="subject"
+                  onChange={e => this.handleInputChange(e)}
                   value={this.state.subject}
                   underlineShow={false}
                 />
@@ -191,8 +260,16 @@ export class BillingView extends React.Component {
                   onClick={() => this.handleEmailModalClose()}
                   label="Cancel"
                 />
-                <RaisedButton onClick={()=>this.handleEmailSend()} label="Submit" />
+                <RaisedButton
+                  onClick={() => this.handleEmailSend()}
+                  label="Submit"
+                />
               </div>
+              <Snackbar
+                open={this.state.emailSnackBar}
+                message="Email Sent"
+                autoHideDuration={3000}
+              />
             </Dialog>
           </RaisedButton>
         </div>

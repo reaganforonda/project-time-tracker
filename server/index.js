@@ -11,7 +11,8 @@ const express = require("express"),
 
 const jobsController = require("./controllers/jobsController"),
   clientController = require("./controllers/clientController"),
-  mailController = require('./controllers/mailController')
+  mailController = require('./controllers/mailController'),
+  s3Controller = require('./controllers/s3Controller'),
   billingController = require('./controllers/billingController'),
   entryController = require('./controllers/entryController');
 
@@ -142,6 +143,9 @@ app.get("/logout", function(req, res) {
 
 // ###### ENDPOINTS - EMAIL ######
 app.post(`/api/email`, mailController.sendEmail)
+
+// ##### Amazon S3 #####
+app.post(`/api/s3/upload`, s3Controller.sign)
 
 // ###### ENDPOINTS - JOB ######
 app.post('/api/job', jobsController.addJob);
