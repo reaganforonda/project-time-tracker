@@ -19,7 +19,8 @@ import {
   selectedForBilling,
   updateInvoiceNum,
   updateInvoiceDate,
-  updateDueDate
+  updateDueDate,
+  getEnteriesForJob
 } from "../../ducks/billingReducer";
 import { Link } from "react-router-dom";
 
@@ -95,6 +96,7 @@ export class BillingItem extends React.Component {
     this.props.updateInvoiceNum(this.state.invoiceNumber);
     this.props.updateInvoiceDate(this.state.invoiceDate);
     this.props.updateDueDate(this.state.dueDate);
+    this.props.getEnteriesForJob(this.props.user.user_id, this.props.job.job_id)
     this.handleCloseModal();
   }
 
@@ -138,7 +140,6 @@ export class BillingItem extends React.Component {
               >
                 <RaisedButton label="Preview" />
               </Link>
-              <RaisedButton label="Generate PDF" />
             </Dialog>
           </FlatButton>
         </Paper>
@@ -163,5 +164,6 @@ export default connect(mapStateToProps, {
   selectedForBilling,
   updateInvoiceNum,
   updateInvoiceDate,
-  updateDueDate
+  updateDueDate,
+  getEnteriesForJob
 })(BillingItem);
