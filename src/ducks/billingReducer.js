@@ -3,7 +3,7 @@ import axios from "axios";
 const BILLING_INITIAL_STATE = {
   billing: [],
   selectedJob: {},
-  lastInvoiceId: 0,
+  lastInvoiceId: '',
   invoiceNum: "",
   invoiceDate: "",
   dueDate: "",
@@ -52,10 +52,6 @@ export function getLastBillingNumber(userid) {
     .catch(e => {
       console.log(`Error at Billing Reducer: ${e}`);
     });
-
-  if (invoiceID === null) {
-    invoiceID = 0;
-  }
 
   return {
     type: GET_LAST_INVOICE_ID,

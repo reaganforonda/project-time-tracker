@@ -56,10 +56,12 @@ export class InvoiceView extends React.Component {
   }
 
   updateJobBilling() {
-    let end_date = this.props.jobEndDate;
+    
+    let end_date = {end_date : this.handleDateConvert(this.props.jobEndDate)};
+
     axios
       .put(
-        `http://localhost:3005/api/billing/update/${this.props.user.user_id}/${
+        `http://localhost:3005/api/jobs/billing/update/${this.props.user.user_id}/${
           this.props.selectedJob.job_id
         }`,
         end_date
@@ -163,7 +165,6 @@ function mapStateToProps(state) {
     dueDate: state.billingReducer.dueDate,
     invoiceNum: state.billingReducer.invoiceNum,
     invoiceDate: state.billingReducer.invoiceDate,
-    dueDate: state.billingReducer.dueDate,
     entries: state.billingReducer.entries,
     jobEndDate: state.billingReducer.jobEndDate
   };

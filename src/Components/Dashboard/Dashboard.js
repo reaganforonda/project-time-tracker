@@ -1,6 +1,5 @@
 import React from "react";
 import Menu from "../Menu/Menu";
-import axios from "axios";
 import { Link, withRouter, Switch, Route } from "react-router-dom";
 import AppBar from 'material-ui/AppBar';
 import {getUser} from '../../ducks/userReducer'

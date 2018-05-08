@@ -79,8 +79,8 @@ module.exports = {
         const dbInstance = req.app.get('db');
         const {userid, jobid} = req.params
         const {end_date} = req.body
-
-        dbInstance.UPDATE_JOB_BILLING([end_date]).then((result) => {
+        console.log(end_date)
+        dbInstance.UPDATE_JOB_BILLING([end_date, userid, jobid]).then((result) => {
             res.status(200).send(result);
         }).catch((e) => {
             console.log(`Error while trying to update for billing : ${e}`);

@@ -207,6 +207,7 @@ export class EntryForm extends React.Component {
                 {jobArr}
               </SelectField>
               <DatePicker
+              
                 onChange={this.handleDateChange}
                 autoOk={true}
                 name="startDate"

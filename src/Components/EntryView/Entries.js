@@ -9,6 +9,8 @@ import {
   DatePicker
 } from "material-ui";
 
+import moment from 'moment';
+
 export default class Entries extends React.Component {
   constructor(props) {
     super(props);
@@ -37,15 +39,16 @@ export default class Entries extends React.Component {
   }
 
   render() {
+    
     return (
       <div>
         <Paper zDepth={3} className="enteries-container">
-          <p>Job Name: {this.props.jobname}</p>
-          <p>Client: {this.props.clientName}</p>
-          <p>Date: {this.props.date}</p>
-          <p>Start Time: {this.props.startTime}</p>
-          <p>End Time: {this.props.endTime}</p>
-          <p>Duration: {this.props.duration}</p>
+          <p>{this.props.jobname}</p>
+          <p>{this.props.clientName}</p>
+          <p>{moment(this.props.date).format('MMMM Do, YYYY')}</p>
+          <p>{this.props.startTime}</p>
+          <p>{this.props.endTime}</p>
+          <p>{this.props.duration} Hrs</p>
           <RaisedButton onClick={() => this.handleModalOpen()} label="Edit">
             <Dialog modal={true} open={this.state.openModal}>
               <h1>{this.props.jobname}</h1>

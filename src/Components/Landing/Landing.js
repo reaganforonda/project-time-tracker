@@ -1,6 +1,6 @@
 import React from "react";
-import axios from "axios";
-import AppBar from "material-ui/AppBar";
+
+
 
 export default class Landing extends React.Component {
   handleLogin() {}

@@ -13,7 +13,6 @@ import {
   updatePhone,
   updatePicture,
   updateCity,
-  updatestate,
   updateWebsite,
   updateState,
   updateZip,
@@ -84,7 +83,6 @@ export class UserView extends React.Component {
 
     this.props.updateUserInfo(this.props.user.user_id, user);
     this.setState({ edit: false, disable: true });
-    
   }
 
   render() {
@@ -92,7 +90,7 @@ export class UserView extends React.Component {
       <div>
         <div>
           <h1>Profile</h1>
-          <img src={this.props.user.picture} />
+          <img src={this.props.user.picture}  alt='profile-pic'/>
         </div>
 
         <div>

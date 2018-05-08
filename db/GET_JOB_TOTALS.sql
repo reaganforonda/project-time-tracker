@@ -3,4 +3,5 @@ from enteries
 join jobs on enteries.job_id = jobs.job_id
 join clients on enteries.client_id = clients.client_id
 where enteries.user_id = $1
+AND jobs.completed = false
 group by jobs.job_id, clients.client_id

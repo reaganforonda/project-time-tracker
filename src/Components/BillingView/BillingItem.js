@@ -49,9 +49,10 @@ export class BillingItem extends React.Component {
     this.handleJobEndDateSelect = this.handleJobEndDateSelect.bind(this);
   }
 
+  
+
   handleOpenModal() {
     this.setState({ open: true });
-    this.props.getLastBillingNumber(this.props.user.user_id);
     this.handleSetInvoiceNumber();
     this.handleSetNewInvoiceNum();
     this.setDefaultDates();
@@ -63,17 +64,13 @@ export class BillingItem extends React.Component {
 
   handleSetInvoiceNumber() {
     let lastid = this.props.lastInvoiceId;
+    console.log(this.props.lastInvoiceId)
+      this.setState({ lastInvID: lastid });
 
-    if (!lastid) {
-      lastid = 0;
-      this.setState({ lastInvID: lastid });
-    } else {
-      this.setState({ lastInvID: lastid });
-    }
   }
 
   handleSetNewInvoiceNum() {
-    let newInvoiceID = this.state.lastInvID + 1;
+    let newInvoiceID = this.props.lastInvoiceId + 1;
     let padding = `INV`;
     let newNewInvNum = padding + String(newInvoiceID);
     this.setState({ invoiceNumber: newNewInvNum });

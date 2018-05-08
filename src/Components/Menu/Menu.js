@@ -5,8 +5,9 @@ import Avatar from "material-ui/Avatar";
 import {Link} from 'react-router-dom';
 
 export default function Menu(props) {
+  
   return (
-    <div>
+    <div className='menu'>
       
       <Drawer docked={true} width={200} open={true} className="menu-drawer">
         <Avatar src={props.img} size={75} />
