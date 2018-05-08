@@ -8,7 +8,7 @@ const {
 
 aws.config.update({
     accessKeyId : ACCESSKEYID,
-    secretAccessKey : SECRETACCESSKEY
+    secretAccessKey : SECRETACCESSKEY,
 })
 
 module.exports = {
@@ -21,7 +21,8 @@ module.exports = {
             Bucket : S3BUCKET,
             Key : filename,
             Expires : 60,
-            ContentType : filetype
+            ContentType : filetype,
+            ACL : 'public-read'
         }
 
         s3.getSignedUrl('putObject', params, (err, data) => {
