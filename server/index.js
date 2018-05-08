@@ -143,6 +143,7 @@ app.post('/api/job', jobsController.addJob);
 app.get('/api/jobs/open/:userId', jobsController.getAllOpenJobs)
 app.get('/api/jobs/:userId', jobsController.getJobsByUserID)
 app.get('/api/jobs/billing/:userid', jobsController.getJobsForBilling)
+app.put('/api/jobs/billing/update/:userid/:jobid', jobsController.updateJobsBilling)
 
 
 // ###### ENDPOINTS - Client ######
@@ -167,6 +168,7 @@ app.put('/api/user/update/:userid', userController.updateUserInfo)
 
 // ###### ENDPOINTS - Billing ######
 app.get('/api/billing/invoiceid/:userid', billingController.getLastBillingNumber)
+app.post('/api/billing/add/:userid', billingController.addBilling)
 
 
 // START SERVER

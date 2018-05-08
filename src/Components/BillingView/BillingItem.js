@@ -18,6 +18,7 @@ import {
   getLastBillingNumber,
   selectedForBilling,
   updateInvoiceNum,
+  updateJobEndDate,
   updateInvoiceDate,
   updateDueDate,
   getEnteriesForJob
@@ -33,7 +34,8 @@ export class BillingItem extends React.Component {
       invoiceNumber: "",
       lastInvID: "",
       invoiceDate: {},
-      dueDate: {}
+      dueDate: {},
+      jobEndDate: ""
     };
 
     this.handleOpenModal = this.handleOpenModal.bind(this);
@@ -44,6 +46,7 @@ export class BillingItem extends React.Component {
     this.setDefaultDates = this.setDefaultDates.bind(this);
     this.handleInvoiceDateChange = this.handleInvoiceDateChange.bind(this);
     this.handleLinkClick = this.handleLinkClick.bind(this);
+    this.handleJobEndDateSelect = this.handleJobEndDateSelect.bind(this);
   }
 
   handleOpenModal() {
@@ -96,8 +99,16 @@ export class BillingItem extends React.Component {
     this.props.updateInvoiceNum(this.state.invoiceNumber);
     this.props.updateInvoiceDate(this.state.invoiceDate);
     this.props.updateDueDate(this.state.dueDate);
-    this.props.getEnteriesForJob(this.props.user.user_id, this.props.job.job_id)
+    this.props.getEnteriesForJob(
+      this.props.user.user_id,
+      this.props.job.job_id
+    );
+    this.props.updateJobEndDate(this.state.jobEndDate);
     this.handleCloseModal();
+  }
+
+  handleJobEndDateSelect(e, date) {
+    this.setState({ jobEndDate: date });
   }
 
   render() {
@@ -118,6 +129,12 @@ export class BillingItem extends React.Component {
               <p>Job Name: {this.props.job.job_name}</p>
               <p>Total Hours: {this.props.job.total_hrs}</p>
               <p>Total: {this.props.job.total}</p>
+
+              <DatePicker
+                onChange={this.handleJobEndDateSelect}
+                hintText="Select Job End Date"
+                floatingLabelText="Select Job End Date"
+              />
               <DatePicker
                 onChange={this.handleInvoiceDateChange}
                 defaultDate={this.state.invoiceDate}
@@ -134,10 +151,7 @@ export class BillingItem extends React.Component {
                 onClick={() => this.handleCloseModal()}
                 label="Cancel"
               />
-              <Link
-                onClick={() => this.handleLinkClick()}
-                to='/invoiceview'
-              >
+              <Link onClick={() => this.handleLinkClick()} to="/invoiceview">
                 <RaisedButton label="Preview" />
               </Link>
             </Dialog>
@@ -155,7 +169,8 @@ function mapStateToProps(state) {
     selectedJob: state.billingReducer.selectedJob,
     invoiceNum: state.billingReducer.invoiceNum,
     dueDate: state.billingReducer.dueDate,
-    invoiceDate: state.billingReducer.invoiceDate
+    invoiceDate: state.billingReducer.invoiceDate,
+    jobEndDate: state.billingReducer.jobEndDate
   };
 }
 
@@ -165,5 +180,6 @@ export default connect(mapStateToProps, {
   updateInvoiceNum,
   updateInvoiceDate,
   updateDueDate,
-  getEnteriesForJob
+  getEnteriesForJob,
+  updateJobEndDate
 })(BillingItem);

@@ -7,7 +7,8 @@ const BILLING_INITIAL_STATE = {
   invoiceNum: "",
   invoiceDate: "",
   dueDate: "",
-  entries: []
+  entries: [],
+  jobEndDate: ""
 };
 
 const GET_BILLING = "GET_BILLING";
@@ -17,6 +18,7 @@ const UPDATE_INVOICE_NUM = "UPDATE_INVOICE_NUM";
 const UPDATE_INVOICE_DATE = "UPDATE_INVOICE_DATE";
 const UPDATE_DUE_DATE = "UPDATE_DUE_DATE";
 const GET_ENTRIES = "GET_ENTRIES";
+const UPDATE_JOB_END_DATE = "UPDATE_JOB_END_DATE";
 
 export function getBilling(user_id) {
   let billing = axios
@@ -35,7 +37,6 @@ export function getBilling(user_id) {
 }
 
 export function selectedForBilling(job) {
-  console.log(job);
   return {
     type: SELECT_FOR_BILLING,
     payload: job
@@ -56,7 +57,6 @@ export function getLastBillingNumber(userid) {
     invoiceID = 0;
   }
 
-  console.log(invoiceID);
   return {
     type: GET_LAST_INVOICE_ID,
     payload: invoiceID
@@ -64,7 +64,6 @@ export function getLastBillingNumber(userid) {
 }
 
 export function updateInvoiceNum(invoiceNum) {
-  console.log(invoiceNum);
   return {
     type: UPDATE_INVOICE_NUM,
     payload: invoiceNum
@@ -89,7 +88,6 @@ export function getEnteriesForJob(user_id, job_id) {
   let entries = axios
     .get(`http://localhost:3005/api/entry/${user_id}/${job_id}`)
     .then(result => {
-        console.log(result.data)
       return result.data;
     })
     .catch(e => {
@@ -101,6 +99,14 @@ export function getEnteriesForJob(user_id, job_id) {
     payload: entries
   };
 }
+
+export function updateJobEndDate(jobEndDate) {
+  return {
+    type: UPDATE_JOB_END_DATE,
+    payload: jobEndDate
+  };
+}
+
 
 export default function reduce(state = BILLING_INITIAL_STATE, action) {
   switch (action.type) {
@@ -125,6 +131,9 @@ export default function reduce(state = BILLING_INITIAL_STATE, action) {
 
     case GET_ENTRIES + "_FULFILLED":
       return Object.assign({}, state, { entries: action.payload });
+
+    case UPDATE_JOB_END_DATE:
+      return Object.assign({}, state, { jobEndDate: action.payload });
 
     default:
       return state;

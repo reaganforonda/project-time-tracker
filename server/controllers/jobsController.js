@@ -73,5 +73,18 @@ module.exports = {
             console.log(`Error while trying to get totals for billing: ${e}`);
             res.sendStatus(500);
         })
+    },
+
+    updateJobsBilling : (req, res) => {
+        const dbInstance = req.app.get('db');
+        const {userid, jobid} = req.params
+        const {end_date} = req.body
+
+        dbInstance.UPDATE_JOB_BILLING([end_date]).then((result) => {
+            res.status(200).send(result);
+        }).catch((e) => {
+            console.log(`Error while trying to update for billing : ${e}`);
+            res.sendStatus(500);
+        })
     }
 }
