@@ -1,12 +1,21 @@
 import React from "react";
 import Menu from "../Menu/Menu";
 
-import { Paper, RaisedButton, Dialog } from "material-ui";
+import {
+  Paper,
+  RaisedButton,
+  Dialog,
+  TextField,
+  Divider,
+  MenuItem,
+  SelectField
+} from "material-ui";
 import BillingItem from "./BillingItem";
 import { connect } from "react-redux";
 import { getBilling, getLastBillingNumber } from "../../ducks/billingReducer";
+import { getAllClients } from "../../ducks/clientReducer";
 import { Link } from "react-router-dom";
-import Dropzone from 'react-dropzone';
+import Dropzone from "react-dropzone";
 
 export class BillingView extends React.Component {
   constructor(props) {
@@ -14,40 +23,58 @@ export class BillingView extends React.Component {
 
     this.state = {
       billing: [],
-      uploadOpen : false,
-      files : []
+      uploadModalOpen: false,
+      emailModalOpen: false,
+      files: [],
+      selectedClient: ""
     };
 
     this.getBilling = this.getBilling.bind(this);
-    this.handleUploadDialogOpen= this.handleUploadDialogOpen.bind(this);
-    this.handleUploadDialogClose = this.handleUploadDialogClose.bind(this);
-    this.onDrop = this.onDrop.bind(this)
-    
+    this.onDrop = this.onDrop.bind(this);
+    this.handleEmailModalClose = this.handleEmailModalClose.bind(this);
+    this.handleEmailModalOpen = this.handleEmailModalOpen.bind(this);
+    this.handleUploadModalOpen = this.handleUploadModalOpen.bind(this);
+    this.handleUploadModalClose = this.handleUploadModalClose.bind(this);
+    this.handleClientSelect = this.handleClientSelect.bind(this);
   }
 
   componentDidMount() {
     this.getBilling();
     this.props.getLastBillingNumber(this.props.user.user_id);
+    
   }
 
   getBilling() {
     this.props.getBilling(this.props.user.user_id);
   }
 
-  handleUploadDialogOpen(){
-    this.setState({uploadOpen : true})
+  handleUploadModalOpen() {
+    this.setState({ uploadModalOpen: true });
   }
 
-  handleUploadDialogClose(){
-    this.setState({uploadOpen : false})
+  handleUploadModalClose() {
+    this.setState({ uploadModalOpen: false });
   }
 
-onDrop(files) {
-  this.setState({files})
-  console.log(this.state.files)
-}
+  handleEmailModalOpen() {
+    this.setState({ emailModalOpen: true });
+    this.props.getAllClients(this.props.user.user_id);
+  }
 
+  handleEmailModalClose() {
+    this.setState({ emailModalOpen: false });
+  }
 
+  onDrop(files) {
+    this.setState({ files });
+    console.log(this.state.files);
+  }
+
+  handleClientSelect = (event, index, value) => {
+    console.log(value);
+    this.setState({ selectedClient: value });
+    
+  };
 
   render() {
     let arr = this.props.billing.map(value => {
@@ -64,24 +91,81 @@ onDrop(files) {
       );
     });
 
+    let clients = this.props.clients.map(client => {
+      return (
+        <MenuItem
+          key={client.client_id}
+          value={client.email}
+          primaryText={client.client_name}
+        />
+      );
+    });
+
     return (
       <div className="billing-view-container">
         <div className="billing-view-top-menu">
-          
-          <RaisedButton onClick={()=>this.handleUploadDialogOpen()}label="Upload Invoice">
-            <Dialog modal={true} open={this.state.uploadOpen}>
-            
-            <Dropzone onDrop = {this.onDrop}>
-              <p>
-                Drop Invoice or click to select files to upload
-              </p>
-            </Dropzone>
+          <RaisedButton
+            onClick={() => this.handleUploadModalOpen()}
+            label="Upload Invoice"
+          >
+            <Dialog modal={true} open={this.state.uploadModalOpen}>
+              <Dropzone onDrop={this.onDrop}>
+                <p>Drop Invoice or click to select files to upload</p>
+              </Dropzone>
 
-            <RaisedButton onClick={()=>this.handleUploadDialogClose()}  label='Close'/>
+              <RaisedButton
+                onClick={() => this.handleUploadModalClose()}
+                label="Close"
+              />
             </Dialog>
           </RaisedButton>
 
-          <RaisedButton label="Email Client" />
+          <RaisedButton
+            onClick={() => this.handleEmailModalOpen()}
+            label="Email Client"
+          >
+            <Dialog modal={true} open={this.state.emailModalOpen}>
+              <Paper>
+                <div>
+                  <SelectField
+                    value={this.state.selectedClient}
+                    onChange={(event, index, value) =>
+                      this.handleClientSelect(event, index, value)
+                    }
+                    hintText="Select Client"
+                    floatingLabelText='Select Client'
+                  >
+                    {clients}
+                  </SelectField>
+                </div>
+
+                <TextField hintText="TO" underlineShow={false} />
+                <Divider />
+                <TextField hintText="FROM" underlineShow={false} />
+                <Divider />
+                <TextField
+                  hintText="SUBJECT"
+                  defaultValue={this.props.user.email}
+                  underlineShow={false}
+                />
+                <Divider />
+                <TextField
+                  hintText="BODY"
+                  multiLine={true}
+                  rows={4}
+                  underlineShow={false}
+                />
+              </Paper>
+
+              <div>
+                <RaisedButton
+                  onClick={() => this.handleEmailModalClose()}
+                  label="Cancel"
+                />
+                <RaisedButton label="Submit" />
+              </div>
+            </Dialog>
+          </RaisedButton>
         </div>
         <div className="billing-items-container">{arr}</div>
 
@@ -95,10 +179,13 @@ function mapStateToProps(state) {
   return {
     user: state.userReducer.user,
     billing: state.billingReducer.billing,
-    selectedJob: state.billingReducer.selectedJob
+    selectedJob: state.billingReducer.selectedJob,
+    clients: state.clientReducer.clients
   };
 }
 
-export default connect(mapStateToProps, { getBilling, getLastBillingNumber })(
-  BillingView
-);
+export default connect(mapStateToProps, {
+  getBilling,
+  getLastBillingNumber,
+  getAllClients
+})(BillingView);

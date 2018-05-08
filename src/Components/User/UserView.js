@@ -90,7 +90,7 @@ export class UserView extends React.Component {
       <div>
         <div>
           <h1>Profile</h1>
-          <img src={this.props.user.picture}  alt='profile-pic'/>
+          <img src={this.props.user.picture} alt="profile-pic" />
         </div>
 
         <div>
@@ -152,6 +152,13 @@ export class UserView extends React.Component {
               floatingLabelText="State"
             />
             <TextField
+              value={this.state.zip}
+              onChange={e => this.handleInputChange(e)}
+              disabled={this.state.disable}
+              name="zip"
+              floatingLabelText="Zip"
+            />
+            <TextField
               value={this.state.country}
               onChange={e => this.handleInputChange(e)}
               disabled={this.state.disable}
@@ -165,14 +172,6 @@ export class UserView extends React.Component {
               name="website"
               floatingLabelText="Website"
             />
-            <TextField
-              value={this.state.zip}
-              onChange={e => this.handleInputChange(e)}
-              disabled={this.state.disable}
-              name="zip"
-              floatingLabelText="Zip"
-            />
-
             <div>
               <Link to="/dashboard">
                 {this.state.edit ? <RaisedButton label="Cancel" /> : null}
@@ -203,7 +202,7 @@ function mapStateToProps(state) {
 }
 
 export default connect(mapStateToProps, {
-    getUser,
+  getUser,
   updateFirstName,
   updateUserInfo,
   updateLastName,

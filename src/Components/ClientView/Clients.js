@@ -31,9 +31,9 @@ export default class Clients extends React.Component {
       phone: this.props.client.phone,
       website: this.props.client.website,
       zip: this.props.client.zip,
-      active : this.props.client.active,
-      checked : !this.props.client.active
-
+      active: this.props.client.active,
+      checked: !this.props.client.active,
+      email: this.props.client.email
     };
 
     this.handleCancel = this.handleCancel.bind(this);
@@ -43,10 +43,10 @@ export default class Clients extends React.Component {
     this.handleUpdateClient = this.handleUpdateClient.bind(this);
   }
 
-  handleCheckBox(){
+  handleCheckBox() {
     let oldState = this.state.checked;
-    this.setState({checked : !oldState});
-    this.setState({active : oldState})
+    this.setState({ checked: !oldState });
+    this.setState({ active: oldState });
   }
 
   handleCancel() {
@@ -72,7 +72,8 @@ export default class Clients extends React.Component {
       phone: this.state.phone,
       website: this.state.website,
       zip: this.state.zip,
-      active : this.state.active
+      active: this.state.active,
+      email : this.state.email
     };
 
     axios
@@ -89,7 +90,7 @@ export default class Clients extends React.Component {
         console.log(e);
       });
 
-      this.setState({openModal : false})
+    this.setState({ openModal: false });
   }
 
   render() {
@@ -108,6 +109,7 @@ export default class Clients extends React.Component {
             <p>{this.props.client.country}</p>
             <p>{this.props.website}</p>
             <p>{this.props.phone}</p>
+            <p>{this.props.email}</p>
           </CardText>
           <CardText>
             <RaisedButton onClick={() => this.handleOpenEdit()} label="EDIT" />
@@ -148,6 +150,13 @@ export default class Clients extends React.Component {
                 floatingLabelText="State"
               />
               <TextField
+                value={this.state.zip}
+                onChange={e => this.handleInputChange(e)}
+                name="zip"
+                hintText="zip"
+                floatingLabelText="Zip"
+              />
+              <TextField
                 value={this.state.country}
                 onChange={e => this.handleInputChange(e)}
                 name="country"
@@ -168,14 +177,19 @@ export default class Clients extends React.Component {
                 hintText="Website"
                 floatingLabelText="Website"
               />
-              <TextField
-                value={this.state.zip}
+
+                <TextField
+                value={this.state.email}
                 onChange={e => this.handleInputChange(e)}
-                name="zip"
-                hintText="zip"
-                floatingLabelText="Zip"
+                name="email"
+                hintText="Email"
+                floatingLabelText="Email"
               />
-              <Checkbox checked={this.state.checked} onCheck={this.handleCheckBox} label='Set as Inactive'/>
+              <Checkbox
+                checked={this.state.checked}
+                onCheck={this.handleCheckBox}
+                label="Set as Inactive"
+              />
               <RaisedButton
                 onClick={() => this.handleCancel()}
                 label="Cancel"

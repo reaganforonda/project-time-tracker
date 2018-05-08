@@ -15,6 +15,7 @@ const jobsController = require("./controllers/jobsController"),
   entryController = require('./controllers/entryController');
 
 const app = express();
+const nodemailer = require('nodemailer')
 
 // .env Desconstructor
 const {

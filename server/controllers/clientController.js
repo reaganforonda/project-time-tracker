@@ -30,7 +30,8 @@ module.exports = {
       phone,
       website,
       zip,
-      active
+      active,
+      email
     } = req.body;
 
     dbInstance
@@ -45,7 +46,8 @@ module.exports = {
         phone,
         website,
         zip,
-        active
+        active,
+        email
       ])
       .then(client => {
         res.status(200).send(client[0]);
@@ -88,7 +90,8 @@ module.exports = {
       phone,
       website,
       zip,
-      active
+      active,
+      email
     } = req.body;
 
     dbInstance
@@ -104,7 +107,8 @@ module.exports = {
         phone,
         website,
         zip,
-        active
+        active,
+        email
       ])
       .then(result => {
         res.status(200).send(result);

@@ -37,7 +37,7 @@ export class ClientForm extends React.Component {
       zipcode: "",
       website: "",
       phone: "",
-      country : ''
+      country: ""
     };
 
     this.handleOpenModal = this.handleOpenModal.bind(this);
@@ -59,8 +59,6 @@ export class ClientForm extends React.Component {
     this.handleResetState();
   }
 
-  
-  
   handleAddClient() {
     let client = {
       user_id: this.props.user.user_id,
@@ -70,11 +68,10 @@ export class ClientForm extends React.Component {
       city: this.state.city,
       state: this.state.state,
       phone: this.state.phone,
-      country: this.state.country, 
+      country: this.state.country,
       website: this.state.website,
       zip: this.state.zipcode,
-      active : true
-      
+      active: true
     };
 
     axios
@@ -100,14 +97,13 @@ export class ClientForm extends React.Component {
       zipcode: "",
       website: "",
       phone: "",
-      country : ''
+      country: ""
     });
 
     this.props.getClients();
   }
 
   render() {
-    
     return (
       <div>
         <FloatingActionButton
@@ -173,8 +169,8 @@ export class ClientForm extends React.Component {
                 floatingLabelText="Zip Code"
               />
 
-                            <TextField
-                type='text'
+              <TextField
+                type="text"
                 value={this.state.country}
                 onChange={e => this.handleTextChange(e)}
                 name="country"
@@ -200,6 +196,15 @@ export class ClientForm extends React.Component {
                 floatingLabelText="Phone"
               />
 
+              <TextField
+                type="email"
+                value={this.state.email}
+                onChange={e => this.handleTextChange(e)}
+                name="email"
+                hintText="Email"
+                floatingLabelText="Email"
+              />
+
               <div>
                 <RaisedButton
                   label="CANCEL"
@@ -207,7 +212,11 @@ export class ClientForm extends React.Component {
                   onClick={() => this.handleCancelModalClick()}
                 />
 
-                <RaisedButton onClick={()=>this.handleAddClient()} label="CONFIRM" primary={true} />
+                <RaisedButton
+                  onClick={() => this.handleAddClient()}
+                  label="CONFIRM"
+                  primary={true}
+                />
               </div>
             </form>
           </Dialog>

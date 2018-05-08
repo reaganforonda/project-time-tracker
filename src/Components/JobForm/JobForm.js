@@ -88,7 +88,6 @@ this.handleResetState();
   handleAddJob(){
     let job = {
       client_id : this.state.client,
-      // TODO: Look at completed ? Should i be auto set to false?
       user_id : this.props.user.user_id,
       job_name : this.state.jobName,
       start_date : this.state.startDate,
