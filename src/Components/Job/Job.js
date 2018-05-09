@@ -1,7 +1,7 @@
 import React from "react";
 import RaisedButton from "material-ui/RaisedButton";
 import { Dialog, Paper } from "material-ui";
-
+import numeral from 'numeral';
 import { connect } from "react-redux";
 import { openModal, closeModal } from "../../ducks/jobReducer";
 import { getTotalHrs, resetState, getTotal, getEnteriesByJobId } from "../../ducks/entryReducer";
@@ -39,8 +39,8 @@ export class Job extends React.Component {
             <p>{entry.entry_date}</p>
             <p>{entry.start_time}</p>
             <p>{entry.end_time}</p>
-            <p>{entry.duration} hrs</p>
-            <p>${entry.total}</p>
+            <p>{numeral(entry.duration).format('0,0.0')} hrs</p>
+            <p>{numeral(entry.total).format('$0,0.00')}</p>
 
           </Paper>
         </div>
@@ -75,8 +75,8 @@ export class Job extends React.Component {
             >
               <Dialog modal={true} open={this.props.open}>
               <div>
-                <h2>Total Hrs: {this.props.totalHrs}</h2>
-                <h2>Total Billing: ${this.props.total}</h2>
+                <h2>Total Hrs: {numeral(this.props.totalHrs).format('0,0.00')}</h2>
+                <h2>Total Billing: {numeral(this.props.total).format('$0,0.00')}</h2>
                 {arr}
               </div>
               <div>
