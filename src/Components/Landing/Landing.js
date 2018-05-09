@@ -8,26 +8,38 @@ export default class Landing extends React.Component {
     const params = {
       particles: {
         number: {
-          value: 20
+          value: 40
         },
 
         line_linked: {
           distance: 100,
-          color: "#EB7F00"
+          color: "#EB7F00",
+          width: 2,
+          opacity: .4,
+          distance : 200
+        },
+        color: { value: "#ACF0F2" },
+
+        size : {
+          value : 8
+        },
+
+        shape : {
+          'stroke.width' : 1,
+          'stroke.color' : '#1695A3'
         }
       }
     };
     return (
       <div className="landing-page">
-        <Particles params={params} className="particles">
-        </Particles>
-          <div>
-            <h1>On The Clock</h1>
+        <Particles params={params} className="particles" />
+        <div class="landing-content">
+          <h1>ON THE CLOCK</h1>
 
-            <a href={process.env.REACT_APP_LOGIN}>
-              <button>Login</button>
-            </a>
-          </div>
+          <a href={process.env.REACT_APP_LOGIN}>
+            <button>Login</button>
+          </a>
+        </div>
       </div>
     );
   }

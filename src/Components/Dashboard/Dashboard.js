@@ -43,12 +43,6 @@ export class Dashboard extends React.Component {
             </Link>
           )}
         </div>
-        {/* <div className='header-bar'>
-          <AppBar/>
-        </div> */}
-
-        {/* TODO: REMOVE */}
-
         <div className="dashboard-container">
           <Switch>
             <Route path="/dashboard/jobview" component={JobView} />

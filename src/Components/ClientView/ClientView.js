@@ -20,7 +20,7 @@ export class ClientView extends React.Component {
     this.getAllClients();
   }
 
-  componentDidUpdate(){
+  componentDidUpdate() {
     this.getAllClients();
   }
 
@@ -40,7 +40,7 @@ export class ClientView extends React.Component {
       return (
         <div key={client.client_id}>
           <Clients
-          clientId = {client.client_id}
+            clientId={client.client_id}
             name={client.client_name}
             addressOne={client.address_one}
             addressTwo={client.address_two}
@@ -50,7 +50,7 @@ export class ClientView extends React.Component {
             website={client.website}
             phone={client.phone}
             email={client.email}
-            client = {client}
+            client={client}
           />
         </div>
       );
@@ -60,18 +60,18 @@ export class ClientView extends React.Component {
         <div className="clientlist-container" />
         {clientArr}
         <div className="floating-action">
-          <ClientForm getClients={this.getAllClients}/>
+          <ClientForm getClients={this.getAllClients} />
         </div>
       </div>
     );
   }
 }
 
-function mapStateToProps(state){ 
+function mapStateToProps(state) {
   return {
-    user : state.userReducer.user,
+    user: state.userReducer.user,
     clients: state.clientReducer.clients
-  }
+  };
 }
 
 export default connect(mapStateToProps, {})(ClientView);

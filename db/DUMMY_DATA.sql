@@ -9,34 +9,34 @@ VALUES
 -- Dummy Data for Clients
 
 INSERT INTO clients
-(user_id, client_name, address_one, address_two, city, state, country, phone, website, zip, active)
+(user_id, client_name, address_one, address_two, city, state, country, phone, website, zip, active, email)
 VALUES
-(1, 'DevMountain Provo', '560 S 100 W St in Provo', '', 'Provo', 'UT', 'United States', '844-433-8686', 'https://devmountain.com/', 84601, true);
+(1, 'Trve Brewing Company', '227 Broadway', '#101', 'Denver', 'CO', 'United States', '303-351-1021', 'https://www.trvebrewing.com/', 80203, true, 'strictlyxsaucers@gmail.com');
 
 INSERT INTO clients
-(user_id, client_name, address_one, address_two, city, state, country, phone, website, zip, active)
+(user_id, client_name, address_one, address_two, city, state, country, phone, website, zip, active, email)
 VALUES
-(1, 'Au Cheval', '800 W Randolph Street', '', 'Chicago', 'IL', 'United States', '312-555-5555', 'https://www.auchevalchicago.com/', 60607, true);
+(1, 'Ratio Beerworks', '2920 Larimer St', '', 'Denver', 'CO', 'United States', '303-997-8288', 'https://www.ratiobeerworks.com/', 80205, true, 'strictlyxsaucers@gmail.com');
 
 INSERT INTO clients
-(user_id, client_name, address_one, address_two, city, state, country, phone, website, zip, active)
+(user_id, client_name, address_one, address_two, city, state, country, phone, website, zip, active, email)
 VALUES
-(1, 'Smith and Sons', '1000 W Fulton Market', '', 'Chicago', 'IL', 'United States', '312-733-9420', 'https://www.swiftandsonschicago.com/', 60607, true);
+(1, 'Denver Beer Co', '1695 Platte St', '', 'Denver', 'CO', 'United States', '303-433-2739', 'https://www.denverbeerco.com/', 80202, true, 'strictlyxsaucers@gmail.com');
 
 INSERT INTO clients
-(user_id, client_name, address_one, address_two, city, state, country, phone, website, zip, active)
+(user_id, client_name, address_one, address_two, city, state, country, phone, website, zip, active, email)
 VALUES
-(1, 'Elske', '1350 W Randolph St', '', 'Chicago', 'IL', 'United States', '312-733-1314', 'https://elskerestaurant.com/', 60607, true);
+(1, 'Revolution Beer LLC', '3340 N. Kedzie Ave', '', 'Chicago', 'IL', 'United States', '773-588-CANS', 'https://www.revbrew.com/', 60618, true, 'strictlyxsaucers@gmail.com');
 
 INSERT INTO clients
-(user_id, client_name, address_one, address_two, city, state, country, phone, website, zip, active)
+(user_id, client_name, address_one, address_two, city, state, country, phone, website, zip, active, email)
 VALUES
-(1, 'Boka', '1729 N Halsted St', '', 'Chicago', 'IL', 'United States', '312-337-6070', 'https://www.bokachicago.com', 60614, true);
+(1, 'Marz Community Brewing Co', '3630 S Iron St', '', 'Chicago', 'IL', 'United States', '773-579-1935', 'https://www.marzbrewing.com/', 60609, true, 'strictlyxsaucers@gmail.com');
 
 INSERT INTO clients
-(user_id, client_name, address_one, address_two, city, state, country, phone, website, zip, active)
+(user_id, client_name, address_one, address_two, city, state, country, phone, website, zip, active, email)
 VALUES
-(1, 'Kumas Corner', '2900 W Belmont Ave', '', 'Chicago', 'IL', 'United States', '773-604-8769', 'https://kumascorner.com/', 60618, true);
+(1, '3 Floyds Brewing Company', '9750 Indiana Pkwy', '', 'Munster', 'IN', 'United States', '46321', 'https://www.3floyds.com/', 46321, true, 'strictlyxsaucers@gmail.com');
 
 
 -- DUMMY DATA FOR JOBS

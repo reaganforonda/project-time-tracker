@@ -9,6 +9,18 @@ $font-main: 'Roboto', sans-serif;
     z-index : -1;
 }
 
-h1 {
-    color : white
+.landing-page h1 {
+    font-size : 72px;
+    letter-spacing: 8px;
+}
+
+.landing-page button {
+    font-size: 30px;
+}
+
+.landing-content {
+    margin-top: auto;
+    margin-bottom: auto;
+    text-align: center;
+    
 }
