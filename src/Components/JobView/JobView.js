@@ -4,11 +4,12 @@ import Job from "../Job/Job";
 import axios from "axios";
 import { Redirect, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
-import { getEnteriesByJobId } from "../../ducks/entryReducer";
+import { getEnteriesByJobId, updateActiveEntry, addActiveEntry } from "../../ducks/entryReducer";
 import {
   getClockedInJob,
   getAllActiveJobs,
   getOffTheClockJobs,
+  updateStartTime,
   clockOutJob
 } from "../../ducks/jobReducer";
 
@@ -18,8 +19,8 @@ export class JobView extends React.Component {
     this.state = {
       jobs: [],
       job: {},
-      startTime: "",
-      activeEntry: {},
+      startTime: this.props.startTime,
+      activeEntry: this.props.activeEntry,
       modalOpen: false
     };
 
@@ -113,7 +114,7 @@ export class JobView extends React.Component {
       console.log(`Error while trying to Update Job: ${e}`);
     });
     
-    this.updateEntry(this.state.activeEntry);
+    this.updateEntry(this.props.activeEntry);
   }
 
   // Get time as soon as the user hit clock in
@@ -129,9 +130,10 @@ export class JobView extends React.Component {
   }
 
   calculateDuration(endTime) {
+    
     let startInMinutes =
-      ~~this.state.startTime.getHours() * 60 +
-      ~~this.state.startTime.getMinutes();
+      ~~this.props.clockInTime.getHours() * 60 +
+      ~~this.props.clockInTime.getMinutes();
     let endInMinutes = ~~endTime.getHours() * 60 + ~~endTime.getMinutes();
     let duration = 0;
 
@@ -148,7 +150,10 @@ export class JobView extends React.Component {
 
   addNewEntry(job) {
     let time = this.getClockTime();
-    this.setState({ startTime: time });
+    // this.setState({ startTime: time });
+
+    this.props.updateStartTime(time);
+    
     let entry_date = this.formatDate(time);
     let start_time = this.formatTime(time);
 
@@ -161,17 +166,20 @@ export class JobView extends React.Component {
       billed: false
     };
 
-    axios
-      .post(`http://localhost:3005/api/entry/add`, entry)
-      .then(result => {
-        this.setState({ activeEntry: result.data });
-      })
-      .catch(e => {
-        console.log(`Error in adding new Entry: ${e}`);
-      });
+    // axios
+    //   .post(`http://localhost:3005/api/entry/add`, entry)
+    //   .then(result => {
+    //     this.setState({ activeEntry: result.data });
+    //   })
+    //   .catch(e => {
+    //     console.log(`Error in adding new Entry: ${e}`);
+    //   });
+
+    this.props.addActiveEntry(entry);
   }
 
   updateEntry(activeEntry) {
+    console.log(this.props.activeEntry)
     let time = this.getClockTime();
     let end_time = this.formatTime(time);
 
@@ -180,27 +188,25 @@ export class JobView extends React.Component {
 
     let updateEntry = { duration: duration, end_time: end_time, total };
 
-    axios
-      .put(
-        `http://localhost:3005/api/entry/update/${activeEntry.job_id}/${
-          activeEntry.user_id
-        }/${activeEntry.entry_id}`,
-        updateEntry
-      )
-      .then(result => {
-        console.log(result.data);
-      })
-      .catch(e => {
-        console.log(`Error in updating Entry: ${e}`);
-      });
+    this.props.updateActiveEntry(activeEntry.job_id, this.props.user.user_id, activeEntry.entry_id, updateEntry);
+
+    // axios
+    //   .put(
+    //     `http://localhost:3005/api/entry/update/${activeEntry.job_id}/${
+    //       activeEntry.user_id
+    //     }/${activeEntry.entry_id}`,
+    //     updateEntry
+    //   )
+    //   .then(result => {
+    //     console.log(result.data);
+    //   })
+    //   .catch(e => {
+    //     console.log(`Error in updating Entry: ${e}`);
+    //   });
   }
 
   render() {
 
-    console.log(this.props.jobOnClock)
-    if(!this.props.user.user_id) {
-      <Redirect to='/'/>
-    }
     let allJobs = this.props.offTheClockJobs.map(job => {
       return (
         <div key={job.job_id}>
@@ -256,7 +262,9 @@ function mapStateToProps(state) {
     user: state.userReducer.user,
     jobOnClock: state.jobReducer.jobOnClock,
     offTheClockJobs: state.jobReducer.offTheClockJobs,
-    clients: state.clientReducer.clients
+    clients: state.clientReducer.clients,
+    clockInTime : state.jobReducer.clockInTime,
+    activeEntry : state.entryReducer.activeEntry
   };
 }
 
@@ -265,5 +273,8 @@ export default connect(mapStateToProps, {
   getAllActiveJobs,
   getOffTheClockJobs,
   getClockedInJob,
-  clockOutJob
+  updateStartTime,
+  updateActiveEntry,
+  clockOutJob,
+  addActiveEntry
 })(withRouter(JobView));

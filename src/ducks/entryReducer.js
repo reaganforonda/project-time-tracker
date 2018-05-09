@@ -15,7 +15,8 @@ const ENTRY_INTIAL_STATE = {
   entries: [],
   total: 0,
   totalHrs: 0,
-  entry: {}
+  entry: {},
+  activeEntry: {}
 };
 
 const UPDATE_CLIENT_ID = "UPDATE_CLIENT_ID";
@@ -34,6 +35,43 @@ const GET_ENTRIES_BY_JOB_ID = "GET_ENTRIES_BY_JOB_ID";
 const RESET_STATE = "RESET_STATE";
 const GET_TOTAL = "GET_TOTAL";
 const GET_HRS = "GET_HRS";
+const ADD_ACTIVE_ENTRY = "ADD_ACTIVE_ENTRY";
+const UPDATE_ACTIVE_ENTRY = "UPDATE_ACTIVE_ENTRY"
+
+export function addActiveEntry(entry) {
+  let newEntry = axios
+    .post(`http://localhost:3005/api/entry/add`, entry)
+    .then(result => {
+      console.log(result.data);
+      return result.data;
+    })
+    .catch(e => {
+      console.log(`Error while trying to add entry: ${e}`);
+    });
+  return {
+    type: ADD_ACTIVE_ENTRY,
+    payload: newEntry
+  };
+}
+
+export function updateActiveEntry(jobid, userid, entryid, updateEntry) {
+  axios
+    .put(
+      `http://localhost:3005/api/entry/update/${jobid}/${userid}/${entryid}`,
+      updateEntry
+    )
+    .then(result => {
+      console.log(result.data);
+    })
+    .catch(e => {
+      console.log(`Error in updating Entry: ${e}`);
+    });
+
+  return {
+    type: UPDATE_ACTIVE_ENTRY,
+    payload: {}
+  };
+}
 
 export function updateClientID(client_id) {
   return {
@@ -186,7 +224,6 @@ export function getTotalHrs(userid, jobid) {
   };
 }
 
-
 export default function entryReducer(state = ENTRY_INTIAL_STATE, action) {
   switch (action.type) {
     case UPDATE_CLIENT_ID:
@@ -233,6 +270,12 @@ export default function entryReducer(state = ENTRY_INTIAL_STATE, action) {
 
     case GET_HRS + "_FULFILLED":
       return Object.assign({}, state, { totalHrs: action.payload });
+
+    case ADD_ACTIVE_ENTRY + "_FULFILLED":
+      return Object.assign({}, state, { activeEntry: action.payload });
+
+      case UPDATE_ACTIVE_ENTRY + "_FULFILLED":
+      return Object.assign({}, state, {activeEntry : action.payload})
 
     default:
       return state;

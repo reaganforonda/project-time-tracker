@@ -18,7 +18,8 @@ const JOB_INITIAL_STATE = {
   clockOutTime: "",
   clockedIn: false,
   newJob: {},
-  open: false
+  open: false,
+  active : {}
 };
 
 const UPDATE_CLOCK_IN_TIME = "UPDATE_CLOCK_IN_TIME";
@@ -32,6 +33,16 @@ const GET_CLOCKED_IN_JOB = "SET_CLOCKED_IN_JOB";
 const RESET_CLOCK_IN_JOB = "RESET_CLOCK_IN_JOB";
 const UPDATE_OFF_THE_CLOCK_JOBS = "UPDATE_OFF_THE_CLOCK_JOBS";
 const GET_OFF_THE_CLOCK_JOBS = "GET_OFF_THE_CLOCK_JOBS";
+const UPDATE_START_TIME = 'UPDATE_START_TIME';
+
+
+export function updateStartTime(time) {
+
+  return {
+    type : UPDATE_START_TIME,
+    payload : time
+  }
+} 
 
 export function getClockedInJob(user_id) {
   let clockIn = axios
@@ -175,6 +186,9 @@ export default function jobReducer(state = JOB_INITIAL_STATE, action) {
 
       case GET_CLOCKED_IN_JOB +"_FULFILLED":
       return Object.assign({}, state, {jobOnClock : action.payload})
+
+      case UPDATE_START_TIME :      
+      return Object.assign({}, state, {clockInTime : action.payload})
 
     default:
       return state;
