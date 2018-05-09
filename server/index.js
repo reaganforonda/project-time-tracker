@@ -150,9 +150,13 @@ app.post(`/api/s3/upload`, s3Controller.sign)
 // ###### ENDPOINTS - JOB ######
 app.post('/api/job', jobsController.addJob);
 app.get('/api/jobs/open/:userId', jobsController.getAllOpenJobs)
+app.put('/api/jobs/updateclock/:userid/:jobid/:clock', jobsController.updateClockInJob)
+app.get('/api/jobs/clockin/:userid/', jobsController.getClockedInJobs)
+app.get('/api/jobs/clockout/:userid/', jobsController.getClockedOutJobs)
 app.get('/api/jobs/:userId', jobsController.getJobsByUserID)
 app.get('/api/jobs/billing/:userid', jobsController.getJobsForBilling)
 app.put('/api/jobs/billing/update/:userid/:jobid', jobsController.updateJobsBilling)
+
 
 
 // ###### ENDPOINTS - Client ######
