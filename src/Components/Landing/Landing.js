@@ -16,7 +16,6 @@ export default class Landing extends React.Component {
           color: "#EB7F00",
           width: 2,
           opacity: .4,
-          distance : 200
         },
         color: { value: "#ACF0F2" },
 

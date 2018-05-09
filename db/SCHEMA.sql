@@ -50,7 +50,8 @@ CREATE TABLE jobs
     end_date DATE,
     completed BOOLEAN,
     rate DECIMAL,
-    description TEXT
+    description TEXT,
+    clocked_in BOOLEAN
 );
 
 CREATE TABLE enteries

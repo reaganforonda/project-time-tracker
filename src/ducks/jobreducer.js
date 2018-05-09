@@ -11,7 +11,7 @@ const JOB_INITIAL_STATE = {
   completed: false,
   rate: 0,
   description: "",
-  jobs: [],
+  allActiveJobs: [],
   jobOnClock: {},
   clockInTime: "",
   clockOutTime: "",
@@ -20,15 +20,12 @@ const JOB_INITIAL_STATE = {
   open: false
 };
 
-// const GET_ALL_JOBS = "GET_ALL_JOBS"; TODO: REMOVE
+
 const UPDATE_CLOCK_IN_TIME = "UPDATE_CLOCK_IN_TIME";
-// const UPDATE_CLOCK_OUT_TIME = "UPDATE_CLOCK_OUT_TIME"; TODO: REMOVE
 const CLOCK_IN_JOB = "CLOCK_IN_JOB";
 const CLOCK_OUT_JOB = "CLOCK_OUT_JOB";
-
 const GET_ACTIVE_JOBS = "GET_ACTIVE_JOBS";
 const ADD_JOB = "ADD_JOB";
-
 const MODAL_OPEN = "MODAL_OEPN";
 const MODAL_CLOSE = "MODAL_CLOSE";
 
@@ -112,6 +109,9 @@ export default function jobReducer(state = JOB_INITIAL_STATE, action) {
       
       case MODAL_CLOSE : 
       return Object.assign({}, state, {open : action.payload})
+
+      case GET_ACTIVE_JOBS + "_FULFILLED":
+      return Object.assign({}, state, {allActiveJobs : action.payload})
 
     default:
       return state;

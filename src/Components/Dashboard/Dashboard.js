@@ -1,7 +1,6 @@
 import React from "react";
 import Menu from "../Menu/Menu";
-import { Link, withRouter, Switch, Route } from "react-router-dom";
-import AppBar from "material-ui/AppBar";
+import { withRouter, Switch, Route } from "react-router-dom";
 import { getUser } from "../../ducks/userReducer";
 import { connect } from "react-redux";
 import JobView from "../JobView/JobView";
@@ -10,7 +9,6 @@ import ClientsView from "../ClientView/ClientView";
 import BillingView from "../BillingView/BillingView";
 import UserView from "../User/UserView";
 import InvoiceView from "../InvoiceView/InvoiceView";
-
 
 export class Dashboard extends React.Component {
   constructor(props) {
@@ -25,30 +23,13 @@ export class Dashboard extends React.Component {
   componentDidMount() {
     this.props.getUser();
     this.setState({ pathname: this.props.location.pathname });
+    
   }
+
+ 
 
   render() {
     let { user_name, picture } = this.props.user;
-
-    const data = {
-      labels : ['1', '2', '3'],
-      datasets : [{
-        label : 'My first Dataset',
-        backgroundColor : 'rgb(255,99,132)',
-        borderColor: 'rgb(255,99,132)',
-        data : [0,10,4]
-      }]
-    }
-
-    const barData = {
-      labels : ["Test 1", "Test 2", "Test 3"],
-      datasets : [{
-        label : "My Bar Chart",
-        backgroundColor : 'rgb(255,99,132)',
-        borderColor: 'rgb(255,99,132)',
-        data : [100, 300, 400]
-      }]
-    }
 
     return (
       <div className="Dashboard">
@@ -65,8 +46,6 @@ export class Dashboard extends React.Component {
             <Route path="/dashboard/invoiceview" component={InvoiceView} />
           </Switch>
         </div>
-
-        <div className="footer-dashboard" />
       </div>
     );
   }
