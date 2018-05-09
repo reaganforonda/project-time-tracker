@@ -94,13 +94,24 @@ export default class Clients extends React.Component {
   }
 
   render() {
+
+    const style = {
+      bg : {
+        'background-color' : "#225378"
+      },
+
+      pText : {
+        'color' : 'white'
+      },
+
+    }
     return (
       <div className="card-container">
-        <Card className="card">
+        <Card style={style.bg}className="card">
           <CardHeader>
             <h1>{this.props.name}</h1>
           </CardHeader>
-          <CardText>
+          <CardText style={style.pText}>
             <p>{this.props.addressOne}</p>
             <p>{this.props.addressTwo}</p>
             <p>

@@ -8,13 +8,11 @@ import {
   RaisedButton,
   FloatingActionButton,
   MenuItem,
-  
   SelectField
 } from "material-ui";
 
-import {connect} from 'react-redux';
-import {getAllActiveJobs} from '../../ducks/jobReducer'
-
+import { connect } from "react-redux";
+import { getAllActiveJobs } from "../../ducks/jobReducer";
 
 export class JobForm extends React.Component {
   constructor(props) {
@@ -47,7 +45,7 @@ export class JobForm extends React.Component {
   }
 
   handleCancelModalClick() {
-this.handleResetState();
+    this.handleResetState();
   }
 
   handleTextChange(e) {
@@ -69,7 +67,6 @@ this.handleResetState();
     return formatedDate;
   }
 
-  
   handleGetClients() {
     axios
       .get(`http://localhost:3005/api/clients/${this.props.user.user_id}`)
@@ -85,33 +82,36 @@ this.handleResetState();
     this.setState({ client: value });
   };
 
-  handleAddJob(){
+  handleAddJob() {
     let job = {
-      client_id : this.state.client,
-      user_id : this.props.user.user_id,
-      job_name : this.state.jobName,
-      start_date : this.state.startDate,
-      completed : false,
-      rate : this.state.hourlyRate,
-      description : this.state.jobDescription
-    }
+      client_id: this.state.client,
+      user_id: this.props.user.user_id,
+      job_name: this.state.jobName,
+      start_date: this.state.startDate,
+      completed: false,
+      rate: this.state.hourlyRate,
+      description: this.state.jobDescription
+    };
 
-    axios.post(`http://localhost:3005/api/job`, (job)).then((result) => {
-      console.log(result.data);
-    }).catch((e) => {
-      console.log(`${e}`)
-    })
+    axios
+      .post(`http://localhost:3005/api/job`, job)
+      .then(result => {
+        console.log(result.data);
+      })
+      .catch(e => {
+        console.log(`${e}`);
+      });
 
     this.props.getAllActiveJobs();
   }
 
-  handleOnConfirm(){
+  handleOnConfirm() {
     this.handleAddJob();
-    this.setState({modalOpen : false});
+    this.setState({ modalOpen: false });
     this.handleResetState();
   }
 
-  handleResetState(){
+  handleResetState() {
     this.setState({
       modalOpen: false,
       jobName: "",
@@ -119,17 +119,17 @@ this.handleResetState();
       startDate: null,
       hourlyRate: 0,
       client: ""
-    })
+    });
   }
 
   render() {
     let clientArr = this.state.clients.map(client => {
       return (
-          <MenuItem
-            key={client.client_id}
-            primaryText={client.client_name}
-            value={client.client_id}
-          />
+        <MenuItem
+          key={client.client_id}
+          primaryText={client.client_name}
+          value={client.client_id}
+        />
       );
     });
 
@@ -146,11 +146,9 @@ this.handleResetState();
               hintText="Select Client"
               floatingLabelText="Select Client"
               value={this.state.client}
-     
               onChange={(event, index, value) =>
                 this.handleClientSelect(event, index, value)
               }
-              
             >
               {clientArr}
             </SelectField>
@@ -194,7 +192,11 @@ this.handleResetState();
                   onClick={() => this.handleCancelModalClick()}
                 />
 
-                <RaisedButton label="CONFIRM" primary={true} onClick={()=>this.handleOnConfirm()}/>
+                <RaisedButton
+                  label="CONFIRM"
+                  primary={true}
+                  onClick={() => this.handleOnConfirm()}
+                />
               </div>
             </form>
           </Dialog>
@@ -204,10 +206,10 @@ this.handleResetState();
   }
 }
 
-function mapStateToProps(state){
+function mapStateToProps(state) {
   return {
-    user : state.userReducer.user
-  }
+    user: state.userReducer.user
+  };
 }
 
-export default connect(mapStateToProps, {getAllActiveJobs})(JobForm)
+export default connect(mapStateToProps, { getAllActiveJobs })(JobForm);

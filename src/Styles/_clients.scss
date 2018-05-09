@@ -1,15 +1,14 @@
-.card{
-    width: 40vw;
-    margin-bottom: 10px;
+.card {
+  width: 24vw;
+  margin-bottom: 10px;
+  border: #eb7f00 solid 1px;
 }
 
-.card h1{
-    font-size: 30px;
+.card h1 {
+  font-size: 40px;
+  text-transform: uppercase;
 }
+
 .card p {
-    
-}
-
-.card-container {
-
+  line-height: 30px;
 }

@@ -225,7 +225,7 @@ export class JobView extends React.Component {
         <div className="job-container">
           <div className="clock-in-container">
             <div className="clockedIn">
-              <h1>On The Clock</h1>
+              <h1>ON THE CLOCK</h1>
               
             </div>
             {this.state.job.job_id ? (
@@ -242,7 +242,7 @@ export class JobView extends React.Component {
 
           <div className="clock-out-container">
             <div className="clockedOut">
-              <h1>Off The Clock</h1>
+              <h1>OFF THE CLOCK</h1>
             </div>
             {allJobs}
           </div>

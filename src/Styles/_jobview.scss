@@ -1,25 +1,36 @@
 $h1-size: 40px;
-$opacity: .9;
-$clockIn-back : rgb(0, 188, 212);
-$clockOut-back : rgb(183, 28, 28);
+$opacity: 1;
+$clockIn-back : rgb(22, 149, 163);
+$clockOut-back : rgb(20, 22, 22);
 $floating-action-pos: 15px;
+$font-color: #EB7F00;
+$height: 70px;
+$padding: 15px;
+$border-color : #ACF0F2;
 
 h1 {
     font-size: $h1-size;
     text-align: center;
-}
-
-.job-container{
-    border: red 1px solid;
+    color : $font-color;
 }
 
 .clockedIn {
+    border-color: $border-color;
+    border : 1px solid;
+    padding-top: $padding;
     background : rgba($clockIn-back, $opacity);
+    margin-bottom : 10px;
+    height : $height;
 }
 
 
 .clockedOut {
+    border-color: $border-color;
+    border : 1px solid;
+    padding-top: $padding;
     background: rgba($clockOut-back, $opacity);
+    height : $height;
+    
 }
 
 .floating-action {
