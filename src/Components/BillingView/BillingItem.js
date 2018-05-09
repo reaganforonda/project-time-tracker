@@ -1,17 +1,12 @@
 import React from "react";
 import {
   Paper,
-  // TextField, TODO: REMOVE
   FlatButton,
   RaisedButton,
   Dialog,
   DatePicker
 } from "material-ui";
 
-// import ActionFavorite from "material-ui/svg-icons/action/favorite"; TODO: REMOVE
-// import ActionFavoriteBorder from "material-ui/svg-icons/action/favorite-border"; TODO: REMOVE
-// import Visibility from "material-ui/svg-icons/action/visibility"; TODO: REMOVE
-// import VisibilityOff from "material-ui/svg-icons/action/visibility-off"; TODO: REMOVE
 import { connect } from "react-redux";
 
 import {
@@ -24,6 +19,8 @@ import {
   getEnteriesForJob
 } from "../../ducks/billingReducer";
 import { Link } from "react-router-dom";
+import numeral from 'numeral';
+import moment from 'moment'
 
 export class BillingItem extends React.Component {
   constructor(props) {
@@ -114,8 +111,9 @@ export class BillingItem extends React.Component {
         <Paper>
           <p>{this.props.jobId}</p>
           <p>{this.props.jobName}</p>
-          <p>{this.props.job.total_hrs}</p>
-          <p>{this.props.total}</p>
+          <p>{this.props.job.client_name}</p>
+          <p>{numeral(this.props.job.total_hrs).format('0,0.0')} Total Hrs.</p>
+          <p>{numeral(this.props.total).format('$0,0.00')}</p>
           <FlatButton
             onClick={() => this.handleOpenModal()}
             label="Select For Billing"
@@ -124,8 +122,8 @@ export class BillingItem extends React.Component {
               <p>Invoice Number: {this.state.invoiceNumber}</p>
               <p>Client Name: {this.props.job.client_name}</p>
               <p>Job Name: {this.props.job.job_name}</p>
-              <p>Total Hours: {this.props.job.total_hrs}</p>
-              <p>Total: {this.props.job.total}</p>
+              <p>Total Hours: {numeral(this.props.job.total_hrs).format('0,0.0')}</p>
+              <p>Total: {numeral(this.props.job.total).format('$0,0.00')}</p>
 
               <DatePicker
                 onChange={this.handleJobEndDateSelect}

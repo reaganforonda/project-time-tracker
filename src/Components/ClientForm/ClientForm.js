@@ -183,17 +183,15 @@ export class ClientForm extends React.Component {
                 hintText="Website"
                 floatingLabelText="Website"
               />
-              <div>
-                <Phone />
-                <TextField
-                  type="text"
-                  value={this.state.phone}
-                  onChange={e => this.handleTextChange(e)}
-                  name="phone"
-                  hintText="Phone"
-                  floatingLabelText="Phone"
-                />
-              </div>
+
+              <TextField
+                type="text"
+                value={this.state.phone}
+                onChange={e => this.handleTextChange(e)}
+                name="phone"
+                hintText="Phone"
+                floatingLabelText="Phone"
+              />
 
               <TextField
                 type="email"

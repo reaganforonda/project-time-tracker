@@ -5,6 +5,8 @@ import { getUser } from "../../ducks/userReducer";
 import printJS from "../../../node_modules/print-js/src/index";
 import { Link } from "react-router-dom";
 import { RaisedButton } from "material-ui";
+import numeral from 'numeral';
+import moment from 'moment';
 
 export class InvoiceView extends React.Component {
   constructor(props) {
@@ -81,9 +83,9 @@ export class InvoiceView extends React.Component {
           <p>
             {this.props.selectedJob.job_name} - {entry.comment}
           </p>
-          <p>Hrs: {entry.duration}</p>
-          <p>Rate:</p>
-          <p>SubTotal: ${entry.total}</p>
+          <p>Hrs: {numeral(entry.duration).format('0,0.00')}</p>
+          <p>Rate: {numeral(this.props.selectedJob.rate).format('$0,0.00')} / hr</p>
+          <p>SubTotal: {numeral(entry.total).format('$0,0.00')}</p>
         </div>
       );
     });
@@ -111,7 +113,7 @@ export class InvoiceView extends React.Component {
               Invoice Date: {this.handleDateConvert(this.props.invoiceDate)}
             </p>
             <p>Due Date: {this.handleDateConvert(this.props.dueDate)}</p>
-            <p>Total: ${this.props.selectedJob.total}</p>
+            <p>Total: {numeral(this.props.selectedJob.total).format('$0,0.00')}</p>
           </div>
 
           <div className="client-info">
@@ -131,7 +133,7 @@ export class InvoiceView extends React.Component {
           <div>
             <div className="total-box">
               <p>Total</p>
-              <div>${this.props.selectedJob.total}</div>
+              <div>{numeral(this.props.selectedJob.total).format('$0,0.00')}</div>
             </div>
             <div className="remit">
               Remit To:

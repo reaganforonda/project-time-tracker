@@ -9,6 +9,7 @@ import {
 } from "material-ui";
 
 import moment from 'moment';
+import numeral from 'numeral';
 
 export default class Entries extends React.Component {
   constructor(props) {
@@ -47,7 +48,7 @@ export default class Entries extends React.Component {
           <p>{moment(this.props.date).format('MMMM Do, YYYY')}</p>
           <p>{this.props.startTime}</p>
           <p>{this.props.endTime}</p>
-          <p>{this.props.duration} Hrs</p>
+          <p>{numeral(this.props.duration).format('0,0.0')} Hrs</p>
           <RaisedButton onClick={() => this.handleModalOpen()} label="Edit">
             <Dialog modal={true} open={this.state.openModal}>
               <h1>{this.props.jobname}</h1>

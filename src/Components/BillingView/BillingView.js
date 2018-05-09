@@ -16,6 +16,7 @@ import { connect } from "react-redux";
 import { getBilling, getLastBillingNumber } from "../../ducks/billingReducer";
 import { getAllClients } from "../../ducks/clientReducer";
 import Dropzone from "react-dropzone";
+import numeral from "numeral";
 
 export class BillingView extends React.Component {
   constructor(props) {
