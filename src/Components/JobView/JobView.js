@@ -2,7 +2,7 @@ import React from "react";
 import JobForm from "../JobForm/JobForm";
 import Job from "../Job/Job";
 import axios from "axios";
-import { Redirect, withRouter } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { getEnteriesByJobId, updateActiveEntry, addActiveEntry } from "../../ducks/entryReducer";
 import {
@@ -17,10 +17,6 @@ export class JobView extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      jobs: [],
-      job: {},
-      startTime: this.props.startTime,
-      activeEntry: this.props.activeEntry,
       modalOpen: false
     };
 
@@ -30,7 +26,7 @@ export class JobView extends React.Component {
     this.formatDate = this.formatDate.bind(this);
 
     this.handleSelectClients = this.handleSelectClients.bind(this);
-    this.getAllActiveJobs = this.getAllActiveJobs.bind(this);
+    // this.getAllActiveJobs = this.getAllActiveJobs.bind(this);TODO: REMOVE
     this.handleClockIn = this.handleClockIn.bind(this);
     this.handleClockOut = this.handleClockOut.bind(this);
     this.formatDate = this.formatDate.bind(this);
@@ -40,7 +36,7 @@ export class JobView extends React.Component {
   }
 
   componentDidMount() {
-    // this.getAllActiveJobs();
+    // this.getAllActiveJobs(); TODO: REMOVE
     this.props.getOffTheClockJobs(this.props.user.user_id);
     this.props.getClockedInJob(this.props.user.user_id)
   }
@@ -67,16 +63,16 @@ export class JobView extends React.Component {
     this.setState({ client: value });
   }
 
-  getAllActiveJobs() {
-    let userId = this.props.user.user_id;
+  // getAllActiveJobs() {
+  //   let userId = this.props.user.user_id;
 
-    axios
-      .get(`http://localhost:3005/api/jobs/open/${userId}`)
-      .then(jobs => {
-        this.setState({ jobs: jobs.data });
-      })
-      .catch(e => console.log(e));
-  }
+  //   axios
+  //     .get(`http://localhost:3005/api/jobs/open/${userId}`)
+  //     .then(jobs => {
+  //       this.setState({ jobs: jobs.data });
+  //     })
+  //     .catch(e => console.log(e));
+  // }TODO:REMOVE
 
   handleClockIn(job) {
 
@@ -150,8 +146,7 @@ export class JobView extends React.Component {
 
   addNewEntry(job) {
     let time = this.getClockTime();
-    // this.setState({ startTime: time });
-
+    
     this.props.updateStartTime(time);
     
     let entry_date = this.formatDate(time);
@@ -166,15 +161,6 @@ export class JobView extends React.Component {
       billed: false
     };
 
-    // axios
-    //   .post(`http://localhost:3005/api/entry/add`, entry)
-    //   .then(result => {
-    //     this.setState({ activeEntry: result.data });
-    //   })
-    //   .catch(e => {
-    //     console.log(`Error in adding new Entry: ${e}`);
-    //   });
-
     this.props.addActiveEntry(entry);
   }
 
@@ -184,25 +170,11 @@ export class JobView extends React.Component {
     let end_time = this.formatTime(time);
 
     let duration = this.calculateDuration(time);
-    let total = duration * this.state.job.rate;
+    let total = duration * this.props.jobOnClock.rate;
 
     let updateEntry = { duration: duration, end_time: end_time, total };
 
     this.props.updateActiveEntry(activeEntry.job_id, this.props.user.user_id, activeEntry.entry_id, updateEntry);
-
-    // axios
-    //   .put(
-    //     `http://localhost:3005/api/entry/update/${activeEntry.job_id}/${
-    //       activeEntry.user_id
-    //     }/${activeEntry.entry_id}`,
-    //     updateEntry
-    //   )
-    //   .then(result => {
-    //     console.log(result.data);
-    //   })
-    //   .catch(e => {
-    //     console.log(`Error in updating Entry: ${e}`);
-    //   });
   }
 
   render() {
