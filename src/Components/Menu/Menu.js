@@ -2,29 +2,73 @@ import React from "react";
 import Drawer from "material-ui/Drawer";
 import MenuItem from "material-ui/MenuItem";
 import Avatar from "material-ui/Avatar";
-import { Link, withRouter } from "react-router-dom";
+import {withRouter } from "react-router-dom";
 
 import { connect } from "react-redux";
 
 export function Menu(props) {
-  const style = {
-      "background-color": "#225378"
+  let navToDashboard = () => {
+    if(props.user.user_id) {
+      props.history.push("/dashboard");
+    } else {
+      props.history.push("/");
+    }
+    
   };
+
+  let navToJobView = () => {
+    if(props.user.user_id) {
+      props.history.push("/dashboard/jobview");
+    } else {
+      props.history.push('/')
+    }
+    
+  };
+
+  let navToEntryView = () => {
+    if(props.user.user_id) {
+
+      props.history.push("/dashboard/entryview");
+    } else {
+      props.history.push('/')
+    }
+  };
+
+  let navToClientView = () => {
+    if(props.user.user_id) {
+
+      props.history.push("/dashboard/clientsview");
+    } else {
+      props.history.push('/')
+    }
+  };
+
+  let navToBillingView = () => {
+    if(props.user.user_id) {
+
+      props.history.push("/dashboard/billingview");
+    } else {
+      props.history.push('/')
+    }
+  };
+
+  let navToUserView = () => {
+    if(props.user.user_id) {
+      props.history.push('/dashboard/userview')
+    } else {
+      props.history.push('/')
+    }
+  }
+
   return (
     <div className="menu">
-      <Drawer
-        docked={true}
-        width={200}
-        open={true}
-        className="menu-drawer"
-        style={style}
-      >
-        {props.user.user_id ? (
+      <Drawer docked={true} width={200} open={true} className="menu-drawer">
+        {/* {props.user.user_id ? (
           <div>
             <Link to="/dashboard/userview">
-              <Avatar src={props.img} size={75} />
+              <Avatar onClick={navToUserView} src={props.img} size={75} />
             </Link>
-            <p>{props.userName}</p>{" "}
+            <p>{props.userName}</p>
           </div>
         ) : (
           <div>
@@ -32,24 +76,20 @@ export function Menu(props) {
               <Avatar src={props.img} size={75} />
             </Link>
           </div>
-        )}
+        )} */}
+
+        <div>
+        <Avatar src={props.img} size={75} onClick={navToUserView}/>
+        </div>
+
 
         <div className="menu-items">
-          <Link className="link" to="/dashboard/">
-            <MenuItem primaryText="DASHBOARD" />
-          </Link>
-          <Link className="link" to="/dashboard/jobview">
-            <MenuItem style={style.bg} primaryText="JOBS" />
-          </Link>
-          <Link className="link" to="/dashboard/entryview">
-            <MenuItem primaryText="ENTERIES" />
-          </Link>
-          <Link className="link" to="/dashboard/clientsview">
-            <MenuItem primaryText="CLIENTS" />
-          </Link>
-          <Link className="link" to="/dashboard/billingview">
-            <MenuItem primaryText="BILLING" />
-          </Link>
+          <MenuItem onClick={navToDashboard} primaryText="DASHBOARD" />
+          <MenuItem onClick={navToJobView} primaryText="JOBS" />
+          <MenuItem onClick={navToEntryView} primaryText="ENTERIES" />
+          <MenuItem onClick={navToClientView} primaryText="CLIENTS" />
+          <MenuItem onClick={navToBillingView} primaryText="BILLING" />
+          
         </div>
       </Drawer>
     </div>

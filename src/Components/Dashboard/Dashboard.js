@@ -10,7 +10,7 @@ import ClientsView from "../ClientView/ClientView";
 import BillingView from "../BillingView/BillingView";
 import UserView from "../User/UserView";
 import InvoiceView from "../InvoiceView/InvoiceView";
-import {Doughnut, Bar} from 'react-chartjs-2'
+
 
 export class Dashboard extends React.Component {
   constructor(props) {
@@ -65,10 +65,6 @@ export class Dashboard extends React.Component {
             <Route path="/dashboard/invoiceview" component={InvoiceView} />
           </Switch>
         </div>
-
-        <Doughnut data={data}/>
-
-        <Bar data={barData}/>
 
         <div className="footer-dashboard" />
       </div>

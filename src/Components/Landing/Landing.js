@@ -33,11 +33,11 @@ export default class Landing extends React.Component {
     return (
       <div className="landing-page">
         <Particles params={params} className="particles" />
-        <div class="landing-content">
+        <div className="landing-content">
           <h1>ON THE CLOCK</h1>
 
           <a href={process.env.REACT_APP_LOGIN}>
-            <button>Login</button>
+            <button>LOGIN</button>
           </a>
         </div>
       </div>
