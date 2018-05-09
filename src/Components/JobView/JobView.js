@@ -2,22 +2,8 @@ import React from "react";
 import JobForm from "../JobForm/JobForm";
 import Job from "../Job/Job";
 import axios from "axios";
-// import ContentAdd from "material-ui/svg-icons/content/add"; TODO: REMOVE
 import { withRouter} from "react-router-dom";
-// import {
-//   // RaisedButton,
-//   // DatePicker, TODO: REMOVE
-//   TextField,
-//   Dialog,
-//   FloatingActionButton,
-//   MenuItem,
-//   SelectField
-// } from "material-ui"; TODO: REMOVE
-
-
-// import { getUser } from "../../ducks/userReducer"; TODO: REMOVE
 import { connect } from "react-redux";
-// import { DH_CHECK_P_NOT_PRIME } from "constants"; TODO: REMOVE
 import {getEnteriesByJobId} from '../../ducks/entryReducer'
 
 export class JobView extends React.Component {
@@ -121,14 +107,6 @@ export class JobView extends React.Component {
     return timestamp;
   }
 
-  // // Formate Datepicker's date to something for useable
-  // formatDate(date) {
-  //   let formatedDate = `${date.getMonth() +
-  //     1}/${date.getDate()}/${date.getFullYear()}`;
-
-  //   return formatedDate;
-  // } TODO: REMOVE DUPLICATE
-
   formatTime(date) {
     let formatedTime = `${date.getHours()}:${date.getMinutes()}`;
     console.log(formatedTime);
@@ -204,8 +182,7 @@ export class JobView extends React.Component {
   }
 
   render() {
-    // let {user_name } = this.props.user; TODO: REMOVE
-
+    
     let allJobs = this.state.jobs.map(job => {
       return (
         <div key={job.job_id}>
@@ -229,7 +206,7 @@ export class JobView extends React.Component {
               
             </div>
             {this.state.job.job_id ? (
-              <Job
+              <Job className='on-clock-job'
                 job={this.state.job}
                 clockedIn={true}
                 clockOut={this.handleClockOut}

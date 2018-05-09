@@ -1,5 +1,4 @@
 import React from "react";
-// import Menu from "../Menu/Menu"; TODO: REMOVE
 import axios from "axios";
 
 import {
@@ -16,7 +15,6 @@ import BillingItem from "./BillingItem";
 import { connect } from "react-redux";
 import { getBilling, getLastBillingNumber } from "../../ducks/billingReducer";
 import { getAllClients } from "../../ducks/clientReducer";
-// import { Link } from "react-router-dom"; TODO: REMOVE
 import Dropzone from "react-dropzone";
 
 export class BillingView extends React.Component {

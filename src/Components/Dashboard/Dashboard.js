@@ -3,8 +3,6 @@ import Menu from "../Menu/Menu";
 import { Link, withRouter, Switch, Route } from "react-router-dom";
 import AppBar from "material-ui/AppBar";
 import { getUser } from "../../ducks/userReducer";
-// import {getAllClients} from '../../ducks/clientReducer'; TODO: REMOVE
-
 import { connect } from "react-redux";
 import JobView from "../JobView/JobView";
 import EntryView from "../EntryView/EntryView";
@@ -12,6 +10,7 @@ import ClientsView from "../ClientView/ClientView";
 import BillingView from "../BillingView/BillingView";
 import UserView from "../User/UserView";
 import InvoiceView from "../InvoiceView/InvoiceView";
+import {Doughnut, Bar} from 'react-chartjs-2'
 
 export class Dashboard extends React.Component {
   constructor(props) {
@@ -30,18 +29,31 @@ export class Dashboard extends React.Component {
 
   render() {
     let { user_name, picture } = this.props.user;
+
+    const data = {
+      labels : ['1', '2', '3'],
+      datasets : [{
+        label : 'My first Dataset',
+        backgroundColor : 'rgb(255,99,132)',
+        borderColor: 'rgb(255,99,132)',
+        data : [0,10,4]
+      }]
+    }
+
+    const barData = {
+      labels : ["Test 1", "Test 2", "Test 3"],
+      datasets : [{
+        label : "My Bar Chart",
+        backgroundColor : 'rgb(255,99,132)',
+        borderColor: 'rgb(255,99,132)',
+        data : [100, 300, 400]
+      }]
+    }
+
     return (
       <div className="Dashboard">
         <div className="menu-section">
-          {this.props.user.user_id ? (
-            <Link to="/dashboard/userview">
-              <Menu img={picture} userName={user_name} />
-            </Link>
-          ) : (
-            <Link to="/">
-              <Menu img={picture} userName={user_name} />
-            </Link>
-          )}
+          <Menu img={picture} userName={user_name} />
         </div>
         <div className="dashboard-container">
           <Switch>
@@ -53,6 +65,10 @@ export class Dashboard extends React.Component {
             <Route path="/dashboard/invoiceview" component={InvoiceView} />
           </Switch>
         </div>
+
+        <Doughnut data={data}/>
+
+        <Bar data={barData}/>
 
         <div className="footer-dashboard" />
       </div>

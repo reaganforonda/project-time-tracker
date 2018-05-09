@@ -1,9 +1,9 @@
 $h1-size: 40px;
 $opacity: 1;
 $clockIn-back : rgb(22, 149, 163);
-$clockOut-back : rgb(20, 22, 22);
+$clockOut-back : rgb(22, 149, 163);
 $floating-action-pos: 15px;
-$font-color: #EB7F00;
+$font-color: black;
 $height: 70px;
 $padding: 15px;
 $border-color : #ACF0F2;
@@ -12,6 +12,7 @@ h1 {
     font-size: $h1-size;
     text-align: center;
     color : $font-color;
+    font-weight: 900;
 }
 
 .clockedIn {
@@ -22,6 +23,7 @@ h1 {
     margin-bottom : 10px;
     height : $height;
 }
+
 
 
 .clockedOut {
@@ -38,3 +40,4 @@ h1 {
     bottom: $floating-action-pos;
     right: $floating-action-pos;
 }
+

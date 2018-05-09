@@ -1,5 +1,6 @@
 import React from "react";
 import ContentAdd from "material-ui/svg-icons/content/add";
+import Phone from "material-ui/svg-icons/maps/local-phone";
 import {
   TextField,
   Dialog,
@@ -182,15 +183,17 @@ export class ClientForm extends React.Component {
                 hintText="Website"
                 floatingLabelText="Website"
               />
-
-              <TextField
-                type="text"
-                value={this.state.phone}
-                onChange={e => this.handleTextChange(e)}
-                name="phone"
-                hintText="Phone"
-                floatingLabelText="Phone"
-              />
+              <div>
+                <Phone />
+                <TextField
+                  type="text"
+                  value={this.state.phone}
+                  onChange={e => this.handleTextChange(e)}
+                  name="phone"
+                  hintText="Phone"
+                  floatingLabelText="Phone"
+                />
+              </div>
 
               <TextField
                 type="email"
