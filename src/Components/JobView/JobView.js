@@ -154,6 +154,7 @@ export class JobView extends React.Component {
   updateEntry(activeEntry) {
     let time = this.getClockTime();
     let end_time = this.formatTime(time);
+
     let duration = this.calculateDuration(time);
     let total = duration * this.props.jobOnClock.rate;
     let updateEntry = { duration: duration, end_time: end_time, total };

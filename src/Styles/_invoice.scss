@@ -1,14 +1,36 @@
 $box-borders : 2px black solid;
+$para-spacing : 8px;
 
 .user-contact-info {
-    border : $box-borders
+    
+    width: 50%;
+    display: flex;
+    justify-content: space-between;    
+    align-items: center;
+    margin-right:30px;
 }
 
-.invoice-info {
-    border : $box-borders
+.user-contact-info p {
+    color: white;
+    margin-top: $para-spacing;
+    margin-bottom: $para-spacing;
+    font-size: 15px;
+    text-align: right;
 }
+
 .client-info {
-    border : $box-borders
+    border : $box-borders;
+    border:yellow 1px solid;
+}
+
+.client-info p {
+    margin-top: $para-spacing;
+    margin-bottom: $para-spacing;
+    margin-left: 30px;
+}
+
+.client-info h2 {
+    margin-left: 30px;
 }
 
 .total-box {
@@ -19,3 +41,57 @@ $box-borders : 2px black solid;
     border: $box-borders
 }
 
+.invoice-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 30px;
+    padding-bottom : 30px;
+    background-color: rgb(34, 83, 120)
+}
+
+.invoice-header h1 {
+    margin-left: 30px;
+    font-size: 80px;
+    
+}
+
+
+.mid-section {
+    
+    margin-top: 20px;
+    margin-bottom: 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: top;
+    padding-top: 20px;
+}
+
+.invoice-info-sect1 p {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.inv-total {
+    margin-right: 30px;
+}
+
+.inv-total p {
+    text-align: right;
+    margin-bottom: $para-spacing;
+}
+
+.main-total {
+    
+    font-size: 30px;
+    color: rgb(34, 83, 120);
+    text-align: right;
+    font-weight: bold
+}
+
+@media print {
+    .inv {
+        width: 210mm;
+        height: 297mm;
+    }
+}

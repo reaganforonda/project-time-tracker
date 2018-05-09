@@ -12,7 +12,7 @@ import {
 } from "material-ui";
 
 import { connect } from "react-redux";
-import { getAllActiveJobs } from "../../ducks/jobReducer";
+import { getAllActiveJobs, getOffTheClockJobs } from "../../ducks/jobReducer";
 
 export class JobForm extends React.Component {
   constructor(props) {
@@ -109,6 +109,7 @@ export class JobForm extends React.Component {
     this.handleAddJob();
     this.setState({ modalOpen: false });
     this.handleResetState();
+    this.props.getOffTheClockJobs(this.props.user.user_id);
   }
 
   handleResetState() {
@@ -212,4 +213,4 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps, { getAllActiveJobs })(JobForm);
+export default connect(mapStateToProps, { getAllActiveJobs, getOffTheClockJobs })(JobForm);

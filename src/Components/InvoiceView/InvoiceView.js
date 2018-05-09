@@ -5,8 +5,8 @@ import { getUser } from "../../ducks/userReducer";
 import printJS from "../../../node_modules/print-js/src/index";
 import { Link } from "react-router-dom";
 import { RaisedButton } from "material-ui";
-import numeral from 'numeral';
-import moment from 'moment';
+import numeral from "numeral";
+import moment from "moment";
 
 export class InvoiceView extends React.Component {
   constructor(props) {
@@ -58,14 +58,13 @@ export class InvoiceView extends React.Component {
   }
 
   updateJobBilling() {
-    
-    let end_date = {end_date : this.handleDateConvert(this.props.jobEndDate)};
+    let end_date = { end_date: this.handleDateConvert(this.props.jobEndDate) };
 
     axios
       .put(
-        `http://localhost:3005/api/jobs/billing/update/${this.props.user.user_id}/${
-          this.props.selectedJob.job_id
-        }`,
+        `http://localhost:3005/api/jobs/billing/update/${
+          this.props.user.user_id
+        }/${this.props.selectedJob.job_id}`,
         end_date
       )
       .then(result => {
@@ -83,57 +82,80 @@ export class InvoiceView extends React.Component {
           <p>
             {this.props.selectedJob.job_name} - {entry.comment}
           </p>
-          <p>Hrs: {numeral(entry.duration).format('0,0.00')}</p>
-          <p>Rate: {numeral(this.props.selectedJob.rate).format('$0,0.00')} / hr</p>
-          <p>SubTotal: {numeral(entry.total).format('$0,0.00')}</p>
+          <p>Hrs: {numeral(entry.duration).format("0,0.00")}</p>
+          <p>
+            Rate: {numeral(this.props.selectedJob.rate).format("$0,0.00")} / hr
+          </p>
+          <p>SubTotal: {numeral(entry.total).format("$0,0.00")}</p>
         </div>
       );
     });
 
     return (
       <div>
-        <div id="print-invoice">
-          <div className="user-contact-info">
-            <p>
-              {this.props.user.first_name} {this.props.user.last_name}
-            </p>
-            <p>{this.props.user.address_one}</p>
-            <p>{this.props.user.address_two}</p>
-            <p>
-              {this.props.user.city}, {this.props.user.state}{" "}
-              {this.props.user.zip}
-            </p>
-            <p>{this.props.user.phone}</p>
-            <p>{this.props.user.email}</p>
-          </div>
+        <div id="print-invoice" className="inv">
+          <header className="invoice-header">
+            <h1>INVOICE</h1>
+            <div className="user-contact-info">
+              <div className="user-info-section-1">
+                <p>{this.props.user.phone}</p>
+                <p>{this.props.user.email}</p>
+              </div>
 
-          <div className="invoice-info">
-            <p>Invoice Number: {this.props.invoiceNum}</p>
-            <p>
-              Invoice Date: {this.handleDateConvert(this.props.invoiceDate)}
-            </p>
-            <p>Due Date: {this.handleDateConvert(this.props.dueDate)}</p>
-            <p>Total: {numeral(this.props.selectedJob.total).format('$0,0.00')}</p>
-          </div>
+              <div className="user-info-section-2">
+                <p>
+                  {this.props.user.first_name} {this.props.user.last_name}
+                </p>
+                <p>{this.props.user.address_one}</p>
+                <p>{this.props.user.address_two}</p>
+                <p>
+                  {this.props.user.city}, {this.props.user.state}{" "}
+                  {this.props.user.zip}
+                </p>
+              </div>
+            </div>
+          </header>
 
-          <div className="client-info">
-            <p>{this.props.selectedJob.client_name}</p>
-            <p>{this.props.selectedJob.address_one}</p>
-            {this.props.selectedJob.address_two ? (
-              <p>{this.props.selectedJob.address_two}</p>
-            ) : null}
-            <p>
-              {this.props.selectedJob.city}, {this.props.selectedJob.state}{" "}
-              {this.props.selectedJob.zip}
-            </p>
-            <p>{this.props.selectedJob.phone}</p>
-          </div>
+          <section className="mid-section">
+            <div className="client-info">
+              <h2>BILL TO:</h2>
+              <p>{this.props.selectedJob.client_name}</p>
+              <p>{this.props.selectedJob.address_one}</p>
+              {this.props.selectedJob.address_two ? (
+                <p>{this.props.selectedJob.address_two}</p>
+              ) : null}
+              <p>
+                {this.props.selectedJob.city}, {this.props.selectedJob.state}
+                {this.props.selectedJob.zip}
+              </p>
+              <p>{this.props.selectedJob.phone}</p>
+            </div>
+
+              <div className="invoice-info-sect1">
+                <p>Invoice Number: {this.props.invoiceNum}</p>
+                <p>
+                  Invoice Date: {this.handleDateConvert(this.props.invoiceDate)}
+                </p>
+
+                <p>Due Date: {this.handleDateConvert(this.props.dueDate)}</p>
+              </div>
+              <div className="inv-total">
+                <p>
+                  Total:</p>
+                  <p className='main-total'>
+                  {numeral(this.props.selectedJob.total).format("$0,0.00")}
+                </p>
+              </div>
+
+          </section>
 
           <div className="billing-container">{arr}</div>
           <div>
             <div className="total-box">
               <p>Total</p>
-              <div>{numeral(this.props.selectedJob.total).format('$0,0.00')}</div>
+              <div>
+                {numeral(this.props.selectedJob.total).format("$0,0.00")}
+              </div>
             </div>
             <div className="remit">
               Remit To:
