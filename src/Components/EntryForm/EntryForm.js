@@ -12,6 +12,7 @@ import {
   SelectField
 } from "material-ui";
 import { connect } from "react-redux";
+import {getAllEntries} from '../../ducks/entryReducer'
 
 export class EntryForm extends React.Component {
   constructor(props) {
@@ -265,4 +266,4 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps, null)(EntryForm);
+export default connect(mapStateToProps, {getAllEntries})(EntryForm);
