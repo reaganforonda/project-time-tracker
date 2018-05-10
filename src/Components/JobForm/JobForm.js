@@ -69,7 +69,7 @@ export class JobForm extends React.Component {
 
   handleGetClients() {
     axios
-      .get(`http://localhost:3005/api/clients/${this.props.user.user_id}`)
+      .get(`/api/clients/${this.props.user.user_id}`)
       .then(clients => {
         this.setState({ clients: clients.data });
       })
@@ -94,7 +94,7 @@ export class JobForm extends React.Component {
     };
 
     axios
-      .post(`http://localhost:3005/api/job`, job)
+      .post(`/api/job`, job)
       .then(result => {
         console.log(result.data);
       })

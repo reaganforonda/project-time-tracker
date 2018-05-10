@@ -46,7 +46,7 @@ export function updateStartTime(time) {
 
 export function getClockedInJob(user_id) {
   let clockIn = axios
-    .get(`http://localhost:3005/api/jobs/clockin/${user_id}`)
+    .get(`/api/jobs/clockin/${user_id}`)
     .then(result => {
       return result.data[0];
     })
@@ -63,7 +63,7 @@ export function getClockedInJob(user_id) {
 
 export function getOffTheClockJobs(user_id) {
   let jobs = axios
-    .get(`http://localhost:3005/api/jobs/clockout/${user_id}`)
+    .get(`/api/jobs/clockout/${user_id}`)
     .then(result => {
       return result.data;
     })
@@ -90,7 +90,7 @@ export function clockOutJob(job) {
 // GET ALL ACTIVE JOBS - USING LOGGED IN USER ID
 export function getAllActiveJobs(userId) {
   let jobsData = axios
-    .get(`http://localhost:3005/api/jobs/open/${userId}`)
+    .get(`/api/jobs/open/${userId}`)
     .then(jobs => {
       return jobs.data;
     })

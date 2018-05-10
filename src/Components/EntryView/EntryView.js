@@ -27,7 +27,7 @@ export class EntryView extends React.Component {
   }
 
   getAllEntries() {
-    axios.get(`http://localhost:3005/api/entry/${this.props.user.user_id}`).then((enteries) => {
+    axios.get(`/api/entry/${this.props.user.user_id}`).then((enteries) => {
       this.setState({enteries : enteries.data})
     }).catch((e) => {
       console.log(e);
@@ -35,7 +35,7 @@ export class EntryView extends React.Component {
   }
 
   handleDeleteEntry(entry) {
-    axios.delete(`http://localhost:3005/api/entry/delete/${this.props.user.user_id}/${entry.entry_id}`).then((result) => {
+    axios.delete(`/api/entry/delete/${this.props.user.user_id}/${entry.entry_id}`).then((result) => {
       console.log(result.data);
       this.getAllEntries();
     }).catch((e) => {

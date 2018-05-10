@@ -26,7 +26,7 @@ export class ClientView extends React.Component {
 
   getAllClients() {
     axios
-      .get(`http://localhost:3005/api/clients/${this.props.user.user_id}`)
+      .get(`/api/clients/${this.props.user.user_id}`)
       .then(clients => {
         this.setState({ clients: clients.data });
       })

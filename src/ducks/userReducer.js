@@ -130,7 +130,7 @@ export function updateZip(zip) {
 export function updateUserInfo(user_id, user) {
   
   let updatedUser = axios
-    .put(`http://localhost:3005/api/user/update/${user_id}`, user)
+    .put(`/api/user/update/${user_id}`, user)
     .then(result => {
       return result.data;
     });

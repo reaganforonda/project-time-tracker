@@ -24,7 +24,7 @@ const UPDATE_INVOICE_LOCATION = "UPDATE_INVOICE_LOCATION"
 
 export function getBilling(user_id) {
   let billing = axios
-    .get(`http://localhost:3005/api/jobs/billing/${user_id}`)
+    .get(`/api/jobs/billing/${user_id}`)
     .then(result => {
       return result.data;
     })
@@ -47,7 +47,7 @@ export function selectedForBilling(job) {
 
 export function getLastBillingNumber(userid) {
   let invoiceID = axios
-    .get(`http://localhost:3005/api/billing/invoiceid/${userid}`)
+    .get(`/api/billing/invoiceid/${userid}`)
     .then(result => {
       return result.data[0].max;
     })
@@ -84,7 +84,7 @@ export function updateDueDate(dueDate) {
 
 export function getEnteriesForJob(user_id, job_id) {
   let entries = axios
-    .get(`http://localhost:3005/api/entry/${user_id}/${job_id}`)
+    .get(`/api/entry/${user_id}/${job_id}`)
     .then(result => {
       return result.data;
     })
@@ -106,7 +106,7 @@ export function updateJobEndDate(jobEndDate) {
 }
 
 export function updateInvLocation(user_id, invoice_id, file) {
-  let location = axios.get(`http://localhost:3005/api/billing/update/invoice/${user_id}/${invoice_id}`, file).then((result) => {
+  let location = axios.get(`/api/billing/update/invoice/${user_id}/${invoice_id}`, file).then((result) => {
     return result.data
   }).catch((e) => {
     console.log(`Error GET request at reducer: ${e}`)

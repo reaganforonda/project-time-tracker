@@ -69,7 +69,7 @@ export class JobView extends React.Component {
   handleClockIn(job) {
     axios
       .put(
-        `http://localhost:3005/api/jobs/updateclock/${
+        `/api/jobs/updateclock/${
           this.props.user.user_id
         }/${job.job_id}/true`
       )
@@ -88,7 +88,7 @@ export class JobView extends React.Component {
   handleClockOut(job) {
     axios
       .put(
-        `http://localhost:3005/api/jobs/updateclock/${
+        `/api/jobs/updateclock/${
           this.props.user.user_id
         }/${job.job_id}/false`
       )

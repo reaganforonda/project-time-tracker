@@ -34,7 +34,7 @@ const GET_ENTRY_FOR_EDIT = "GET_ENTRY_FOR_EDIT";
 
 export function addActiveEntry(entry) {
   let newEntry = axios
-    .post(`http://localhost:3005/api/entry/add`, entry)
+    .post(`/api/entry/add`, entry)
     .then(result => {
       console.log(result.data);
       return result.data;
@@ -51,7 +51,7 @@ export function addActiveEntry(entry) {
 export function updateActiveEntry(jobid, userid, entryid, updateEntry) {
   axios
     .put(
-      `http://localhost:3005/api/entry/update/${jobid}/${userid}/${entryid}`,
+      `/api/entry/update/${jobid}/${userid}/${entryid}`,
       updateEntry
     )
     .then(result => {
@@ -120,7 +120,7 @@ export function getAllEntries(userid) {
   let enteries = [];
 
   axios
-    .get(`http://localhost:3005/api/entry/${userid}`)
+    .get(`/api/entry/${userid}`)
     .then(enteries => {
       enteries = enteries.data;
     })
@@ -136,7 +136,7 @@ export function getAllEntries(userid) {
 
 export function getEnteriesByJobId(userid, jobid) {
   let entries = axios
-    .get(`http://localhost:3005/api/entry/${userid}/${jobid}`)
+    .get(`/api/entry/${userid}/${jobid}`)
     .then(result => {
       return result.data;
     })
@@ -159,7 +159,7 @@ export function resetState() {
 
 export function getTotal(userid, jobid) {
   let total = axios
-    .get(`http://localhost:3005/api/entry/total/${userid}/${jobid}`)
+    .get(`/api/entry/total/${userid}/${jobid}`)
     .then(result => {
       return result.data[0].sum;
     })
@@ -175,7 +175,7 @@ export function getTotal(userid, jobid) {
 
 export function getTotalHrs(userid, jobid) {
   let totalHrs = axios
-    .get(`http://localhost:3005/api/entry/hrs/total/${userid}/${jobid}`)
+    .get(`/api/entry/hrs/total/${userid}/${jobid}`)
     .then(result => {
       console.log(result.data);
       return result.data[0].sum;
@@ -192,7 +192,7 @@ export function getTotalHrs(userid, jobid) {
 
 export function getEntryForEdit(userid, jobid, entryid) {
   let entry = axios
-    .get(`http://localhost:3005/api/entry/${userid}/${jobid}/${entryid}`)
+    .get(`/api/entry/${userid}/${jobid}/${entryid}`)
     .then(result => {
       return result.data;
     })

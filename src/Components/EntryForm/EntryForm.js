@@ -139,7 +139,7 @@ export class EntryForm extends React.Component {
     };
 
     axios
-      .post("http://localhost:3005/api/entry/add", entry)
+      .post("/api/entry/add", entry)
       .then(result => {
         console.log(entry);
         this.props.getAllEntries(this.props.user.user_id);
@@ -154,7 +154,7 @@ export class EntryForm extends React.Component {
   getAllJobs() {
     let userId = this.props.user.user_id;
     axios
-      .get(`http://localhost:3005/api/jobs/${userId}`)
+      .get(`/api/jobs/${userId}`)
       .then(jobs => {
         this.setState({ jobs: jobs.data });
       })

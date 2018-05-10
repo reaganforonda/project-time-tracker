@@ -30,10 +30,10 @@ const {
   CALLBACK_URL,
 } = process.env;
 
+app.use(express.static(__dirname + '/../build'));
 app.use(bodyParser.json());
 app.use(cors());
 
-app.use(express.static(__dirname + '/../build'));
 
 // ###### SESSIONS ######
 app.use(
@@ -124,8 +124,8 @@ app.get("/auth", passport.authenticate("auth0"));
 app.get(
   "/auth/callback",
   passport.authenticate("auth0", {
-    successRedirect: "http://localhost:3005/#/dashboard",
-    failureRedirect: "http://localhost:3005"
+    successRedirect: process.env.REACT_SUCCESS_REDIRECT,
+    failureRedirect: process.env.REACT_FAILURE_REDIRECT
   })
 );
 
@@ -139,7 +139,7 @@ app.get("/auth/me", function(req, res) {
 
 app.get("/logout", function(req, res) {
   req.logOut();
-  res.redirect("http://localhost:3005");
+  res.redirect(process.env.REACT_LOGOUT_REDIRECT);
 });
 
 

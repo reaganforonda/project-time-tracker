@@ -56,7 +56,7 @@ export class InvoiceView extends React.Component {
     };
     axios
       .post(
-        `http://localhost:3005/api/billing/add/${this.props.user.user_id}`,
+        `/api/billing/add/${this.props.user.user_id}`,
         invoice
       )
       .then(result => {
@@ -72,7 +72,7 @@ export class InvoiceView extends React.Component {
 
     axios
       .put(
-        `http://localhost:3005/api/jobs/billing/update/${
+        `/api/jobs/billing/update/${
           this.props.user.user_id
         }/${this.props.selectedJob.job_id}`,
         end_date

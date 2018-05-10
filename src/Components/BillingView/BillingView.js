@@ -105,7 +105,7 @@ export class BillingView extends React.Component {
     };
 
     axios
-      .post("http://localhost:3005/api/email", email)
+      .post("/api/email", email)
       .then(result => {
         console.log(result);
         this.setState({ emailSnackBar: true });
@@ -130,7 +130,7 @@ export class BillingView extends React.Component {
     console.log(upload);
 
     axios
-      .post(`http://localhost:3005/api/s3/upload`, upload)
+      .post(`/api/s3/upload`, upload)
       .then(result => {
         let signedURL = result.data;
 
