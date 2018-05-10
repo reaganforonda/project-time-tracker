@@ -8,18 +8,30 @@ $height: 70px;
 $padding: 15px;
 $border-color : #ACF0F2;
 
-h1 {
+$color1 : #225378;
+$color2 : #1695A3;
+$color3 : #ACF0F2;
+$color4: #F3FFE2;
+$color5: #EB7F00;
+
+.clockedIn h1 {
     font-size: $h1-size;
     text-align: center;
-    color : $font-color;
+    color : $color5;
+    font-weight: 900;
+}
+
+.clockedOut h1 {
+    font-size: $h1-size;
+    text-align: center;
+    color : $color3;
     font-weight: 900;
 }
 
 .clockedIn {
-    border-color: $border-color;
-    border : 1px solid;
+    border : 1px solid $color5;
     padding-top: $padding;
-    background : rgba($clockIn-back, $opacity);
+    background : $color1;
     margin-bottom : 10px;
     height : $height;
 }
@@ -30,7 +42,7 @@ h1 {
     border-color: $border-color;
     border : 1px solid;
     padding-top: $padding;
-    background: rgba($clockOut-back, $opacity);
+    background: $color1;
     height : $height;
     
 }
@@ -40,4 +52,3 @@ h1 {
     bottom: $floating-action-pos;
     right: $floating-action-pos;
 }
-

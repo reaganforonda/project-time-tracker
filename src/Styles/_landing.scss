@@ -1,5 +1,9 @@
 $font-main: 'Roboto', sans-serif;
-
+$color1 : #225378;
+$color2 : #1695A3;
+$color3 : #ACF0F2;
+$color4: #F3FFE2;
+$color5: #EB7F00;
 
 .particles {
     position: absolute;
@@ -9,18 +13,32 @@ $font-main: 'Roboto', sans-serif;
     z-index : -1;
 }
 
-.landing-page h1 {
+.landing-h1 {
     font-size : 72px;
     letter-spacing: 8px;
-}
-
-.landing-page button {
-    font-size: 30px;
+    color: $color5;
+    font-weight: 900;
 }
 
 .landing-content {
-    margin-top: auto;
-    margin-bottom: auto;
-    text-align: center;
-    
+
+    text-align: center;    
+}
+
+.btn {
+    color: $color5;
+    background: transparent;
+    border : 2px $color4 solid;
+    border-radius : 10px;
+    cursor: pointer;
+    text-decoration: none;
+    text-transform: uppercase;
+    font-size: 40px;
+    padding: 10px;
+}
+
+.btn:hover {
+    background-color: $color5;
+    color: $color4;
+    border: none;
 }

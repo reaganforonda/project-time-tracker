@@ -4,6 +4,11 @@ $height: 60px;
 $button-margin: 20px;
 $font-size: 20px;
 
+$color1 : #225378;
+$color2 : #1695A3;
+$color3 : #ACF0F2;
+$color4: #F3FFE2;
+$color5: #EB7F00;
 
 .single-job-container {
     display: flex;
@@ -14,12 +19,18 @@ $font-size: 20px;
     margin-top: $margin;
     margin-bottom: $margin;
     height: $height;
+    
 }
 
 .job-button {
     margin-left: $button-margin;
 }
 
-p{
-    font-size: $font-size;
+
+.single-job-container p {
+    border : 1px red solid;
+}
+
+.single-job-container {
+    border : 2px yellow solid;
 }

@@ -121,13 +121,26 @@ passport.deserializeUser((id, done) => {
 
 app.get("/auth", passport.authenticate("auth0"));
 
-app.get(
-  "/auth/callback",
-  passport.authenticate("auth0", {
-    successRedirect: process.env.REACT_SUCCESS_REDIRECT,
-    failureRedirect: process.env.REACT_FAILURE_REDIRECT
-  })
-);
+
+if(process.env.NODE_ENV === 'development') {
+  app.get(
+    "/auth/callback",
+    passport.authenticate("auth0", {
+      successRedirect: 'http://localhost:3000/#/dashboard',
+      failureRedirect: "http://localhost:3000"
+    })
+  );
+} else {
+
+  app.get(
+    "/auth/callback",
+    passport.authenticate("auth0", {
+      successRedirect: process.env.REACT_SUCCESS_REDIRECT,
+      failureRedirect: process.env.REACT_FAILURE_REDIRECT
+    })
+  );
+}
+
 
 app.get("/auth/me", function(req, res) {
   if (req.user) {
@@ -137,10 +150,16 @@ app.get("/auth/me", function(req, res) {
   }
 });
 
+if(process.env.NODE_ENV === 'development') {
+  app.get("/logout", function(req, res) {
+    req.logOut();
+    res.redirect('http://localhost:3000');
+  });
+} else {
 app.get("/logout", function(req, res) {
   req.logOut();
   res.redirect(process.env.REACT_LOGOUT_REDIRECT);
-});
+});}
 
 
 // ###### ENDPOINTS - EMAIL ######

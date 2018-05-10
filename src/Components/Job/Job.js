@@ -30,12 +30,14 @@ export class Job extends React.Component {
     this.props.resetState();
   }
 
+  
+
   render() {
 
     let arr = this.props.entries.map(entry => {
       return (
         <div key={entry.entry_id}>
-          <Paper zDepth={1}>
+          <Paper zDepth={0}>
             <p>{entry.entry_date}</p>
             <p>{entry.start_time}</p>
             <p>{entry.end_time}</p>
@@ -47,18 +49,26 @@ export class Job extends React.Component {
       )
     })
 
+    const stylePaper = {
+      backgroundColor : "#1695A3",
+      textAlign : 'left'
+    }
+
+
     return (
       <div>
-        <Paper zDepth={3} className="single-job-container">
+        <Paper zDepth={3} style={stylePaper} className="single-job-container">
           <p>{this.props.jobName}</p>
           <p>{this.props.clientName}</p>
           <div>
             {!this.props.clockedIn ? (
               <RaisedButton
+                backgroundColor={"#EB7F00"}
+                labelColor={'black'}
                 onClick={() => this.props.clockIn(this.props.job)}
                 className="job-button"
                 label="Clock In"
-                primary={true}
+                
               />
             ) : (
               <RaisedButton

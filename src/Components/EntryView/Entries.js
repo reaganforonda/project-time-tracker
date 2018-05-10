@@ -127,7 +127,7 @@ export class Entries extends React.Component {
               <h1>{this.props.jobname}</h1>
               <h2>{this.props.clientName}</h2>
               <DatePicker
-                autoOk={true}
+                autoOk={false}
                 name="startDate"
                 floatingLabelText="Entry Date"
                 onChange={(e, date) => this.handleDateChange(e, date)}
