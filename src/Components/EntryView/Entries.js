@@ -11,7 +11,7 @@ import {
 import moment from 'moment';
 import numeral from 'numeral';
 import {connect} from 'react-redux';
-import {getEntryForEdit} from '../../ducks/entryReducer';
+import {getEntryForEdit, getAllEntries, updateActiveEntry} from '../../ducks/entryReducer';
 
 export class Entries extends React.Component {
   constructor(props) {
@@ -31,6 +31,11 @@ export class Entries extends React.Component {
     this.handleModalOpen = this.handleModalOpen.bind(this);
     this.handleModalClose = this.handleModalClose.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
+    this.handleStartTimeChange = this.handleStartTimeChange.bind(this);
+    this.handleEndTimeChange = this.handleEndTimeChange.bind(this);
+    this.formatTime = this.formatTime.bind(this);
+    this.calculateDuration = this.calculateDuration.bind(this);
+    this.updateEntry = this.updateEntry.bind(this)
   }
 
   handleInputChange(e) {
@@ -51,8 +56,58 @@ export class Entries extends React.Component {
     this.setState({startDate : date})
   }
 
-  handleTimeChange(e, date ) {
-    this.setState({[e.target.name] : date})
+  handleStartTimeChange(e, date ) {
+    this.setState({startTime : date})
+  }
+
+  handleEndTimeChange(e, date ) {
+    this.setState({endTime: date})
+  }
+
+  formatTime(date) {
+    let formatedTime = `${date.getHours()}:${date.getMinutes()}`;
+    console.log(formatedTime);
+    return formatedTime;
+  }
+
+  // Calculate duration by converting start time and end time into minutes
+  // use ~ ~ to turn text into number by flipping the bits
+  calculateDuration() {
+    let startInMinutes =
+      ~~this.state.startTime.getHours() * 60 +
+      ~~this.state.startTime.getMinutes();
+    let endInMinutes =
+      ~~this.state.endTime.getHours() * 60 + ~~this.state.endTime.getMinutes();
+    let duration = 0;
+
+    try {
+      if (startInMinutes > endInMinutes)
+        throw "Start Time Can't Be After End Time";
+      duration = (endInMinutes - startInMinutes) / 60;
+    } catch (err) {
+      alert(`Error : ${err}`);
+    }
+
+    return duration;
+  }
+
+  updateEntry(){
+
+    let duration = this.calculateDuration();
+    let total = duration * this.props.entryForEdit.rate
+
+    let updatedEntry = {
+      entry_date : this.state.startDate,
+      start_time : this.state.startTime,
+      end_time : this.state.endTime,
+      duration : duration,
+      total : total,
+      comment : this.state.comment
+    }
+    console.log(updatedEntry)
+    this.props.updateActiveEntry(this.props.entry.job_id, this.props.user.user_id, this.props.entry.entry_id, updatedEntry);
+    this.props.getAllEntries(this.props.user.user_id);
+    this.handleModalClose();
   }
 
   render() {
@@ -75,17 +130,19 @@ export class Entries extends React.Component {
                 autoOk={true}
                 name="startDate"
                 floatingLabelText="Entry Date"
+                onChange={(e, date) => this.handleDateChange(e, date)}
               />
               <TimePicker
                 hintText="Entry Start Time"
                 name="startTime"
                 floatingLabelText="Entry Start Time"
+                onChange={(e, date)=>this.handleStartTimeChange(e, date)}
               />
               <TimePicker
                 hintText="Entry End Time"
                 name="endTime"
                 floatingLabelText="Entry End Time"
-                value={this.props.endTime}
+                onChange={(e, date)=>this.handleEndTimeChange(e, date)}
               />
               <TextField
                 onChange={(e)=>this.handleInputChange(e)}
@@ -93,13 +150,14 @@ export class Entries extends React.Component {
                 name="comment"
                 hintText="Comment"
                 floatingLabelText="Comment"
+                
               />
               <div>
                 <RaisedButton
                   onClick={() => this.handleModalClose()}
                   label="Cancel"
                 />
-                <RaisedButton label="Save" />
+                <RaisedButton onClick={()=>this.updateEntry()} label="Save" />
               </div>
             </Dialog>
           </RaisedButton>
@@ -121,4 +179,4 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps, {getEntryForEdit})(Entries);
+export default connect(mapStateToProps, {updateActiveEntry, getAllEntries, getEntryForEdit})(Entries);

@@ -2,10 +2,6 @@ import axios from "axios";
 import * as entryServices from "../services/entryservices";
 
 const ENTRY_INTIAL_STATE = {
-  client_id: 0,
-  job_id: 0,
-  job_name: "",
-  client_name: "",
   entry_date: "",
   start_time: "",
   end_time: "",
@@ -20,10 +16,6 @@ const ENTRY_INTIAL_STATE = {
   entryForEdit: {}
 };
 
-const UPDATE_CLIENT_ID = "UPDATE_CLIENT_ID";
-const UPDATE_JOB_ID = "UPDATE_JOB_ID";
-const UPDATE_JOB_NAME = "UPDATE_JOB_NAME";
-const UPDATE_CLIENT_NAME = "UPDATE_CLIENT_NAME";
 const UPDATE_ENTRY_DATE = "UPDATE_ENTRY_DATE";
 const UPDATE_START_TIME = "UPDATE_START_TIME";
 const UPDATE_END_TIME = "UPDATE_END_TIME";
@@ -72,34 +64,6 @@ export function updateActiveEntry(jobid, userid, entryid, updateEntry) {
   return {
     type: UPDATE_ACTIVE_ENTRY,
     payload: {}
-  };
-}
-
-export function updateClientID(client_id) {
-  return {
-    type: UPDATE_CLIENT_ID,
-    payload: client_id
-  };
-}
-
-export function updateJobID(job_id) {
-  return {
-    type: UPDATE_JOB_ID,
-    payload: job_id
-  };
-}
-
-export function updateJobName(job_name) {
-  return {
-    type: UPDATE_JOB_NAME,
-    payload: job_name
-  };
-}
-
-export function updateClientName(client_name) {
-  return {
-    type: UPDATE_CLIENT_NAME,
-    payload: client_name
   };
 }
 
@@ -246,18 +210,6 @@ export default function entryReducer(state = ENTRY_INTIAL_STATE, action) {
   switch (action.type) {
     case GET_ENTRY_FOR_EDIT + "_FULFILLED":
       return Object.assign({}, state, { entryForEdit: action.payload });
-
-    case UPDATE_CLIENT_ID:
-      return Object.assign({}, state, { client_id: action.payload });
-
-    case UPDATE_JOB_ID:
-      return Object.assign({}, state, { job_id: action.payload });
-
-    case UPDATE_JOB_NAME:
-      return Object.assign({}, state, { job_name: action.payload });
-
-    case UPDATE_CLIENT_NAME:
-      return Object.assign({}, state, { client_name: action.payload });
 
     case UPDATE_ENTRY_DATE:
       return Object.assign({}, state, { entry_date: action.payload });

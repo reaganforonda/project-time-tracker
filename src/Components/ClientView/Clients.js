@@ -97,7 +97,7 @@ export default class Clients extends React.Component {
 
     const style = {
       bg : {
-        'background-color' : "#225378"
+        'backgroundColor' : "#225378"
       },
 
       pText : {
