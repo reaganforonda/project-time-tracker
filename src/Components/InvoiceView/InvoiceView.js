@@ -4,9 +4,18 @@ import { connect } from "react-redux";
 import { getUser } from "../../ducks/userReducer";
 import printJS from "../../../node_modules/print-js/src/index";
 import { Link } from "react-router-dom";
-import { RaisedButton } from "material-ui";
+import { RaisedButton, Divider } from "material-ui";
 import numeral from "numeral";
 import moment from "moment";
+
+import {
+  Table,
+  TableBody,
+  TableHeader,
+  TableHeaderColumn,
+  TableRow,
+  TableRowColumn
+} from "material-ui/Table";
 
 export class InvoiceView extends React.Component {
   constructor(props) {
@@ -78,16 +87,20 @@ export class InvoiceView extends React.Component {
   render() {
     let arr = this.props.entries.map(entry => {
       return (
-        <div key={entry.entry_id}>
-          <p>
+        <TableRow displayBorder={false} selectable={false} key={entry.entry_id}>
+          <TableRowColumn>
             {this.props.selectedJob.job_name} - {entry.comment}
-          </p>
-          <p>Hrs: {numeral(entry.duration).format("0,0.00")}</p>
-          <p>
-            Rate: {numeral(this.props.selectedJob.rate).format("$0,0.00")} / hr
-          </p>
-          <p>SubTotal: {numeral(entry.total).format("$0,0.00")}</p>
-        </div>
+          </TableRowColumn>
+          <TableRowColumn>
+            {numeral(entry.duration).format("0,0.00")}
+          </TableRowColumn>
+          <TableRowColumn>
+            {numeral(this.props.selectedJob.rate).format("$0,0.00")}
+          </TableRowColumn>
+          <TableRowColumn>
+            {numeral(entry.total).format("$0,0.00")}
+          </TableRowColumn>
+        </TableRow>
       );
     });
 
@@ -131,34 +144,63 @@ export class InvoiceView extends React.Component {
               <p>{this.props.selectedJob.phone}</p>
             </div>
 
-              <div className="invoice-info-sect1">
-                <p>Invoice Number: {this.props.invoiceNum}</p>
-                <p>
-                  Invoice Date: {this.handleDateConvert(this.props.invoiceDate)}
-                </p>
+            <div className="invoice-info-sect1">
+              <p>Invoice Number: {this.props.invoiceNum}</p>
+              <p>
+                Invoice Date: {this.handleDateConvert(this.props.invoiceDate)}
+              </p>
 
-                <p>Due Date: {this.handleDateConvert(this.props.dueDate)}</p>
-              </div>
-              <div className="inv-total">
-                <p>
-                  Total:</p>
-                  <p className='main-total'>
-                  {numeral(this.props.selectedJob.total).format("$0,0.00")}
-                </p>
-              </div>
-
+              <p>Due Date: {this.handleDateConvert(this.props.dueDate)}</p>
+            </div>
+            <div className="inv-total">
+              <p>Total:</p>
+              <p className="main-total">
+                {numeral(this.props.selectedJob.total).format("$0,0.00")}
+              </p>
+            </div>
           </section>
 
-          <div className="billing-container">{arr}</div>
-          <div>
-            <div className="total-box">
-              <p>Total</p>
-              <div>
-                {numeral(this.props.selectedJob.total).format("$0,0.00")}
-              </div>
-            </div>
+          <hr className="invoice-hr" />
+
+          <div className="invoice-table">
+            <Table
+              displayBorder={false}
+              displaySelectAll={false}
+              adjustForCheckbox={false}
+              displayRowCheckbox={false}
+              selectable={false}
+            >
+              <TableHeader
+                displayBorder={false}
+                displaySelectAll={false}
+                adjustForCheckbox={false}
+                displayRowCheckbox={false}
+                selectable={false}
+              >
+                <TableRow
+                  displayBorder={false}
+                  displayRowCheckbox={false}
+                  selectable={false}
+                >
+                  <TableHeaderColumn>Description</TableHeaderColumn>
+                  <TableHeaderColumn>Hours</TableHeaderColumn>
+                  <TableHeaderColumn>Rate ($/Hr)</TableHeaderColumn>
+                  <TableHeaderColumn>Subtotal</TableHeaderColumn>
+                </TableRow>
+              </TableHeader>
+              <TableBody
+                displayBorder={false}
+                displayRowCheckbox={false}
+                selectable={false}
+              >
+                {arr}
+              </TableBody>
+            </Table>
+          </div>
+
+          <div className="bottom-section">
             <div className="remit">
-              Remit To:
+              <h2>Remit To:</h2>
               <p>
                 {this.props.user.first_name} {this.props.user.last_name}
               </p>
@@ -169,6 +211,7 @@ export class InvoiceView extends React.Component {
                 {this.props.user.zip}
               </p>
             </div>
+
           </div>
         </div>
         <div>
