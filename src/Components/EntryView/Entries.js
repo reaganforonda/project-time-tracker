@@ -10,8 +10,10 @@ import {
 
 import moment from 'moment';
 import numeral from 'numeral';
+import {connect} from 'react-redux';
+import {getEntryForEdit} from '../../ducks/entryReducer';
 
-export default class Entries extends React.Component {
+export class Entries extends React.Component {
   constructor(props) {
     super(props);
 
@@ -21,24 +23,40 @@ export default class Entries extends React.Component {
       startTime: "",
       endTime: "",
       duration: 0,
-      comment: "",
+      comment: '',
       job: "",
       edit: false
     };
 
     this.handleModalOpen = this.handleModalOpen.bind(this);
     this.handleModalClose = this.handleModalClose.bind(this);
+    this.handleInputChange = this.handleInputChange.bind(this);
+  }
+
+  handleInputChange(e) {
+    this.setState({[e.target.name] : e.target.value})
   }
 
   handleModalOpen() {
     this.setState({ openModal: true });
+    this.props.getEntryForEdit(this.props.user.user_id, this.props.entry.job_id, this.props.entry.entry_id)
+    console.log(this.props.entryForEdit)
   }
 
   handleModalClose() {
     this.setState({ openModal: false });
   }
 
+  handleDateChange(e, date) {
+    this.setState({startDate : date})
+  }
+
+  handleTimeChange(e, date ) {
+    this.setState({[e.target.name] : date})
+  }
+
   render() {
+
     
     return (
       <div>
@@ -70,6 +88,7 @@ export default class Entries extends React.Component {
                 value={this.props.endTime}
               />
               <TextField
+                onChange={(e)=>this.handleInputChange(e)}
                 type="text"
                 name="comment"
                 hintText="Comment"
@@ -93,3 +112,13 @@ export default class Entries extends React.Component {
     )
   }
 }
+
+function mapStateToProps(state) {
+  return {
+    user: state.userReducer.user,
+    entries : state.entryReducer.entries,
+    entryForEdit : state.entryReducer.entryForEdit
+  };
+}
+
+export default connect(mapStateToProps, {getEntryForEdit})(Entries);

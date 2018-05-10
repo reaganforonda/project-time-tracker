@@ -16,7 +16,8 @@ const ENTRY_INTIAL_STATE = {
   total: 0,
   totalHrs: 0,
   entry: {},
-  activeEntry: {}
+  activeEntry: {},
+  entryForEdit: {}
 };
 
 const UPDATE_CLIENT_ID = "UPDATE_CLIENT_ID";
@@ -36,7 +37,8 @@ const RESET_STATE = "RESET_STATE";
 const GET_TOTAL = "GET_TOTAL";
 const GET_HRS = "GET_HRS";
 const ADD_ACTIVE_ENTRY = "ADD_ACTIVE_ENTRY";
-const UPDATE_ACTIVE_ENTRY = "UPDATE_ACTIVE_ENTRY"
+const UPDATE_ACTIVE_ENTRY = "UPDATE_ACTIVE_ENTRY";
+const GET_ENTRY_FOR_EDIT = "GET_ENTRY_FOR_EDIT";
 
 export function addActiveEntry(entry) {
   let newEntry = axios
@@ -224,8 +226,27 @@ export function getTotalHrs(userid, jobid) {
   };
 }
 
+export function getEntryForEdit(userid, jobid, entryid) {
+  let entry = axios
+    .get(`http://localhost:3005/api/entry/${userid}/${jobid}/${entryid}`)
+    .then(result => {
+      return result.data;
+    })
+    .catch(e => {
+      console.log(`Error GET: Attempted to Get Entry for Edit: ${e}`);
+    });
+
+  return {
+    type: GET_ENTRY_FOR_EDIT,
+    payload: entry
+  };
+}
+
 export default function entryReducer(state = ENTRY_INTIAL_STATE, action) {
   switch (action.type) {
+    case GET_ENTRY_FOR_EDIT + "_FULFILLED":
+      return Object.assign({}, state, { entryForEdit: action.payload });
+
     case UPDATE_CLIENT_ID:
       return Object.assign({}, state, { client_id: action.payload });
 
@@ -274,8 +295,8 @@ export default function entryReducer(state = ENTRY_INTIAL_STATE, action) {
     case ADD_ACTIVE_ENTRY + "_FULFILLED":
       return Object.assign({}, state, { activeEntry: action.payload });
 
-      case UPDATE_ACTIVE_ENTRY + "_FULFILLED":
-      return Object.assign({}, state, {activeEntry : action.payload})
+    case UPDATE_ACTIVE_ENTRY + "_FULFILLED":
+      return Object.assign({}, state, { activeEntry: action.payload });
 
     default:
       return state;

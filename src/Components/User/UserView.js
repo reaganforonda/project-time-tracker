@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
-import { Paper, RaisedButton, TextField } from "material-ui";
+import { Avatar, Paper, RaisedButton, TextField } from "material-ui";
 
 import {
   updateFirstName,
@@ -88,13 +88,13 @@ export class UserView extends React.Component {
   render() {
     return (
       <div>
-        <div>
+        <header className='header-user-view'>
           <h1>Profile</h1>
-          <img src={this.props.user.picture} alt="profile-pic" />
-        </div>
+          <Avatar className='profile-picture-user-view' src={this.props.user.picture} size={200} />
+        </header>
 
         <div>
-          <Paper zDepth={1}>
+          <Paper zDepth={2}>
             <TextField
               value={this.state.first_name}
               onChange={e => this.handleInputChange(e)}

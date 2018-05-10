@@ -142,7 +142,7 @@ export class EntryForm extends React.Component {
       .post("http://localhost:3005/api/entry/add", entry)
       .then(result => {
         console.log(entry);
-        this.props.getAllEntries();
+        this.props.getAllEntries(this.props.user.user_id);
       })
       .catch(e => {
         console.log(e);

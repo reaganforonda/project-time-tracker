@@ -141,11 +141,11 @@ export class BillingView extends React.Component {
             this.setState({ uploadModalOpen: false, uploadSnackBar: true });
           })
           .catch(e => {
-            console.log(`Error during PUT to Amazon S3: ${e}`);
+            console.log(`Error PUT - Attempted Upload to Amazon S3: ${e}`);
           });
       })
       .catch(e => {
-        console.log(`Error POST trying to get signed url : ${e}`);
+        console.log(`Error POST - Attempted to get Signed URL : ${e}`);
       });
   }
 

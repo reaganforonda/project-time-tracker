@@ -56,7 +56,7 @@ module.exports = {
     const { jobid, userid, entryid } = req.params;
 
     dbInstance
-      .GET_ENTRY_ID([jobid, userid, entryid])
+      .GET_ENTRY_BY_ID([jobid, userid, entryid])
       .then(entry => {
         res.status(200).send(entry);
       })

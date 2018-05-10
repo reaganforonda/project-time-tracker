@@ -106,17 +106,27 @@ export class BillingItem extends React.Component {
   }
 
   render() {
+    const style= {
+      backgroundColor : "#1695A3"
+    }
+
+    const styleButton = {
+      color: 'black',
+      backgroundColor : '#EB7F00',
+    }
+
     return (
       <div>
-        <Paper>
-          <p>{this.props.jobId}</p>
-          <p>{this.props.jobName}</p>
+        <Paper style= {style}className='billing-item'>
           <p>{this.props.job.client_name}</p>
+          <p>{this.props.jobName}</p>
           <p>{numeral(this.props.job.total_hrs).format('0,0.0')} Total Hrs.</p>
           <p>{numeral(this.props.total).format('$0,0.00')}</p>
           <FlatButton
+          style={styleButton}
             onClick={() => this.handleOpenModal()}
             label="Select For Billing"
+            className='select-for-billing-button'
           >
             <Dialog modal={true} open={this.state.open}>
               <p>Invoice Number: {this.state.invoiceNumber}</p>

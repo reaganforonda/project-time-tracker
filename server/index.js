@@ -167,14 +167,17 @@ app.put('/api/client/update/:userid/:clientid', clientController.updateClient);
 
 // ###### ENDPOINTS - Enteries ######
 app.post('/api/entry/add', entryController.addEntry)
-app.get('/api/entry/:userid', entryController.getAllEnteries)
-app.get('/api/entry/:userid/:jobid', entryController.getEntriesByJobId)
-app.get('/api/entry/total/:userid/:jobid', entryController.getTotalByJobId)
-app.get('/api/entry/hrs/total/:userid/:jobid', entryController.getTotalHrsByJobId)
+
 app.put(`/api/entry/update/:jobid/:userid/:entryid`, entryController.updateEntry)
 app.put('/api/entry/fullupdate/:userid/:entryid/:jobid', entryController.updateFullEntry);
-app.delete('/api/entry/delete/:userid/:entryid', entryController.deleteEntry)
 
+app.get('/api/entry/:userid/:jobid', entryController.getEntriesByJobId)
+app.get('/api/entry/total/:userid/:jobid', entryController.getTotalByJobId)
+app.get('/api/entry/:userid', entryController.getAllEnteries)
+app.get('/api/entry/hrs/total/:userid/:jobid', entryController.getTotalHrsByJobId)
+app.get('/api/entry/:userid/:jobid/:entryid', entryController.getEntryById)
+
+app.delete('/api/entry/delete/:userid/:entryid', entryController.deleteEntry)
 
 // ###### ENDPOINTS - User ######
 app.put('/api/user/update/:userid', userController.updateUserInfo)
