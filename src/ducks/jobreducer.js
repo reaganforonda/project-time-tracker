@@ -1,5 +1,4 @@
 import axios from "axios";
-import * as jobServices from "../services/jobservices";
 
 const JOB_INITIAL_STATE = {
   job_id: 0,
@@ -103,13 +102,6 @@ export function getAllActiveJobs(userId) {
   return {
     type: GET_ACTIVE_JOBS,
     payload: jobsData
-  };
-}
-
-export function addJob(job) {
-  return {
-    type: ADD_JOB,
-    payload: jobServices.addJob(job)
   };
 }
 
