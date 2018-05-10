@@ -2,7 +2,8 @@ import React from "react";
 import axios from "axios";
 import { connect } from "react-redux";
 import { getUser } from "../../ducks/userReducer";
-import printJS from "../../../node_modules/print-js/src/index";
+// import printJS from "../../../node_modules/print-js/src/index";
+import printJS from '../../print-js/src/index'
 import { Link } from "react-router-dom";
 import { RaisedButton, Divider } from "material-ui";
 import numeral from "numeral";

@@ -33,6 +33,8 @@ const {
 app.use(bodyParser.json());
 app.use(cors());
 
+app.use(express.static(__dirname + '/../build'));
+
 // ###### SESSIONS ######
 app.use(
   session({
@@ -122,8 +124,8 @@ app.get("/auth", passport.authenticate("auth0"));
 app.get(
   "/auth/callback",
   passport.authenticate("auth0", {
-    successRedirect: "http://localhost:3000/#/dashboard",
-    failureRedirect: "http://localhost:3000"
+    successRedirect: "http://localhost:3005/#/dashboard",
+    failureRedirect: "http://localhost:3005"
   })
 );
 
@@ -137,7 +139,7 @@ app.get("/auth/me", function(req, res) {
 
 app.get("/logout", function(req, res) {
   req.logOut();
-  res.redirect("http://localhost:3000");
+  res.redirect("http://localhost:3005");
 });
 
 
