@@ -13,6 +13,7 @@ import {
 } from "material-ui";
 import { connect } from "react-redux";
 import {getAllEntries} from '../../ducks/entryReducer'
+import {getAllActiveJobs} from '../../ducks/jobReducer'
 
 export class EntryForm extends React.Component {
   constructor(props) {
@@ -48,7 +49,7 @@ export class EntryForm extends React.Component {
   }
 
   componentDidMount() {
-    this.getAllJobs();
+    this.props.getAllActiveJobs(this.props.user.user_id)
   }
 
   handleTextChange(e) {
@@ -181,7 +182,7 @@ export class EntryForm extends React.Component {
   }
 
   render() {
-    let jobArr = this.state.jobs.map(job => {
+    let jobArr = this.props.allJobs.map(job => {
       return (
         <MenuItem key={job.job_id} primaryText={job.job_name} value={job} />
       );
@@ -262,8 +263,9 @@ export class EntryForm extends React.Component {
 
 function mapStateToProps(state) {
   return {
-    user: state.userReducer.user
+    user: state.userReducer.user,
+    allJobs: state.jobReducer.allJobs
   };
 }
 
-export default connect(mapStateToProps, {getAllEntries})(EntryForm);
+export default connect(mapStateToProps, {getAllEntries, getAllActiveJobs})(EntryForm);
