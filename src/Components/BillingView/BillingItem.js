@@ -19,8 +19,8 @@ import {
   getEnteriesForJob
 } from "../../ducks/billingReducer";
 import { Link } from "react-router-dom";
-import numeral from 'numeral';
-import moment from 'moment'
+import numeral from "numeral";
+import moment from "moment";
 
 export class BillingItem extends React.Component {
   constructor(props) {
@@ -46,8 +46,6 @@ export class BillingItem extends React.Component {
     this.handleJobEndDateSelect = this.handleJobEndDateSelect.bind(this);
   }
 
-  
-
   handleOpenModal() {
     this.setState({ open: true });
     this.handleSetInvoiceNumber();
@@ -61,9 +59,8 @@ export class BillingItem extends React.Component {
 
   handleSetInvoiceNumber() {
     let lastid = this.props.lastInvoiceId;
-    console.log(this.props.lastInvoiceId)
-      this.setState({ lastInvID: lastid });
-
+    console.log(this.props.lastInvoiceId);
+    this.setState({ lastInvID: lastid });
   }
 
   handleSetNewInvoiceNum() {
@@ -106,34 +103,61 @@ export class BillingItem extends React.Component {
   }
 
   render() {
-    const style= {
-      backgroundColor : "#1695A3"
-    }
+    const style = {
+      backgroundColor: "#1695A3"
+    };
 
     const styleButton = {
-      color: 'black',
-      backgroundColor : '#EB7F00',
-    }
+      color: "black",
+      backgroundColor: "#EB7F00"
+    };
+
+    const stylePaper = {
+      backgroundColor: "#1695A3",
+      textAlign: "left",
+      position: 'relative'
+    };
+
+    const dialogStyle = {
+      backgroundColor: "rgba(0,0,0, .7)"
+    };
 
     return (
       <div>
-        <Paper zDepth={1} style= {style}className='billing-item'>
+        <Paper zDepth={1} style={style} className="billing-item">
           <p>{this.props.job.client_name}</p>
           <p>{this.props.jobName}</p>
-          <p>{numeral(this.props.job.total_hrs).format('0,0.0')} Total Hrs.</p>
-          <p>{numeral(this.props.total).format('$0,0.00')}</p>
+          <p>{numeral(this.props.job.total_hrs).format("0,0.0")} Total Hrs.</p>
+          <p>{numeral(this.props.total).format("$0,0.00")}</p>
           <FlatButton
-          style={styleButton}
+            style={styleButton}
             onClick={() => this.handleOpenModal()}
             label="Select For Billing"
-            className='select-for-billing-button'
+            className="select-for-billing-button"
           >
-            <Dialog modal={true} open={this.state.open}>
-              <p>Invoice Number: {this.state.invoiceNumber}</p>
-              <p>Client Name: {this.props.job.client_name}</p>
-              <p>Job Name: {this.props.job.job_name}</p>
-              <p>Total Hours: {numeral(this.props.job.total_hrs).format('0,0.0')}</p>
-              <p>Total: {numeral(this.props.job.total).format('$0,0.00')}</p>
+            <Dialog
+              overlayStyle={dialogStyle}
+              paperProps={{ style: { backgroundColor: "#F3FFE2" } }}
+              modal={true}
+              open={this.state.open}
+              contentStyle={{ width: "400px" }}
+            >
+              <div className="billing-modal-head">
+                <div className="billing-modal-head-sec2">
+                  <p>{this.props.job.client_name}</p>
+                  <p>{this.props.job.job_name}</p>
+                </div>
+                <div className="billing-modal-head-sec1">
+                  <h1>Invoice Number: {this.state.invoiceNumber}</h1>
+                  <h2>
+                    Total Hours:{" "}
+                    {numeral(this.props.job.total_hrs).format("0,0.0")}
+                  </h2>
+                  <h2>
+                    Total: {numeral(this.props.job.total).format("$0,0.00")}
+                  </h2>
+                </div>
+              </div>
 
               <DatePicker
                 onChange={this.handleJobEndDateSelect}
@@ -152,13 +176,21 @@ export class BillingItem extends React.Component {
                 hintText="Select Due Date"
                 floatingLabelText="Select Due Date"
               />
-              <RaisedButton
-                onClick={() => this.handleCloseModal()}
-                label="Cancel"
-              />
-              <Link onClick={() => this.handleLinkClick()} to="/invoiceview">
-                <RaisedButton label="Preview" />
-              </Link>
+
+              <div className="modal-buttons-billing">
+                <RaisedButton
+                  onClick={() => this.handleCloseModal()}
+                  label="Cancel"
+                />
+                <div>
+                  <Link
+                    onClick={() => this.handleLinkClick()}
+                    to="/invoiceview"
+                  >
+                    <RaisedButton label="Preview" />
+                  </Link>
+                </div>
+              </div>
             </Dialog>
           </FlatButton>
         </Paper>

@@ -8,9 +8,27 @@
 
 .billing-item p {
     text-align: center;
-    // color: #225378;
-    // color: #ACF0F2;
     color: #F3FFE2;
     
 }
 
+
+
+.billing-modal-head-sec2 {
+    font-size: 25px;
+    text-align: center;
+
+}
+
+.billing-modal-head-sec1 {
+    font-size: 20px;
+}
+
+.modal-buttons-billing{
+    
+    display: flex;
+    right:0;
+    position: absolute;
+    bottom: 1px;
+        
+}

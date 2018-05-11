@@ -60,14 +60,14 @@ export class Job extends React.Component {
     };
 
     const dialogStyle = {
-      backgroundColor: "rgba(0,0,0, .5)"
+      backgroundColor: "rgba(0,0,0,.2)"
     };
 
     return (
       <div>
         <Paper zDepth={1} style={stylePaper} className="single-job-container">
-          <p>{this.props.jobName}</p>
           <p>{this.props.clientName}</p>
+          <p>{this.props.jobName}</p>
           <div>
             {!this.props.clockedIn ? (
               <RaisedButton

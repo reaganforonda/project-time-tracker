@@ -131,7 +131,7 @@ export class Entries extends React.Component {
         <Paper style={style}zDepth={1} className="enteries-container">
           <p>{this.props.jobname}</p>
           <p>{this.props.clientName}</p>
-          <p>{moment(this.props.entry.entry_date).format('MMMM Do, YYYY')}</p>
+          <p>{moment(this.props.entry.entry_date).format('MM/DD/YYYY')}</p>
           <p>{this.props.startTime}</p>
           <p>{this.props.endTime}</p>
           <p>{numeral(this.props.duration).format('0,0.0')} Hrs</p>
