@@ -109,13 +109,6 @@ export function updateBilled(billed) {
   };
 }
 
-export function addNewEntry(job) {
-  return {
-    type: ADD_NEW_ENTRY,
-    payload: entry.addEntry(job)
-  };
-}
-
 export function getAllEntries(userid) {
   let enteries = [];
 
