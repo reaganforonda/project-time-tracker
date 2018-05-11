@@ -7,15 +7,17 @@ import { withRouter } from "react-router-dom";
 import {
   getInProgressCount,
   getInProgressTotals,
-  getTotalsClient
+  getTotalsClient,
+  getRevMonthly,
+  getHrsMonthly
 } from "../../ducks/analyticsReducer";
 
 export class Analytics extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-        dataSet1 : {}
-    }
+      dataSet1: {}
+    };
 
     this.createDoughnutDataSet1 = this.createDoughnutDataSet1.bind(this);
   }
@@ -23,104 +25,99 @@ export class Analytics extends React.Component {
     this.props.getInProgressCount(this.props.user.user_id);
     this.props.getInProgressTotals(this.props.user.user_id);
     this.props.getTotalsClient(this.props.user.user_id);
-
+    this.props.getHrsMonthly(this.props.user.user_id);
+    this.props.getRevMonthly(this.props.user.user_id);
   }
 
-  createDoughnutDataSet1(data, label){
+  createDoughnutDataSet1(data, label) {
+    let dataSet = {
+      datasets: [
+        {
+          data: data
+        }
+      ],
 
-      let dataSet = {
-          datasets : [
-              {
-                  data : data
-              }
-          ],
-          
-          label : label
-      }
+      label: label
+    };
 
-      console.log(dataSet)
+    console.log(dataSet);
 
-      this.setState({dataSet1 : dataSet})
+    this.setState({ dataSet1: dataSet });
   }
 
   generateRandomcColors(numOfColors) {
-      let colors = [];
-      let counter = 0;
+    let colors = [];
+    let counter = 0;
 
-      while(counter < numOfColors) {
-          let r = Math.floor((Math.random() * 255) );
-          let g = Math.floor((Math.random() * 255) );
-          let b = Math.floor((Math.random() * 255) );
-          let color = `rgb(${r}, ${b}, ${b})`;
-          colors.push(color);
-          counter += 1;
-      }
+    while (counter < numOfColors) {
+      let r = Math.floor(Math.random() * 255);
+      let g = Math.floor(Math.random() * 255);
+      let b = Math.floor(Math.random() * 255);
+      let color = `rgb(${r}, ${b}, ${b})`;
+      colors.push(color);
+      counter += 1;
+    }
 
-      return colors
+    return colors;
   }
 
   render() {
-    //   Doughnut 1 Data Set 
-    let data = this.props.totalsClient.map((value)=> {
-        return value.total_revenue
-    })
+    //   Doughnut 1 Data Set
+    let data = this.props.totalsClient.map(value => {
+      return value.total_revenue;
+    });
 
-    let label = this.props.totalsClient.map((value) => {
-        return value.client_name
-    })
+    let label = this.props.totalsClient.map(value => {
+      return value.client_name;
+    });
     let dataSet1 = {
-        datasets : [
-            {
-                data : data,
-                backgroundColor : this.generateRandomcColors(data.length)
-            }
-        ],
-        labels : label,
+      datasets: [
+        {
+          data: data,
+          backgroundColor: this.generateRandomcColors(data.length)
+        }
+      ],
+      labels: label
+    };
 
-    }
     let optionsDataSet1 = {
-        responsive: true,
-        title : {
-            
-            display : true,
-            position : 'top',
-            text : 'TOTAL REVENUE',
-            fontSize: 20,
-            fontColor: '#EB7F00'
-        }
-    }
+      responsive: true,
+      title: {
+        display: true,
+        position: "top",
+        text: "TOTAL REVENUE",
+        fontSize: 20,
+        fontColor: "#EB7F00"
+      }
+    };
 
-        //   Doughnut 2 Data Set 
-        let data2 = this.props.totalsClient.map((value)=> {
-            return value.total_hrs
-        })
-    
-        let label2 = this.props.totalsClient.map((value) => {
-            return value.client_name
-        })
-        let dataSet2 = {
-            datasets : [
-                {
-                    data : data2,
-                    backgroundColor : this.generateRandomcColors(data.length)
-                }
-            ],
-            labels : label2,
-    
-        }
-        let optionsDataSet2 = {
-            responsive: true,
-            title : {
-                
-                display : true,
-                position : 'top',
-                text : 'TOTAL HOURS',
-                fontSize: 25,
-                fontColor: '#EB7F00'
-            }
-        }
+    //   Doughnut 2 Data Set
+    let data2 = this.props.totalsClient.map(value => {
+      return value.total_hrs;
+    });
 
-
+    let label2 = this.props.totalsClient.map(value => {
+      return value.client_name;
+    });
+    let dataSet2 = {
+      datasets: [
+        {
+          data: data2,
+          backgroundColor: this.generateRandomcColors(data.length)
+        }
+      ],
+      labels: label2
+    };
+    let optionsDataSet2 = {
+      responsive: true,
+      title: {
+        display: true,
+        position: "top",
+        text: "TOTAL HOURS",
+        fontSize: 25,
+        fontColor: "#EB7F00"
+      }
+    };
 
     return (
       <div>
@@ -153,15 +150,14 @@ export class Analytics extends React.Component {
               </h1>
             </Paper>
             <div>
-            <Paper>
-                <Doughnut data={dataSet1} options={optionsDataSet1}/>
-            </Paper>
+              <Paper>
+                <Doughnut data={dataSet1} options={optionsDataSet1} />
+              </Paper>
 
-            <Paper>
-                <Doughnut data={dataSet2} options={optionsDataSet2}/>
-            </Paper>
+              <Paper>
+                <Doughnut data={dataSet2} options={optionsDataSet2} />
+              </Paper>
             </div>
-            
           </div>
         )}
       </div>
@@ -174,12 +170,14 @@ function mapStateToProps(state) {
     user: state.userReducer.user,
     inProgressCount: state.analyticsReducer.inProgressCount,
     inProgressTotals: state.analyticsReducer.inProgressTotals,
-    totalsClient : state.analyticsReducer.totalsClient
+    totalsClient: state.analyticsReducer.totalsClient
   };
 }
 
 export default connect(mapStateToProps, {
   getInProgressCount,
   getInProgressTotals,
-  getTotalsClient
+  getTotalsClient,
+  getRevMonthly,
+  getHrsMonthly
 })(withRouter(Analytics));

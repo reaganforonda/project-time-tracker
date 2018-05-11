@@ -102,7 +102,7 @@ export class JobForm extends React.Component {
         console.log(`${e}`);
       });
 
-    this.props.getAllActiveJobs();
+    this.props.getAllActiveJobs(this.props.user.user_id);
   }
 
   handleOnConfirm() {

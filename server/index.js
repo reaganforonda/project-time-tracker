@@ -218,6 +218,8 @@ app.put(
 app.get("/api/data/jobs/progresscount/:userid", analyticsController.getJobsInProgressCount)
 app.get("/api/data/jobs/progress/total/:userid", analyticsController.getJobsInProgressTotal)
 app.get('/api/data/jobs/clientotal/:userid', analyticsController.getTotalsClient)
+app.get('/api/data/jobs/hrsmonthly/:userid', analyticsController.getHrsMonthly)
+app.get('/api/data/jobs/revmonthly/:userid', analyticsController.getRevMonthly)
 
 // START SERVER
 app.listen(CONNECTION_PORT, () => {
