@@ -42,21 +42,27 @@ VALUES
 -- DUMMY DATA FOR JOBS
 
 INSERT INTO jobs
-(client_id, user_id, job_name, start_date, end_date, completed, rate, description)
+(client_id, user_id, job_name, start_date, end_date, completed, rate, description, clocked_in)
 VALUES
-(2, 1, 'Website Project', '4/1/2018', null, FALSE, 50, 'Build new website');
+(2, 1, 'Build New Website', '4/1/2018', null, FALSE, 100, 'Build Single Page React Website', false);
 
 INSERT INTO jobs
-(client_id, user_id, job_name, start_date, end_date, completed, rate, description)
+(client_id, user_id, job_name, start_date, end_date, completed, rate, description, clocked_in)
 VALUES
-(5, 1, 'Back-end Project', '12/1/2018', null, FALSE, 90, 'Build Back End Server');
+(5, 1, 'Website Update', '12/1/2018', null, FALSE, 85, 'Update website to be mobile responsive', false);
 
 INSERT INTO jobs
-(client_id, user_id, job_name, start_date, end_date, completed, rate, description)
+(client_id, user_id, job_name, start_date, end_date, completed, rate, description, clocked_in)
 VALUES
-(3, 1, 'Shoes Website', '1/1/2018', '3/31/18', TRUE, 90, 'Build E-Commerce Website');
+(3, 1, 'Build New Website', '1/1/2018', '3/31/18', TRUE, 50, 'Build Basic HTML-Javascript Site', false);
 
 INSERT INTO jobs
-(client_id, user_id, job_name, start_date, end_date, completed, rate, description)
+(client_id, user_id, job_name, start_date, end_date, completed, rate, description, clocked_in)
 VALUES
-(4, 1, 'Styling Website', '11/1/2017', '11/5/17', TRUE, 90, 'Style landing page of website');
+(4, 1, 'Build New Website', '11/1/2017', '11/5/17', TRUE, 100, 'Build Mobile Responsive Site', false);
+
+
+INSERT INTO jobs
+(client_id, user_id, job_name, start_date, end_date, completed, rate, description, clocked_in)
+VALUES
+(4, 1, 'Monthly Website Update', '11/1/2017', '03/03/18', TRUE, 40, 'Update Site', false);

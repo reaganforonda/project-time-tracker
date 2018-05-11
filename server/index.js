@@ -12,6 +12,7 @@ const express = require("express"),
 const jobsController = require("./controllers/jobsController"),
   clientController = require("./controllers/clientController"),
   mailController = require("./controllers/mailController"),
+  analyticsController = require('./controllers/analyticsController'),
   s3Controller = require("./controllers/s3Controller"),
   billingController = require("./controllers/billingController"),
   entryController = require("./controllers/entryController");
@@ -212,6 +213,10 @@ app.put(
   "/api/billing/update/invoice/:userid/:invoiceid",
   billingController.updateInvoiceLocation
 );
+
+// ###### ENDPOINTS - Analytics ######
+app.get("/api/data/jobs/progresscount/:userid", analyticsController.getJobsInProgressCount)
+app.get("/api/data/jobs/progress/total/:userid", analyticsController.getJobsInProgressTotal)
 
 // START SERVER
 app.listen(CONNECTION_PORT, () => {

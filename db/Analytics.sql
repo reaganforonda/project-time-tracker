@@ -27,3 +27,9 @@ select clients.client_name, sum(enteries.total) as total_revenue from enteries
 join clients on enteries.client_id = clients.client_id
 Group by clients.client_id
 
+-- GET JOBS IN PROGRESS
+SELECT rate FROM jobs
+WHERE user_id = $1
+AND completed = false
+
+
