@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { Doughnut } from "react-chartjs-2";
+import { Doughnut, Bar } from "react-chartjs-2";
 import { Paper } from "material-ui";
 import numeral from "numeral";
 import { withRouter } from "react-router-dom";
@@ -119,6 +119,77 @@ export class Analytics extends React.Component {
       }
     };
 
+    // BarChart Data Set 1
+    let barData1 = this.props.hrsMonthly.map(value => {
+      return value.total;
+    });
+
+    let barLabel = this.props.hrsMonthly.map(value => {
+      return `${value.month}`;
+    });
+
+    let barDataSet1 = {
+      datasets: [
+        {
+          data: barData1,
+          backgroundColor: this.generateRandomcColors(data.length)
+        }
+      ],
+      labels: barLabel
+    };
+
+    let optionsBarSet1 = {
+      responsive: true,
+      title: {
+        display: true,
+        position: "top",
+        text: "MONTHLY HOURS",
+        fontSize: 25,
+        fontColor: "#EB7F00"
+      },
+      legend : {display : false}
+    };
+
+    // BarChart Data Set 2
+    let barData2 = this.props.revMonthly.map(value => {
+      return value.total;
+    });
+
+    let barLabel2 = this.props.revMonthly.map(value => {
+      return `${value.month}`;
+    });
+
+    let barDataSet2 = {
+      datasets: [
+        {
+          data: barData2,
+          backgroundColor: this.generateRandomcColors(data.length)
+        }
+      ],
+      labels: barLabel2
+    };
+
+    let optionsBarSet2 = {
+      responsive: true,
+      title: {
+        display: true,
+        position: "top",
+        text: "MONTHLY REVENUE",
+        fontSize: 25,
+        fontColor: "#EB7F00"
+      },
+      legend : {display : false},
+      scales : {
+          yAxes : [{
+              ticks : {
+                  callback : function (value, index, values) {
+                      return '$' + value;
+                  }
+              }
+          }]
+      }
+    };
+
     return (
       <div>
         {!this.props.user.user_id ? (
@@ -158,6 +229,14 @@ export class Analytics extends React.Component {
                 <Doughnut data={dataSet2} options={optionsDataSet2} />
               </Paper>
             </div>
+            <div>
+              <Paper>
+                <Bar data={barDataSet1} options={optionsBarSet1} />
+              </Paper>
+              <Paper>
+                <Bar data={barDataSet2} options={optionsBarSet2} />
+              </Paper>
+            </div>
           </div>
         )}
       </div>
@@ -170,7 +249,9 @@ function mapStateToProps(state) {
     user: state.userReducer.user,
     inProgressCount: state.analyticsReducer.inProgressCount,
     inProgressTotals: state.analyticsReducer.inProgressTotals,
-    totalsClient: state.analyticsReducer.totalsClient
+    totalsClient: state.analyticsReducer.totalsClient,
+    hrsMonthly: state.analyticsReducer.hrsMonthly,
+    revMonthly: state.analyticsReducer.revMonthly
   };
 }
 
