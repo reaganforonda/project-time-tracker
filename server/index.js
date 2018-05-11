@@ -217,6 +217,7 @@ app.put(
 // ###### ENDPOINTS - Analytics ######
 app.get("/api/data/jobs/progresscount/:userid", analyticsController.getJobsInProgressCount)
 app.get("/api/data/jobs/progress/total/:userid", analyticsController.getJobsInProgressTotal)
+app.get('/api/data/jobs/clientotal/:userid', analyticsController.getTotalsClient)
 
 // START SERVER
 app.listen(CONNECTION_PORT, () => {

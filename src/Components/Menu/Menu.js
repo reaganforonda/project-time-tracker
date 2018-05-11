@@ -10,7 +10,7 @@ import { connect } from "react-redux";
 export function Menu(props) {
   let navToDashboard = () => {
     if (props.user.user_id) {
-      props.history.push("/dashboard");
+      props.history.push("/dashboard/analytics");
     } else {
       props.history.push("/");
     }
@@ -80,7 +80,7 @@ export function Menu(props) {
             style={listItemStyle}
             hoverColor={"#EB7F00"}
             onClick={navToDashboard}
-            primaryText="DASHBOARD"
+            primaryText="ANALYTICS"
           />
           <ListItem
             hoverColor={"#EB7F00"}

@@ -11,6 +11,8 @@ import BillingView from "../BillingView/BillingView";
 import UserView from "../User/UserView";
 import InvoiceView from "../InvoiceView/InvoiceView";
 import Analytics from '../Analytics/Analytics'
+import {  getInProgressCount,
+  getInProgressTotals}  from '../../ducks/analyticsReducer'
 
 export class Dashboard extends React.Component {
   constructor(props) {
@@ -59,4 +61,5 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps, { getUser, getBilling })(withRouter(Dashboard));
+export default connect(mapStateToProps, { getUser, getBilling,   getInProgressCount,
+  getInProgressTotals })(withRouter(Dashboard));

@@ -21,5 +21,17 @@ module.exports = {
             console.log(`Server Error while trying to access DB: ${e}`)
             res.sendStatus(500);
         })
+    },
+
+    getTotalsClient : (req, res) => {
+        dbInstance = req.app.get('db');
+        const {userid} = req.params;
+
+        dbInstance.DATA_TOTALS_CLIENT([userid]).then((result) => {
+            res.status(200).send(result);
+        }).catch((e) => {
+            console.log(`Server Error while trying to access DB: ${e}`)
+            res.sendStatus(500);
+        })
     }
 }

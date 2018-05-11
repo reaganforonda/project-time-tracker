@@ -4,7 +4,7 @@ import axios from "axios";
 import EntryForm from "../EntryForm/EntryForm";
 import Entries from "./Entries";
 import { connect } from "react-redux";
-
+import { withRouter } from "react-router-dom";
 
 export class EntryView extends React.Component {
   constructor(props) {
@@ -15,7 +15,6 @@ export class EntryView extends React.Component {
 
     this.getAllEntries = this.getAllEntries.bind(this);
     this.handleDeleteEntry = this.handleDeleteEntry.bind(this);
-    
   }
 
   componentDidMount() {
@@ -23,27 +22,31 @@ export class EntryView extends React.Component {
   }
 
   componentDidUpdate() {
-    this.getAllEntries()
+    this.getAllEntries();
   }
 
   getAllEntries() {
-    axios.get(`/api/entry/${this.props.user.user_id}`).then((enteries) => {
-      this.setState({enteries : enteries.data})
-    }).catch((e) => {
-      console.log(e);
-    })
+    axios
+      .get(`/api/entry/${this.props.user.user_id}`)
+      .then(enteries => {
+        this.setState({ enteries: enteries.data });
+      })
+      .catch(e => {
+        console.log(e);
+      });
   }
 
   handleDeleteEntry(entry) {
-    axios.delete(`/api/entry/delete/${this.props.user.user_id}/${entry.entry_id}`).then((result) => {
-      console.log(result.data);
-      this.getAllEntries();
-    }).catch((e) => {
-      console.log(`Error while deleting entry: ${e}`);
-    })
+    axios
+      .delete(`/api/entry/delete/${this.props.user.user_id}/${entry.entry_id}`)
+      .then(result => {
+        console.log(result.data);
+        this.getAllEntries();
+      })
+      .catch(e => {
+        console.log(`Error while deleting entry: ${e}`);
+      });
   }
-
-
 
   render() {
     let entryArr = this.state.enteries.map(entry => {
@@ -56,9 +59,9 @@ export class EntryView extends React.Component {
             startTime={entry.start_time}
             endTime={entry.end_time}
             duration={entry.duration}
-            delete = {this.handleDeleteEntry}
-            entry = {entry}
-            edit = {this.handleEditEntry}
+            delete={this.handleDeleteEntry}
+            entry={entry}
+            edit={this.handleEditEntry}
           />
         </div>
       );
@@ -66,11 +69,16 @@ export class EntryView extends React.Component {
 
     return (
       <div className="entryview-container">
-        <div className="Entry-List-container" />
-            {entryArr}
-        <div className="floating-action">
-          <EntryForm getEntries={this.getAllEntries}/>
-        </div>
+        {!this.props.user.user_id ? (
+          this.props.history.push("/")
+        ) : (
+          <div>
+            <div className="Entry-List-container">{entryArr}</div>
+            <div className="floating-action">
+              <EntryForm getEntries={this.getAllEntries} />
+            </div>
+          </div>
+        )}
       </div>
     );
   }
@@ -79,8 +87,8 @@ export class EntryView extends React.Component {
 function mapStateToProps(state) {
   return {
     user: state.userReducer.user,
-    entries : state.entryReducer.entries
+    entries: state.entryReducer.entries
   };
 }
 
-export default connect(mapStateToProps, {})(EntryView);
+export default connect(mapStateToProps, {})(withRouter(EntryView));
