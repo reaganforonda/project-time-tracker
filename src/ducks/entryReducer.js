@@ -1,5 +1,4 @@
 import axios from "axios";
-import * as entryServices from "../services/entryservices";
 
 const ENTRY_INTIAL_STATE = {
   entry_date: "",
@@ -113,7 +112,7 @@ export function updateBilled(billed) {
 export function addNewEntry(job) {
   return {
     type: ADD_NEW_ENTRY,
-    payload: entryServices.addEntry(job)
+    payload: entry.addEntry(job)
   };
 }
 
