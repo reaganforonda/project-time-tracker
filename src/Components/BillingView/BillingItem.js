@@ -150,7 +150,7 @@ export class BillingItem extends React.Component {
                 <div className="billing-modal-head-sec1">
                   <h1>Invoice Number: {this.state.invoiceNumber}</h1>
                   <h2>
-                    Total Hours:{" "}
+                    Total Hours:
                     {numeral(this.props.job.total_hrs).format("0,0.0")}
                   </h2>
                   <h2>

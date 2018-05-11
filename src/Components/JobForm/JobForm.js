@@ -172,8 +172,6 @@ export class JobForm extends React.Component {
               />
 
               <DatePicker
-                
-                // value={this.state.startDate}
                 onChange={this.handleDateChange}
                 name="startDate"
                 hintText="Job Start Date"

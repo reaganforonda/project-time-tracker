@@ -9,7 +9,8 @@ const BILLING_INITIAL_STATE = {
   dueDate: "",
   entries: [],
   jobEndDate: "",
-  invoiceLocation : ''
+  invoiceLocation : '',
+  allBilling:[]
 };
 
 const GET_BILLING = "GET_BILLING";
@@ -21,6 +22,21 @@ const UPDATE_DUE_DATE = "UPDATE_DUE_DATE";
 const GET_ENTRIES = "GET_ENTRIES";
 const UPDATE_JOB_END_DATE = "UPDATE_JOB_END_DATE";
 const UPDATE_INVOICE_LOCATION = "UPDATE_INVOICE_LOCATION"
+const GET_ALL_BILLING = 'GET_ALL_BILLING'
+
+export function getAllBilling(userid) {
+  let allBilling = axios.get(`/api/billing/${userid}`).then((result) => {
+    return result.data;
+  }).catch((e) => {
+    console.log(`Error GET at Reducer - Attempt to get all billing: ${e}`)
+  })
+
+  console.log(allBilling)
+  return {
+    type : GET_ALL_BILLING,
+    payload: allBilling
+  }
+}
 
 export function getBilling(user_id) {
   let billing = axios
@@ -121,6 +137,9 @@ export function updateInvLocation(user_id, invoice_id, file) {
 
 export default function reduce(state = BILLING_INITIAL_STATE, action) {
   switch (action.type) {
+    case GET_ALL_BILLING + "_FULFILLED":
+    return Object.assign({},state, {allBilling : action.payload})
+
     case GET_BILLING + "_FULFILLED":
       return Object.assign({}, state, { billing: action.payload });
 

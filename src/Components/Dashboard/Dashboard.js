@@ -2,6 +2,7 @@ import React from "react";
 import Menu from "../Menu/Menu";
 import { withRouter, Switch, Route } from "react-router-dom";
 import { getUser } from "../../ducks/userReducer";
+import {getBilling} from '../../ducks/billingReducer';
 import { connect } from "react-redux";
 import JobView from "../JobView/JobView";
 import EntryView from "../EntryView/EntryView";
@@ -23,7 +24,6 @@ export class Dashboard extends React.Component {
   componentDidMount() {
     this.props.getUser();
     this.setState({ pathname: this.props.location.pathname });
-    
   }
 
  
@@ -57,4 +57,4 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps, { getUser })(withRouter(Dashboard));
+export default connect(mapStateToProps, { getUser, getBilling })(withRouter(Dashboard));

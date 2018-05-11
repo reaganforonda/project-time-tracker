@@ -32,6 +32,7 @@ module.exports = {
     updateInvoiceLocation : (req, res) => {
         const dbInstance = req.app.get('db');
         const {userid, invoiceid} = req.params;
+        console.log(req.body);
         const {key} = req.body;
         const file = key.replace(/\s/g, '+');
         console.log(file)
@@ -42,6 +43,18 @@ module.exports = {
         }).catch((e) => {
             console.log(`Error updating Invoice Location at controller: ${e}`);
             res.sendStatus(500)
+        })
+    },
+
+    getAllBilling : (req, res) => {
+        const dbInstance = req.app.get('db');
+        const {userid} = req.params;
+        
+        dbInstance.GET_BILLING([userid]).then((result) => {
+            res.status(200).send(result);
+        }).catch((e) => {
+            console.log(`Error while getting all billing at controller: ${e}`);
+            res.sendStatus(500);
         })
     }
 }

@@ -13,7 +13,11 @@ import {
 } from "material-ui";
 import BillingItem from "./BillingItem";
 import { connect } from "react-redux";
-import { getBilling, getLastBillingNumber } from "../../ducks/billingReducer";
+import {
+  getBilling,
+  getLastBillingNumber,
+  getAllBilling
+} from "../../ducks/billingReducer";
 import { getAllClients } from "../../ducks/clientReducer";
 import Dropzone from "react-dropzone";
 import numeral from "numeral";
@@ -36,7 +40,10 @@ export class BillingView extends React.Component {
       uploadSnackBar: false,
       signedUrl: "",
       selectedFile: {},
-      submitDisabled: true
+      submitDisabled: true,
+      invoice: "",
+      attachment: '',
+      emailSubmit: true
     };
 
     this.getBilling = this.getBilling.bind(this);
@@ -50,11 +57,11 @@ export class BillingView extends React.Component {
     this.defaultBodyText = this.defaultBodyText.bind(this);
     this.handleS3Upload = this.handleS3Upload.bind(this);
     this.handleCancelUploadModal = this.handleCancelUploadModal.bind(this);
+    this.handleInvoiceSelect = this.handleInvoiceSelect.bind(this);
   }
 
   componentDidMount() {
     this.getBilling();
-    this.props.getLastBillingNumber(this.props.user.user_id);
   }
 
   defaultBodyText() {
@@ -65,6 +72,7 @@ export class BillingView extends React.Component {
 
   getBilling() {
     this.props.getBilling(this.props.user.user_id);
+    this.props.getAllBilling(this.props.user.user_id);
   }
 
   handleUploadModalOpen() {
@@ -75,9 +83,9 @@ export class BillingView extends React.Component {
     this.setState({ uploadModalOpen: false });
   }
 
-  handleCancelUploadModal(){
-    this.setState({uploadModalOpen : false});
-    this.setState({files:[], submitDisabled: true})
+  handleCancelUploadModal() {
+    this.setState({ uploadModalOpen: false });
+    this.setState({ files: [], submitDisabled: true });
   }
 
   handleEmailModalOpen() {
@@ -89,21 +97,29 @@ export class BillingView extends React.Component {
     this.setState({ emailModalOpen: false });
   }
 
-
-
   onDrop(files) {
     this.setState({ files });
-    this.setState({submitDisabled : false})
+    this.setState({ submitDisabled: false });
   }
 
   handleClientSelect = (event, index, value) => {
-    console.log(value);
     this.setState({ selectedClient: value });
     this.setState({ toEmail: value });
+    if(this.state.toEmail !== '' && this.state.fromEmail !== '') {
+      this.setState({emailSubmit : false})
+    } else {
+      this.setState({emailSubmit : true})
+    }
   };
 
   handleInputChange(e) {
     this.setState({ [e.target.name]: e.target.value });
+    
+    if(this.state.toEmail !== '' && this.state.fromEmail !== '') {
+      this.setState({emailSubmit : false})
+    } else {
+      this.setState({emailSubmit : true})
+    }
   }
 
   handleEmailSend() {
@@ -111,14 +127,20 @@ export class BillingView extends React.Component {
       toEmail: this.state.toEmail,
       fromEmail: this.state.fromEmail,
       subject: this.state.subject,
-      message: this.state.bodyText
+      message: this.state.bodyText,
+      attachments : [
+          {
+            path: this.state.attachment
+          }
+      ]
     };
 
     axios
       .post("/api/email", email)
       .then(result => {
         console.log(result);
-        this.setState({ emailSnackBar: true });
+        this.setState({ emailSnackBar: true, attachment: '', emailModalOpen:false });
+
       })
       .catch(e => {
         console.log(`Error while trying to send email front end : ${e}`);
@@ -148,7 +170,26 @@ export class BillingView extends React.Component {
           .put(signedURL, file, options)
           .then(result => {
             console.log(result);
-            this.setState({ uploadModalOpen: false, uploadSnackBar: true, submitDisabled: true });
+            this.setState({
+              uploadModalOpen: false,
+              uploadSnackBar: true,
+              submitDisabled: true
+            });
+            let awsFileName = { key: upload.filename };
+            console.log(awsFileName);
+            axios
+              .put(
+                `/api/billing/update/invoice/${this.props.user.user_id}/${
+                  this.state.invoice
+                }`,
+                awsFileName
+              )
+              .then(result => {
+                console.log(result.data);
+                this.setState({
+                  files: []
+                });
+              });
           })
           .catch(e => {
             console.log(`Error PUT - Attempted Upload to Amazon S3: ${e}`);
@@ -157,6 +198,15 @@ export class BillingView extends React.Component {
       .catch(e => {
         console.log(`Error POST - Attempted to get Signed URL : ${e}`);
       });
+  }
+
+  handleInvoiceSelect = (event, index, value) => {
+    this.setState({ invoice: value });
+  };
+
+  handleAttachmentSelect = (event, index, value) => {
+    console.log(value);
+    this.setState({attachment : value})
   }
 
   render() {
@@ -185,14 +235,28 @@ export class BillingView extends React.Component {
     });
 
     let files = this.state.files.map(file => {
+      return <p key={file.name}>{file.name}</p>;
+    });
+
+    let invoices = this.props.allBilling.map(value => {
       return (
-        <p key={file.name}>
-          {file.name}
-        </p>
+        <MenuItem
+          key={value.invoice_id}
+          primaryText={value.invoice_number}
+          value={value.invoice_id}
+        />
       );
     });
 
-
+    let attachments = this.props.allBilling.map(value => {
+      return (
+        <MenuItem
+          key={value.invoice_id}
+          primaryText={value.invoice_number}
+          value={value.aws_file_location}
+        />
+      );
+    });
 
     return (
       <div className="billing-view-container">
@@ -200,14 +264,26 @@ export class BillingView extends React.Component {
           <RaisedButton
             onClick={() => this.handleUploadModalOpen()}
             label="UPLOAD INVOICE"
-            backgroundColor={'#EB7F00'}
+            backgroundColor={"#EB7F00"}
           >
-            <Dialog modal={true} open={this.state.uploadModalOpen} contentStyle={{width : 'fit-content'}} > 
+            <Dialog
+              modal={true}
+              open={this.state.uploadModalOpen}
+              contentStyle={{ width: "fit-content" }}
+            >
+              <SelectField
+                hintText="Select Invoice"
+                floatingLabelText="Select Invoice"
+                value={this.state.invoice}
+                onChange={this.handleInvoiceSelect}
+              >
+                {invoices}
+              </SelectField>
               <Dropzone onDrop={this.onDrop}>
                 <p>Drop Invoice or click to select files to upload</p>
               </Dropzone>
               <div>{files}</div>
-              <div className='upload-buttons-div'>
+              <div className="upload-buttons-div">
                 <RaisedButton
                   onClick={() => this.handleCancelUploadModal()}
                   label="CANCEL"
@@ -224,7 +300,7 @@ export class BillingView extends React.Component {
           <RaisedButton
             onClick={() => this.handleEmailModalOpen()}
             label="EMAIL CLIENT"
-            backgroundColor={'#EB7F00'}
+            backgroundColor={"#EB7F00"}
           >
             <Dialog modal={true} open={this.state.emailModalOpen}>
               <Paper>
@@ -240,10 +316,23 @@ export class BillingView extends React.Component {
                     {clients}
                   </SelectField>
                 </div>
+                <div>
+                  <SelectField
+                    value={this.state.attachment}
+                    onChange={(event, index, value) =>
+                      this.handleAttachmentSelect(event, index, value)
+                    }
+                    hintText="Select Attachment"
+                    floatingLabelText="Select Attachment"
+                  >
+                    {attachments}
+                  </SelectField>
+                </div>
 
                 <TextField
                   name="toEmail"
                   value={this.state.toEmail}
+                  errorText='Required'
                   onChange={e => this.handleInputChange(e)}
                   hintText="TO"
                   underlineShow={false}
@@ -253,6 +342,7 @@ export class BillingView extends React.Component {
                   name="fromEmail"
                   value={this.state.fromEmail}
                   onChange={e => this.handleInputChange(e)}
+                  errorText='Required'
                   hintText="FROM"
                   underlineShow={false}
                 />
@@ -280,6 +370,7 @@ export class BillingView extends React.Component {
                 />
                 <RaisedButton
                   onClick={() => this.handleEmailSend()}
+                  disabled={this.state.emailSubmit}
                   label="Submit"
                 />
               </div>
@@ -308,12 +399,14 @@ function mapStateToProps(state) {
     user: state.userReducer.user,
     billing: state.billingReducer.billing,
     selectedJob: state.billingReducer.selectedJob,
-    clients: state.clientReducer.clients
+    clients: state.clientReducer.clients,
+    allBilling: state.billingReducer.allBilling
   };
 }
 
 export default connect(mapStateToProps, {
   getBilling,
   getLastBillingNumber,
-  getAllClients
+  getAllClients,
+  getAllBilling
 })(BillingView);

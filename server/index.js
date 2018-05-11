@@ -11,13 +11,13 @@ const express = require("express"),
 
 const jobsController = require("./controllers/jobsController"),
   clientController = require("./controllers/clientController"),
-  mailController = require('./controllers/mailController'),
-  s3Controller = require('./controllers/s3Controller'),
-  billingController = require('./controllers/billingController'),
-  entryController = require('./controllers/entryController');
+  mailController = require("./controllers/mailController"),
+  s3Controller = require("./controllers/s3Controller"),
+  billingController = require("./controllers/billingController"),
+  entryController = require("./controllers/entryController");
 
 const app = express();
-const nodemailer = require('nodemailer')
+const nodemailer = require("nodemailer");
 
 // .env Desconstructor
 const {
@@ -27,13 +27,12 @@ const {
   DOMAIN,
   CLIENT_ID,
   CLIENT_SECRET,
-  CALLBACK_URL,
+  CALLBACK_URL
 } = process.env;
 
-app.use(express.static(__dirname + '/../build'));
+app.use(express.static(__dirname + "/../build"));
 app.use(bodyParser.json());
 app.use(cors());
-
 
 // ###### SESSIONS ######
 app.use(
@@ -43,20 +42,6 @@ app.use(
     saveUninitialized: true
   })
 );
-
-// ### STAY LOGGED IN
-// app.use((req, res, next)=>{
-//   if(process.env.DEV_MODE){
-//       req.user = {
-//           user_id: 1,
-//           auth_id: "test-user-1",
-//           first_name : "Bob",
-//           last_name : "Belcher"
-//       }
-//   }
-// })
-
-
 
 // ###### DB Connection ######
 massive(CONNECTION_STRING)
@@ -85,7 +70,6 @@ passport.use(
       const { id, displayName, picture, given_name, family_name } = profile;
 
       db.FIND_USER_AUTH([id]).then(users => {
-
         if (users[0]) {
           console.log(users[0]);
           return done(null, users[0].auth_id);
@@ -93,9 +77,9 @@ passport.use(
           db
             .CREATE_USER([id, displayName, picture, given_name, family_name])
             .then(createdUser => {
-              
               return done(null, createdUser[0].auth_id);
-            }).catch((e) => {
+            })
+            .catch(e => {
               console.log(`Error at Creating User: ${e}`);
             });
         }
@@ -114,24 +98,23 @@ passport.deserializeUser((id, done) => {
     .FIND_USER_SESSION([id])
     .then(user => {
       done(null, user[0]);
-    }).catch((e)=> {
+    })
+    .catch(e => {
       console.log(`Error : ${e}`);
     });
 });
 
 app.get("/auth", passport.authenticate("auth0"));
 
-
-if(process.env.NODE_ENV === 'development') {
+if (process.env.NODE_ENV === "development") {
   app.get(
     "/auth/callback",
     passport.authenticate("auth0", {
-      successRedirect: 'http://localhost:3000/#/dashboard',
+      successRedirect: "http://localhost:3000/#/dashboard",
       failureRedirect: "http://localhost:3000"
     })
   );
 } else {
-
   app.get(
     "/auth/callback",
     passport.authenticate("auth0", {
@@ -141,7 +124,6 @@ if(process.env.NODE_ENV === 'development') {
   );
 }
 
-
 app.get("/auth/me", function(req, res) {
   if (req.user) {
     res.status(200).send(req.user);
@@ -150,64 +132,86 @@ app.get("/auth/me", function(req, res) {
   }
 });
 
-if(process.env.NODE_ENV === 'development') {
+if (process.env.NODE_ENV === "development") {
   app.get("/logout", function(req, res) {
     req.logOut();
-    res.redirect('http://localhost:3000');
+    res.redirect("http://localhost:3000");
   });
 } else {
-app.get("/logout", function(req, res) {
-  req.logOut();
-  res.redirect(process.env.REACT_LOGOUT_REDIRECT);
-});}
-
+  app.get("/logout", function(req, res) {
+    req.logOut();
+    res.redirect(process.env.REACT_LOGOUT_REDIRECT);
+  });
+}
 
 // ###### ENDPOINTS - EMAIL ######
-app.post(`/api/email`, mailController.sendEmail)
+app.post(`/api/email`, mailController.sendEmail);
 
 // ##### Amazon S3 #####
-app.post(`/api/s3/upload`, s3Controller.sign)
+app.post(`/api/s3/upload`, s3Controller.sign);
+app.put("/api/s3/update/:user_id/:jobid");
 
 // ###### ENDPOINTS - JOB ######
-app.post('/api/job', jobsController.addJob);
-app.get('/api/jobs/open/:userId', jobsController.getAllOpenJobs)
-app.put('/api/jobs/updateclock/:userid/:jobid/:clock', jobsController.updateClockInJob)
-app.get('/api/jobs/clockin/:userid/', jobsController.getClockedInJobs)
-app.get('/api/jobs/clockout/:userid/', jobsController.getClockedOutJobs)
-app.get('/api/jobs/:userId', jobsController.getJobsByUserID)
-app.get('/api/jobs/billing/:userid', jobsController.getJobsForBilling)
-app.put('/api/jobs/billing/update/:userid/:jobid', jobsController.updateJobsBilling)
+app.get("/api/jobs/open/:userId", jobsController.getAllOpenJobs);
+app.get("/api/jobs/clockin/:userid/", jobsController.getClockedInJobs);
+app.get("/api/jobs/clockout/:userid/", jobsController.getClockedOutJobs);
+app.get("/api/jobs/:userId", jobsController.getJobsByUserID);
+app.get("/api/jobs/billing/:userid", jobsController.getJobsForBilling);
 
+app.post("/api/job", jobsController.addJob);
 
+app.put(
+  "/api/jobs/billing/update/:userid/:jobid",
+  jobsController.updateJobsBilling
+);
+app.put(
+  "/api/jobs/updateclock/:userid/:jobid/:clock",
+  jobsController.updateClockInJob
+);
 
 // ###### ENDPOINTS - Client ######
-app.get('/api/clients/:userid', clientController.getAllClients);
-app.post('/api/client/', clientController.addClient);
-app.delete('/api/client/:userid/:clientid', clientController.deleteClient);
-app.put('/api/client/update/:userid/:clientid', clientController.updateClient);
+app.get("/api/clients/:userid", clientController.getAllClients);
+app.post("/api/client/", clientController.addClient);
+app.delete("/api/client/:userid/:clientid", clientController.deleteClient);
+app.put("/api/client/update/:userid/:clientid", clientController.updateClient);
 
 // ###### ENDPOINTS - Enteries ######
-app.post('/api/entry/add', entryController.addEntry)
+app.post("/api/entry/add", entryController.addEntry);
 
-app.put(`/api/entry/update/:jobid/:userid/:entryid`, entryController.updateEntry)
-app.put('/api/entry/fullupdate/:userid/:entryid/:jobid', entryController.updateFullEntry);
+app.put(
+  `/api/entry/update/:jobid/:userid/:entryid`,
+  entryController.updateEntry
+);
+app.put(
+  "/api/entry/fullupdate/:userid/:entryid/:jobid",
+  entryController.updateFullEntry
+);
 
-app.get('/api/entry/:userid/:jobid', entryController.getEntriesByJobId)
-app.get('/api/entry/total/:userid/:jobid', entryController.getTotalByJobId)
-app.get('/api/entry/:userid', entryController.getAllEnteries)
-app.get('/api/entry/hrs/total/:userid/:jobid', entryController.getTotalHrsByJobId)
-app.get('/api/entry/:userid/:jobid/:entryid', entryController.getEntryById)
+app.get("/api/entry/:userid/:jobid", entryController.getEntriesByJobId);
+app.get("/api/entry/total/:userid/:jobid", entryController.getTotalByJobId);
+app.get("/api/entry/:userid", entryController.getAllEnteries);
+app.get(
+  "/api/entry/hrs/total/:userid/:jobid",
+  entryController.getTotalHrsByJobId
+);
+app.get("/api/entry/:userid/:jobid/:entryid", entryController.getEntryById);
 
-app.delete('/api/entry/delete/:userid/:entryid', entryController.deleteEntry)
+app.delete("/api/entry/delete/:userid/:entryid", entryController.deleteEntry);
 
 // ###### ENDPOINTS - User ######
-app.put('/api/user/update/:userid', userController.updateUserInfo)
+app.put("/api/user/update/:userid", userController.updateUserInfo);
 
 // ###### ENDPOINTS - Billing ######
-app.get('/api/billing/invoiceid/:userid', billingController.getLastBillingNumber)
-app.post('/api/billing/add/:userid', billingController.addBilling)
-app.put('/api/billing/update/invoice/:userid/:invoiceid', billingController.updateInvoiceLocation)
-
+app.get("/api/billing/:userid", billingController.getAllBilling);
+app.get(
+  "/api/billing/invoiceid/:userid",
+  billingController.getLastBillingNumber
+);
+app.post("/api/billing/add/:userid", billingController.addBilling);
+app.put(
+  "/api/billing/update/invoice/:userid/:invoiceid",
+  billingController.updateInvoiceLocation
+);
 
 // START SERVER
 app.listen(CONNECTION_PORT, () => {

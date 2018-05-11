@@ -8,7 +8,7 @@ const {
 
 module.exports = {
     sendEmail : (req, res) => {
-        const {toEmail, fromEmail, subject, message} = req.body
+        const {toEmail, fromEmail, subject, message, attachments} = req.body
         const smtpTransport = nodemailer.createTransport({
             service : "Gmail",
             auth : {
@@ -22,6 +22,7 @@ module.exports = {
             to : toEmail,
             subject : subject,
             text : message,
+            attachments : attachments
         }
 
         smtpTransport.sendMail(mailOptions, (error, response) => {
