@@ -37,7 +37,7 @@ export class Job extends React.Component {
     let arr = this.props.entries.map(entry => {
       return (
         <div key={entry.entry_id}>
-          <Paper zDepth={0}>
+          <Paper zDepth={1}>
             <p>{entry.entry_date}</p>
             <p>{entry.start_time}</p>
             <p>{entry.end_time}</p>
@@ -57,7 +57,7 @@ export class Job extends React.Component {
 
     return (
       <div>
-        <Paper zDepth={3} style={stylePaper} className="single-job-container">
+        <Paper zDepth={1} style={stylePaper} className="single-job-container">
           <p>{this.props.jobName}</p>
           <p>{this.props.clientName}</p>
           <div>

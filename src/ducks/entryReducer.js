@@ -49,9 +49,10 @@ export function addActiveEntry(entry) {
 }
 
 export function updateActiveEntry(jobid, userid, entryid, updateEntry) {
+  
   axios
     .put(
-      `/api/entry/update/${jobid}/${userid}/${entryid}`,
+      `/api/entry/fullupdate/${userid}/${entryid}/${jobid}`,
       updateEntry
     )
     .then(result => {

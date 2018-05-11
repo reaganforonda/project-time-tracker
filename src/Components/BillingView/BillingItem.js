@@ -117,7 +117,7 @@ export class BillingItem extends React.Component {
 
     return (
       <div>
-        <Paper style= {style}className='billing-item'>
+        <Paper zDepth={1} style= {style}className='billing-item'>
           <p>{this.props.job.client_name}</p>
           <p>{this.props.jobName}</p>
           <p>{numeral(this.props.job.total_hrs).format('0,0.0')} Total Hrs.</p>

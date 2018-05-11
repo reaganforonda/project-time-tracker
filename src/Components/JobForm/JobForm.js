@@ -170,7 +170,7 @@ export class JobForm extends React.Component {
               />
 
               <DatePicker
-                autoOk={true}
+                
                 // value={this.state.startDate}
                 onChange={this.handleDateChange}
                 name="startDate"

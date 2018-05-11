@@ -210,7 +210,7 @@ export class EntryForm extends React.Component {
               <DatePicker
               
                 onChange={this.handleDateChange}
-                autoOk={true}
+                
                 name="startDate"
                 hintText="Entry Date"
                 floatingLabelText="Entry Date"

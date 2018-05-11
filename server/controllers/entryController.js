@@ -134,6 +134,9 @@ module.exports = {
     const dbInstance = req.app.get('db');
     const {userid, jobid, entryid} = req.params;
     const {entry_date, start_time, end_time, duration, total, comment} = req.body;
+    
+console.log(req.body);
+
 
     dbInstance.UPDATE_FULL_ENTRY([entry_date, start_time, end_time, duration, total, comment, userid, entryid, jobid]).then((result) => {
       res.status(200).send(result);

@@ -50,6 +50,8 @@ export class Entries extends React.Component {
 
   handleModalClose() {
     this.setState({ openModal: false });
+    this.props.getAllEntries(this.props.user.user_id);
+    console.log(this.props.entries)
   }
 
   handleDateChange(e, date) {
@@ -58,6 +60,7 @@ export class Entries extends React.Component {
 
   handleStartTimeChange(e, date ) {
     this.setState({startTime : date})
+    console.log(date);
   }
 
   handleEndTimeChange(e, date ) {
@@ -94,15 +97,23 @@ export class Entries extends React.Component {
   updateEntry(){
 
     let duration = this.calculateDuration();
-    let total = duration * this.props.entryForEdit.rate
+    
+    console.log(this.props.entry.rate)
+    let total = duration * this.props.entry.rate
+    let start_time = moment(this.state.startTime).format('h:mm:ss a')
+    console.log(start_time)
+    let end_time = moment(this.state.endTime).format('h:mm:ss a')
+    console.log(end_time)
+    let entry_date = moment(this.state.startDate).format('MM/DD/YYYY')
+    console.log(entry_date)
 
     let updatedEntry = {
-      entry_date : this.state.startDate,
-      start_time : this.state.startTime,
-      end_time : this.state.endTime,
+      entry_date : entry_date,
+      start_time : start_time,
+      end_time : end_time,
       duration : duration,
       total : total,
-      comment : this.state.comment
+      comment : this.state.comment,
     }
     console.log(updatedEntry)
     this.props.updateActiveEntry(this.props.entry.job_id, this.props.user.user_id, this.props.entry.entry_id, updatedEntry);
@@ -111,14 +122,16 @@ export class Entries extends React.Component {
   }
 
   render() {
-
+    const style= {
+      backgroundColor : "#1695A3"
+    }
     
     return (
       <div>
-        <Paper zDepth={3} className="enteries-container">
+        <Paper style={style}zDepth={1} className="enteries-container">
           <p>{this.props.jobname}</p>
           <p>{this.props.clientName}</p>
-          <p>{moment(this.props.date).format('MMMM Do, YYYY')}</p>
+          <p>{moment(this.props.entry.entry_date).format('MMMM Do, YYYY')}</p>
           <p>{this.props.startTime}</p>
           <p>{this.props.endTime}</p>
           <p>{numeral(this.props.duration).format('0,0.0')} Hrs</p>
