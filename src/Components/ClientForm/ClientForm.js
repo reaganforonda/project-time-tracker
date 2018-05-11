@@ -107,6 +107,8 @@ export class ClientForm extends React.Component {
           onClick={() => this.handleOpenModal()}
           mini={false}
           disabled={false}
+          zDepth={5}
+          backgroundColor='#EB7F00'
         >
           <ContentAdd />
           <Dialog modal={true} open={this.state.modalOpen}>

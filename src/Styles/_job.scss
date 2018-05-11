@@ -34,3 +34,31 @@ $color5: #EB7F00;
 .single-job-container {
     border : 2px yellow solid;
 }
+
+.job-enteries-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 20px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    color: $color5;
+    font-weight: 600;
+}
+
+.job-entry-modal-entries {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-left: 8px;
+    padding-right: 8px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    font-size: 18px;
+    background-color: $color1;
+    color: $color4;
+    margin-bottom: 10px;
+}
+

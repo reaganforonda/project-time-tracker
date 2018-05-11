@@ -140,8 +140,10 @@ export class JobForm extends React.Component {
           onClick={() => this.handleOpenModal()}
           mini={false}
           disabled={false}
+          zDepth={5}
+          backgroundColor='#EB7F00'
         >
-          <ContentAdd />
+          <ContentAdd className='content-add'/>
           <Dialog modal={true} open={this.state.modalOpen}>
             <SelectField
               hintText="Select Client"

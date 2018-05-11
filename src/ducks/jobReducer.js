@@ -53,7 +53,6 @@ export function getClockedInJob(user_id) {
       console.log(`Error while trying to Get Clocked In Job: ${e}`);
     });
 
-  console.log(clockIn);
   return {
     type: GET_CLOCKED_IN_JOB,
     payload: clockIn
@@ -96,8 +95,6 @@ export function getAllActiveJobs(userId) {
     .catch(e => {
       console.log(`Error: ${e}`);
     });
-
-  console.log(JOB_INITIAL_STATE.offTheClockJobs);
 
   return {
     type: GET_ACTIVE_JOBS,

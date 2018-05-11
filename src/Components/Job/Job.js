@@ -1,10 +1,16 @@
 import React from "react";
 import RaisedButton from "material-ui/RaisedButton";
 import { Dialog, Paper } from "material-ui";
-import numeral from 'numeral';
+import numeral from "numeral";
+import moment from 'moment'
 import { connect } from "react-redux";
 import { openModal, closeModal } from "../../ducks/jobReducer";
-import { getTotalHrs, resetState, getTotal, getEnteriesByJobId } from "../../ducks/entryReducer";
+import {
+  getTotalHrs,
+  resetState,
+  getTotal,
+  getEnteriesByJobId
+} from "../../ducks/entryReducer";
 
 export class Job extends React.Component {
   constructor(props) {
@@ -14,46 +20,48 @@ export class Job extends React.Component {
   }
 
   handleViewEnteries() {
-
     this.props.openModal();
     this.props.getEnteriesByJobId(
       this.props.user.user_id,
       this.props.job.job_id
     );
     this.props.getTotal(this.props.user.user_id, this.props.job.job_id);
-    this.props.getTotalHrs(this.props.user.user_id, this.props.job.job_id)
-    
+    this.props.getTotalHrs(this.props.user.user_id, this.props.job.job_id);
   }
 
-  handleCloseEnteries(){
+  handleCloseEnteries() {
     this.props.closeModal();
     this.props.resetState();
   }
 
-  
-
   render() {
-
     let arr = this.props.entries.map(entry => {
       return (
-        <div key={entry.entry_id}>
-          <Paper zDepth={1}>
-            <p>{entry.entry_date}</p>
+        <Paper
+          style={{ background: "transparent" }}
+          key={entry.entry_id}
+          zDepth={1}
+        >
+          <div className="job-entry-modal-entries">
+            
+            <p>{moment(new Date(entry.entry_date)).format('MM/DD/YYYY')}</p>
             <p>{entry.start_time}</p>
             <p>{entry.end_time}</p>
-            <p>{numeral(entry.duration).format('0,0.0')} hrs</p>
-            <p>{numeral(entry.total).format('$0,0.00')}</p>
-
-          </Paper>
-        </div>
-      )
-    })
+            <p>{numeral(entry.duration).format("0,0.0")} hrs</p>
+            <p>{numeral(entry.total).format("$0,0.00")}</p>
+          </div>
+        </Paper>
+      );
+    });
 
     const stylePaper = {
-      backgroundColor : "#1695A3",
-      textAlign : 'left'
-    }
+      backgroundColor: "#1695A3",
+      textAlign: "left"
+    };
 
+    const dialogStyle = {
+      backgroundColor: "rgba(0,0,0, .5)"
+    };
 
     return (
       <div>
@@ -64,11 +72,10 @@ export class Job extends React.Component {
             {!this.props.clockedIn ? (
               <RaisedButton
                 backgroundColor={"#EB7F00"}
-                labelColor={'black'}
+                labelColor={"black"}
                 onClick={() => this.props.clockIn(this.props.job)}
                 className="job-button"
                 label="Clock In"
-                
               />
             ) : (
               <RaisedButton
@@ -83,15 +90,24 @@ export class Job extends React.Component {
               className="job-button"
               label="View Enteries"
             >
-              <Dialog modal={true} open={this.props.open}>
-              <div>
-                <h2>Total Hrs: {numeral(this.props.totalHrs).format('0,0.00')}</h2>
-                <h2>Total Billing: {numeral(this.props.total).format('$0,0.00')}</h2>
-                {arr}
-              </div>
-              <div>
-                
-              </div>
+              <Dialog
+                overlayStyle={dialogStyle}
+                paperProps={{ style: { backgroundColor: "#F3FFE2" } }}
+                modal={true}
+                open={this.props.open}
+              >
+                <div className="job-enteries">
+                  <div className="job-enteries-header">
+                    <h2>
+                      Total Hrs: {numeral(this.props.totalHrs).format("0,0.00")}
+                    </h2>
+                    <h2>
+                      Total Billing:{" "}
+                      {numeral(this.props.total).format("$0,0.00")}
+                    </h2>
+                  </div>
+                  {arr}
+                </div>
                 <RaisedButton
                   onClick={() => this.handleCloseEnteries()}
                   label="Close"
@@ -110,8 +126,8 @@ function mapStateToProps(state) {
     user: state.userReducer.user,
     open: state.jobReducer.open,
     entries: state.entryReducer.entries,
-    total : state.entryReducer.total,
-    totalHrs : state.entryReducer.totalHrs
+    total: state.entryReducer.total,
+    totalHrs: state.entryReducer.totalHrs
   };
 }
 
