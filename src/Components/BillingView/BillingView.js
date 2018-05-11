@@ -16,7 +16,8 @@ import { connect } from "react-redux";
 import {
   getBilling,
   getLastBillingNumber,
-  getAllBilling
+  getAllBilling,
+  setEmailBodyTemplate
 } from "../../ducks/billingReducer";
 import { getAllClients } from "../../ducks/clientReducer";
 import Dropzone from "react-dropzone";
@@ -35,7 +36,7 @@ export class BillingView extends React.Component {
       fromEmail: this.props.user.email,
       toEmail: "",
       subject: "",
-      bodyText: this.defaultBodyText(),
+      bodyText: '',
       emailSnackBar: false,
       uploadSnackBar: false,
       signedUrl: "",
@@ -54,20 +55,16 @@ export class BillingView extends React.Component {
     this.handleUploadModalClose = this.handleUploadModalClose.bind(this);
     this.handleClientSelect = this.handleClientSelect.bind(this);
     this.handleEmailSend = this.handleEmailSend.bind(this);
-    this.defaultBodyText = this.defaultBodyText.bind(this);
     this.handleS3Upload = this.handleS3Upload.bind(this);
     this.handleCancelUploadModal = this.handleCancelUploadModal.bind(this);
     this.handleInvoiceSelect = this.handleInvoiceSelect.bind(this);
+    this.handleEmailModalCancel = this.handleEmailModalCancel.bind(this);
+    this.handleEmailStateReset = this.handleEmailStateReset.bind(this);
   }
 
   componentDidMount() {
     this.getBilling();
-  }
-
-  defaultBodyText() {
-    let text = "Hello, Please find attached your invoice";
-
-    return text;
+    
   }
 
   getBilling() {
@@ -93,6 +90,22 @@ export class BillingView extends React.Component {
     this.props.getAllClients(this.props.user.user_id);
   }
 
+  handleEmailModalCancel(){
+    this.handleEmailModalClose();
+    this.handleEmailStateReset();
+  }
+
+  handleEmailStateReset(){
+    this.setState({
+      selectedClient : '',
+      toEmail : '',
+      fromEmail : '',
+      attachment : '',
+      subject : '',
+      bodyText : '',
+    })
+  }
+
   handleEmailModalClose() {
     this.setState({ emailModalOpen: false });
   }
@@ -110,7 +123,10 @@ export class BillingView extends React.Component {
     } else {
       this.setState({emailSubmit : true})
     }
+
   };
+
+
 
   handleInputChange(e) {
     this.setState({ [e.target.name]: e.target.value });
@@ -205,7 +221,6 @@ export class BillingView extends React.Component {
   };
 
   handleAttachmentSelect = (event, index, value) => {
-    console.log(value);
     this.setState({attachment : value})
   }
 
@@ -334,21 +349,24 @@ export class BillingView extends React.Component {
                   value={this.state.toEmail}
                   errorText='Required'
                   onChange={e => this.handleInputChange(e)}
-                  hintText="TO"
+                  hintText="TO:"
+                  floatingLabelText='TO:'
                   underlineShow={false}
                 />
                 <Divider />
                 <TextField
                   name="fromEmail"
+                  floatingLabelText='FROM:'
                   value={this.state.fromEmail}
                   onChange={e => this.handleInputChange(e)}
                   errorText='Required'
-                  hintText="FROM"
+                  hintText="FROM:"
                   underlineShow={false}
                 />
                 <Divider />
                 <TextField
                   hintText="SUBJECT"
+                  floatingLabelText='SUBJECT'
                   name="subject"
                   onChange={e => this.handleInputChange(e)}
                   value={this.state.subject}
@@ -357,15 +375,19 @@ export class BillingView extends React.Component {
                 <Divider />
                 <TextField
                   hintText="BODY"
+                  floatingLabelText='BODY'
+                  onChange={e => this.handleInputChange(e)}
+                  name='bodyText'
                   multiLine={true}
-                  rows={4}
+                  rows={2}
                   underlineShow={false}
+                  value={this.state.bodyText}
                 />
               </Paper>
 
               <div>
                 <RaisedButton
-                  onClick={() => this.handleEmailModalClose()}
+                  onClick={() => this.handleEmailModalCancel()}
                   label="Cancel"
                 />
                 <RaisedButton
@@ -400,7 +422,8 @@ function mapStateToProps(state) {
     billing: state.billingReducer.billing,
     selectedJob: state.billingReducer.selectedJob,
     clients: state.clientReducer.clients,
-    allBilling: state.billingReducer.allBilling
+    allBilling: state.billingReducer.allBilling,
+
   };
 }
 
@@ -408,5 +431,6 @@ export default connect(mapStateToProps, {
   getBilling,
   getLastBillingNumber,
   getAllClients,
-  getAllBilling
+  getAllBilling,
+
 })(BillingView);

@@ -56,5 +56,5 @@ module.exports = {
             console.log(`Error while getting all billing at controller: ${e}`);
             res.sendStatus(500);
         })
-    }
+    },
 }
