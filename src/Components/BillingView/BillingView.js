@@ -35,7 +35,8 @@ export class BillingView extends React.Component {
       emailSnackBar: false,
       uploadSnackBar: false,
       signedUrl: "",
-      selectedFile: {}
+      selectedFile: {},
+      submitDisabled: true
     };
 
     this.getBilling = this.getBilling.bind(this);
@@ -48,6 +49,7 @@ export class BillingView extends React.Component {
     this.handleEmailSend = this.handleEmailSend.bind(this);
     this.defaultBodyText = this.defaultBodyText.bind(this);
     this.handleS3Upload = this.handleS3Upload.bind(this);
+    this.handleCancelUploadModal = this.handleCancelUploadModal.bind(this);
   }
 
   componentDidMount() {
@@ -73,6 +75,11 @@ export class BillingView extends React.Component {
     this.setState({ uploadModalOpen: false });
   }
 
+  handleCancelUploadModal(){
+    this.setState({uploadModalOpen : false});
+    this.setState({files:[], submitDisabled: true})
+  }
+
   handleEmailModalOpen() {
     this.setState({ emailModalOpen: true });
     this.props.getAllClients(this.props.user.user_id);
@@ -82,8 +89,11 @@ export class BillingView extends React.Component {
     this.setState({ emailModalOpen: false });
   }
 
+
+
   onDrop(files) {
     this.setState({ files });
+    this.setState({submitDisabled : false})
   }
 
   handleClientSelect = (event, index, value) => {
@@ -138,7 +148,7 @@ export class BillingView extends React.Component {
           .put(signedURL, file, options)
           .then(result => {
             console.log(result);
-            this.setState({ uploadModalOpen: false, uploadSnackBar: true });
+            this.setState({ uploadModalOpen: false, uploadSnackBar: true, submitDisabled: true });
           })
           .catch(e => {
             console.log(`Error PUT - Attempted Upload to Amazon S3: ${e}`);
@@ -177,31 +187,35 @@ export class BillingView extends React.Component {
     let files = this.state.files.map(file => {
       return (
         <p key={file.name}>
-          {file.name} {file.size} bytes
+          {file.name}
         </p>
       );
     });
+
+
 
     return (
       <div className="billing-view-container">
         <div className="billing-view-top-menu">
           <RaisedButton
             onClick={() => this.handleUploadModalOpen()}
-            label="Upload Invoice"
+            label="UPLOAD INVOICE"
+            backgroundColor={'#EB7F00'}
           >
-            <Dialog modal={true} open={this.state.uploadModalOpen}>
+            <Dialog modal={true} open={this.state.uploadModalOpen} contentStyle={{width : 'fit-content'}} > 
               <Dropzone onDrop={this.onDrop}>
                 <p>Drop Invoice or click to select files to upload</p>
               </Dropzone>
               <div>{files}</div>
-              <div>
+              <div className='upload-buttons-div'>
                 <RaisedButton
-                  onClick={() => this.handleUploadModalClose()}
-                  label="Close"
+                  onClick={() => this.handleCancelUploadModal()}
+                  label="CANCEL"
                 />
                 <RaisedButton
                   onClick={() => this.handleS3Upload()}
-                  label="Submit"
+                  disabled={this.state.submitDisabled}
+                  label="SUBMIT"
                 />
               </div>
             </Dialog>
@@ -209,7 +223,8 @@ export class BillingView extends React.Component {
 
           <RaisedButton
             onClick={() => this.handleEmailModalOpen()}
-            label="Email Client"
+            label="EMAIL CLIENT"
+            backgroundColor={'#EB7F00'}
           >
             <Dialog modal={true} open={this.state.emailModalOpen}>
               <Paper>
