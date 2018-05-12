@@ -57,14 +57,14 @@ export function Menu(props) {
   };
 
   const listItemStyle = {
-    color: "#F3FFE2",
+    color: "white",
     textAlign: "center"
   };
 
   return (
     <div className="menu">
       <Drawer
-        containerStyle={{ backgroundColor: "#225378" }}
+        containerStyle={{ backgroundColor: "black" }}
         docked={true}
         width={200}
         open={true}
@@ -78,30 +78,30 @@ export function Menu(props) {
         <List>
           <ListItem
             style={listItemStyle}
-            hoverColor={"#EB7F00"}
+            hoverColor={"#86C232"}
             onClick={navToDashboard}
             primaryText="ANALYTICS"
           />
           <ListItem
-            hoverColor={"#EB7F00"}
+            hoverColor={"#86C232"}
             style={listItemStyle}
             onClick={navToJobView}
             primaryText="JOBS"
           />
           <ListItem
-            hoverColor={"#EB7F00"}
+            hoverColor={"#86C232"}
             style={listItemStyle}
             onClick={navToEntryView}
             primaryText="ENTERIES"
           />
           <ListItem
-            hoverColor={"#EB7F00"}
+            hoverColor={"#86C232"}
             style={listItemStyle}
             onClick={navToClientView}
             primaryText="CLIENTS"
           />
           <ListItem
-            hoverColor={"#EB7F00"}
+            hoverColor={"#86C232"}
             style={listItemStyle}
             onClick={navToBillingView}
             primaryText="BILLING"

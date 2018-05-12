@@ -329,8 +329,9 @@ export class BillingView extends React.Component {
     });
 
     const stylePaper = {
-      backgroundColor : '#225378'
-    }
+      style : {
+        backgroundColor : '#225378'
+    }}
 
     const buttonStyle1 = {
       labelColor: "red",

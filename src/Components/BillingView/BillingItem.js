@@ -104,12 +104,13 @@ export class BillingItem extends React.Component {
 
   render() {
     const style = {
-      backgroundColor: "#1695A3"
+      backgroundColor: "#6B6E70"
     };
 
     const styleButton = {
-      color: "black",
-      backgroundColor: "#EB7F00"
+      color: "#86C232",
+      backgroundColor: "#222629",
+      borderRadius : '30px'
     };
 
     const stylePaper = {

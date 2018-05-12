@@ -1,3 +1,11 @@
+$color1 : #222629;
+$color2 : #474B4F;
+$color3 : #6B6E70;
+$color4: #61892F;
+$color5: #86C232;
+$color6: white;
+$color7: black;
+
 .billing-item {
     display: flex;
     align-items: center;
@@ -8,7 +16,8 @@
 
 .billing-item p {
     text-align: center;
-    color: #F3FFE2;
+    color: $color6;
+    text-transform: uppercase
     
 }
 
