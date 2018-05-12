@@ -330,21 +330,21 @@ export class BillingView extends React.Component {
 
     const stylePaper = {
       style : {
-        backgroundColor : '#225378'
+        backgroundColor : '#6B6E70'
     }}
 
     const buttonStyle1 = {
-      labelColor: "red",
-      backgroundColor: "#ACF0F2"
+      labelColor : "white",
+      backgroundColor: "#86C232"
     };
 
     const buttonStyle2 = {
-      labelColor : "#F3FFE2",
-      backgroundColor : "#EB7F00"
+      labelColor : "white",
+      backgroundColor: "#86C232"
     }
 
     const overlayStyle = {
-      backgroundColor: "rgba(0,0,0, .8)"
+      backgroundColor: "rgba(0,0,0, .89)"
     }
 
 
@@ -359,7 +359,9 @@ export class BillingView extends React.Component {
               {/* DOWNLOAD INVOICES SECTION */}
               <RaisedButton
                 label="INVOICES"
-                backgroundColor={"#EB7F00"}
+                backgroundColor={"#86C232"}
+                labelColor={'#222629'}
+                
                 onClick={() => this.handleInvoiceButtonClickOpen()}
               >
                 <Dialog
@@ -374,6 +376,8 @@ export class BillingView extends React.Component {
                     onChange={this.handleClientSelectInvoice}
                     hintText="Select Client"
                     floatingLabelText="Select Client"
+                    floatingLabelStyle={{color:'#86C232'}}
+                    labelStyle={{color: "white"}}
                   >
                     {clients}
                   </SelectField>
@@ -382,6 +386,8 @@ export class BillingView extends React.Component {
                     value={this.state.invoiceToDownload}
                     onChange={this.handleInvoiceSelectDownload}
                     hintText="Select Invoice"
+                    labelStyle={{color: "white"}}
+                    floatingLabelStyle={{color:'#86C232'}}
                     floatingLabelText="Select Invoice"
                   >
                     {filteredInvoices}
@@ -409,18 +415,24 @@ export class BillingView extends React.Component {
               <RaisedButton
                 onClick={() => this.handleUploadModalOpen()}
                 label="UPLOAD INVOICE"
-                backgroundColor={"#EB7F00"}
+                backgroundColor={"#86C232"}
+                labelColor={'#222629'}
+                style={{marginLeft:'15px'}}
               >
                 <Dialog
                   modal={true}
                   open={this.state.uploadModalOpen}
                   contentStyle={{ width: "fit-content" }}
+                  paperProps = {stylePaper}
+                  overlayStyle={overlayStyle}
                 >
                   <SelectField
-                    hintText="Select Invoice"
-                    floatingLabelText="Select Invoice"
+                    hintText="Name of Invoice"
+                    floatingLabelText="Name of Invoice"
                     value={this.state.invoice}
                     onChange={this.handleInvoiceSelect}
+                    labelStyle={{color: "white"}}
+                    floatingLabelStyle={{color:'#86C232'}}
                   >
                     {invoices}
                   </SelectField>
@@ -431,12 +443,16 @@ export class BillingView extends React.Component {
                   <div>{files}</div>
                   <div className="upload-buttons-div">
                     <RaisedButton
+                    backgroundColor={buttonStyle1.backgroundColor}
                       onClick={() => this.handleCancelUploadModal()}
+                      labelColor={buttonStyle1.labelColor}
                       label="CANCEL"
                     />
                     <RaisedButton
+                    backgroundColor={buttonStyle2.backgroundColor}
                       onClick={() => this.handleS3Upload()}
                       disabled={this.state.submitDisabled}
+                      labelColor={buttonStyle2.labelColor}
                       label="SUBMIT"
                     />
                   </div>
@@ -447,10 +463,18 @@ export class BillingView extends React.Component {
               <RaisedButton
                 onClick={() => this.handleEmailModalOpen()}
                 label="EMAIL CLIENT"
-                backgroundColor={"#EB7F00"}
+                labelColor={'#222629'}
+                backgroundColor={"#86C232"}
+                style={{marginLeft:'15px'}}
               >
-                <Dialog modal={true} open={this.state.emailModalOpen}>
-                  <Paper>
+                <Dialog
+                
+                contentStyle={{ width: "fit-content", height: 'fit-content'}}
+                  paperProps = {stylePaper}
+                  overlayStyle={overlayStyle}
+                  overflow={true}
+                modal={true} open={this.state.emailModalOpen}>
+
                     <div>
                       <SelectField
                         value={this.state.selectedClient}
@@ -515,7 +539,7 @@ export class BillingView extends React.Component {
                       underlineShow={false}
                       value={this.state.bodyText}
                     />
-                  </Paper>
+
 
                   <div>
                     <RaisedButton
