@@ -4,6 +4,7 @@ import axios from "axios";
 import ClientForm from "../ClientForm/ClientForm";
 import Clients from "./Clients";
 import { connect } from "react-redux";
+import {withRouter} from 'react-router-dom'
 
 export class ClientView extends React.Component {
   constructor(props) {
@@ -56,12 +57,19 @@ export class ClientView extends React.Component {
       );
     });
     return (
-      <div className="clientview-container">
+
+
+      <div> {
+        !this.props.user.user_id ? this.props.history.push('/') : <div className="clientview-container">
+        
         <div className="clientlist-container" />
         {clientArr}
         <div className="floating-action">
           <ClientForm getClients={this.getAllClients} />
         </div>
+        </div>
+      }
+        
       </div>
     );
   }
@@ -74,4 +82,4 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps, {})(ClientView);
+export default connect(mapStateToProps, {})(withRouter(ClientView));

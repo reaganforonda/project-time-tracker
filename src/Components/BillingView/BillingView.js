@@ -1,6 +1,5 @@
 import React from "react";
 import axios from "axios";
-
 import {
   Paper,
   RaisedButton,
@@ -22,6 +21,7 @@ import {
 import { getAllClients } from "../../ducks/clientReducer";
 import Dropzone from "react-dropzone";
 import numeral from "numeral";
+import {withRouter} from 'react-router-dom'
 
 export class BillingView extends React.Component {
   constructor(props) {
@@ -274,7 +274,12 @@ export class BillingView extends React.Component {
     });
 
     return (
-      <div className="billing-view-container">
+      <div>{
+        !this.props.user.user_id ? this.props.history.push('/') : 
+      
+
+        <div className="billing-view-container">
+        
         <div className="billing-view-top-menu">
           <RaisedButton
             onClick={() => this.handleUploadModalOpen()}
@@ -294,6 +299,7 @@ export class BillingView extends React.Component {
               >
                 {invoices}
               </SelectField>
+              
               <Dropzone onDrop={this.onDrop}>
                 <p>Drop Invoice or click to select files to upload</p>
               </Dropzone>
@@ -411,6 +417,7 @@ export class BillingView extends React.Component {
           message="Upload Successful"
           autoHideDuration={3000}
         />
+        </div>}
       </div>
     );
   }
@@ -433,4 +440,4 @@ export default connect(mapStateToProps, {
   getAllClients,
   getAllBilling,
 
-})(BillingView);
+})(withRouter(BillingView));
