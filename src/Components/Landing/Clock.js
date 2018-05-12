@@ -1,31 +1,28 @@
-import React from 'react'
+import React from 'react';
 
 export default class Clock extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       digits: [[], [], []]
-    }
+    };
 
     this.numberToBinary = this.numberToBinary.bind(this);
     this.numberAsBinaryArrayPair = this.numberAsBinaryArrayPair.bind(this);
   }
-    numberToBinary(base10Number) {
-        const base2Values = [8, 4, 2, 1];
-        let output = [0, 0, 0, 0];
-        let remainder = base10Number;
-        
-        base2Values.forEach((val, idx) => {
-          const left = remainder - val;
-      
-          if(left >= 0) {
-            output[idx] = 1;
-            remainder = left
-          } 
-        });
-        
-        return output;
+  numberToBinary(base10Number) {
+    const base2Values = [8, 4, 2, 1];
+    let output = [0, 0, 0, 0];
+    let remainder = base10Number;
+    base2Values.forEach((val, idx) => {
+      const left = remainder - val;
+      if(left >= 0) {
+        output[idx] = 1;
+        remainder = left
       }
+    });
+    return output;
+  }
       
       numberAsBinaryArrayPair(number) {
         const pair = [];

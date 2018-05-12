@@ -158,28 +158,48 @@ export class Entries extends React.Component {
           <p>{this.props.endTime}</p>
           <p>{numeral(this.props.duration).format('0,0.0')} Hrs</p>
           <FlatButton style={styleButton} onClick={() => this.handleModalOpen()} label="EDIT">
-            <Dialog modal={true} open={this.state.openModal} contentStyle={{ width: "fit-content" }} paperProps = {stylePaper} overlayStyle={overlayStyle}>
+            <Dialog modal={true} open={this.state.openModal} contentStyle={{ width: "fit-content" }} className='entries-edit-modal' paperProps = {stylePaper} overlayStyle={overlayStyle}>
               <h1>{this.props.clientName}</h1>
               <h2>{this.props.jobname}</h2>
               <DatePicker
+              fullWidth={true}
+              textFieldStyle={{color: 'white'}}
+              inputStyle={{color: 'white'}}
+              floatingLabelStyle={{color:'#86C232'}}
                 autoOk={false}
                 name="startDate"
                 floatingLabelText="Entry Date"
                 onChange={(e, date) => this.handleDateChange(e, date)}
+
               />
               <TimePicker
+              fullWidth={true}
+              textFieldStyle={{color: 'white'}}
+              inputStyle={{color: 'white'}}
+              floatingLabelStyle={{color:'#86C232'}}
                 hintText="Entry Start Time"
                 name="startTime"
                 floatingLabelText="Entry Start Time"
                 onChange={(e, date)=>this.handleStartTimeChange(e, date)}
               />
               <TimePicker
+              fullWidth={true}
+              textFieldStyle={{color: 'white'}}
+              inputStyle={{color: 'white'}}
+              floatingLabelStyle={{color:'#86C232'}}
                 hintText="Entry End Time"
                 name="endTime"
                 floatingLabelText="Entry End Time"
                 onChange={(e, date)=>this.handleEndTimeChange(e, date)}
               />
               <TextField
+              fullWidth={true}
+              textFieldStyle={{color: 'white'}}
+              inputStyle={{color: 'white'}}
+              floatingLabelStyle={{color:'#86C232'}}
+              inputStyle={{color: 'white'}}
+              floatingLabelStyle={{color:'#86C232'}}
+              underlineFocusStyle={{borderColor: "#86C232" }}
                 onChange={(e)=>this.handleInputChange(e)}
                 type="text"
                 name="comment"
