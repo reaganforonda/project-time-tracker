@@ -15,7 +15,7 @@ import { connect } from "react-redux";
 import {
   getBilling,
   getLastBillingNumber,
-  getAllBilling,
+  getAllBilling
 } from "../../ducks/billingReducer";
 import { getAllClients } from "../../ducks/clientReducer";
 import Dropzone from "react-dropzone";
@@ -45,8 +45,8 @@ export class BillingView extends React.Component {
       attachment: "",
       emailSubmit: true,
       invoiceButtonOpen: false,
-      invoiceToDownload : '',
-      downloadButtonDisabled : true
+      invoiceToDownload: "",
+      downloadButtonDisabled: true
     };
 
     this.getBilling = this.getBilling.bind(this);
@@ -145,15 +145,14 @@ export class BillingView extends React.Component {
   }
 
   handleEmailSend() {
+    let email = {};
 
-    let email = {}
-
-    if(this.state.attachment === '') {
+    if (this.state.attachment === "") {
       email = {
         toEmail: this.state.toEmail,
         fromEmail: this.state.fromEmail,
         subject: this.state.subject,
-        message: this.state.bodyText,
+        message: this.state.bodyText
       };
     } else {
       email = {
@@ -168,7 +167,6 @@ export class BillingView extends React.Component {
         ]
       };
     }
-    
 
     axios
       .post("/api/email", email)
@@ -253,21 +251,19 @@ export class BillingView extends React.Component {
   handleInvoiceModalCloseCancel() {
     this.setState({ invoiceButtonOpen: false });
     this.setState({
-      selectedClient : '',
+      selectedClient: "",
       downloadButtonDisabled: true
-    })
+    });
   }
 
   handleClientSelectInvoice = (event, index, value) => {
-    this.setState({selectedClient : value})
-  }
+    this.setState({ selectedClient: value });
+  };
 
   handleInvoiceSelectDownload = (event, index, value) => {
-    this.setState({invoiceToDownload : value, downloadButtonDisabled : false})
+    this.setState({ invoiceToDownload: value, downloadButtonDisabled: false });
     console.log(this.state.invoiceToDownload);
-  }
-
-  
+  };
 
   render() {
     let arr = this.props.billing.map(value => {
@@ -290,7 +286,6 @@ export class BillingView extends React.Component {
           key={client.client_id}
           value={client}
           primaryText={client.client_name}
-          
         />
       );
     });
@@ -309,18 +304,19 @@ export class BillingView extends React.Component {
       );
     });
 
-    let filteredInvoices = this.props.allBilling.filter((o)=> {
-      return o.client_id === this.state.selectedClient.client_id
-    }).map((value) => {
-      
-      return (
-        <MenuItem
-          key={value.invoice_id}
-          primaryText={value.invoice_number}
-          value={value}
-        />
-      )
-    })
+    let filteredInvoices = this.props.allBilling
+      .filter(o => {
+        return o.client_id === this.state.selectedClient.client_id;
+      })
+      .map(value => {
+        return (
+          <MenuItem
+            key={value.invoice_id}
+            primaryText={value.invoice_number}
+            value={value}
+          />
+        );
+      });
 
     let attachments = this.props.allBilling.map(value => {
       return (
@@ -331,6 +327,24 @@ export class BillingView extends React.Component {
         />
       );
     });
+
+    const stylePaper = {
+      backgroundColor : '#225378'
+    }
+
+    const buttonStyle1 = {
+      labelColor: "red",
+      backgroundColor: "#ACF0F2"
+    };
+
+    const buttonStyle2 = {
+      labelColor : "#F3FFE2",
+      backgroundColor : "#EB7F00"
+    }
+
+    const overlayStyle = {
+      backgroundColor: "rgba(0,0,0, .8)"
+    }
 
 
 
@@ -351,23 +365,41 @@ export class BillingView extends React.Component {
                   modal={true}
                   open={this.state.invoiceButtonOpen}
                   contentStyle={{ width: "fit-content" }}
+                  paperProps = {stylePaper}
+                  overlayStyle={overlayStyle}
                 >
-                <SelectField value={this.state.selectedClient} onChange={this.handleClientSelectInvoice} hintText='Select Client' floatingLabelText='Select Client'>
-                  {clients}
-                </SelectField>
-                <br/>
-                <SelectField value={this.state.invoiceToDownload} onChange={this.handleInvoiceSelectDownload}  hintText='Select Invoice' floatingLabelText='Select Invoice'>
+                  <SelectField
+                    value={this.state.selectedClient}
+                    onChange={this.handleClientSelectInvoice}
+                    hintText="Select Client"
+                    floatingLabelText="Select Client"
+                  >
+                    {clients}
+                  </SelectField>
+                  <br />
+                  <SelectField
+                    value={this.state.invoiceToDownload}
+                    onChange={this.handleInvoiceSelectDownload}
+                    hintText="Select Invoice"
+                    floatingLabelText="Select Invoice"
+                  >
                     {filteredInvoices}
                   </SelectField>
-
-
-
                   <div className="invoice-modal-buttons">
                     <RaisedButton
+                      backgroundColor={buttonStyle1.backgroundColor}
+                      labelColor={buttonStyle1.labelColor}
                       onClick={() => this.handleInvoiceModalCloseCancel()}
                       label="CANCEL"
                     />
-                    <RaisedButton href={this.state.invoiceToDownload.aws_file_location} target='_blank'disabled={this.state.downloadButtonDisabled} label="DOWNLOAD" />
+                    <RaisedButton
+                    backgroundColor={buttonStyle2.backgroundColor}
+                    labelColor={buttonStyle2.labelColor}
+                      href={this.state.invoiceToDownload.aws_file_location}
+                      target="_blank"
+                      disabled={this.state.downloadButtonDisabled}
+                      label="DOWNLOAD"
+                    />
                   </div>
                 </Dialog>
               </RaisedButton>
