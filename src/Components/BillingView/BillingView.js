@@ -277,7 +277,7 @@ export class BillingView extends React.Component {
             total={value.total}
           />
         </div>
-      );
+      )
     });
 
     let clients = this.props.clients.map(client => {
@@ -444,15 +444,15 @@ export class BillingView extends React.Component {
                   <div className="upload-buttons-div">
                     <RaisedButton
                     backgroundColor={buttonStyle1.backgroundColor}
-                      onClick={() => this.handleCancelUploadModal()}
-                      labelColor={buttonStyle1.labelColor}
+                    labelColor={buttonStyle1.labelColor}
+                    onClick={() => this.handleCancelUploadModal()}
                       label="CANCEL"
                     />
                     <RaisedButton
                     backgroundColor={buttonStyle2.backgroundColor}
+                    labelColor={buttonStyle2.labelColor}
                       onClick={() => this.handleS3Upload()}
                       disabled={this.state.submitDisabled}
-                      labelColor={buttonStyle2.labelColor}
                       label="SUBMIT"
                     />
                   </div>
@@ -472,10 +472,11 @@ export class BillingView extends React.Component {
                 contentStyle={{ width: "fit-content", height: 'fit-content'}}
                   paperProps = {stylePaper}
                   overlayStyle={overlayStyle}
-                  overflow={true}
+                  autoScrollBodyContent={true}
                 modal={true} open={this.state.emailModalOpen}>
 
-                    <div>
+
+                    <div className='top-select-field-email'>
                       <SelectField
                         value={this.state.selectedClient}
                         onChange={(event, index, value) =>
@@ -483,24 +484,31 @@ export class BillingView extends React.Component {
                         }
                         hintText="Select Client"
                         floatingLabelText="Select Client"
+                        labelStyle={{color: "white"}}
+                    floatingLabelStyle={{color:'#86C232'}}
                       >
                         {clients}
                       </SelectField>
-                    </div>
-                    <div>
+
                       <SelectField
+                      
                         value={this.state.attachment}
                         onChange={(event, index, value) =>
                           this.handleAttachmentSelect(event, index, value)
                         }
                         hintText="Select Attachment"
                         floatingLabelText="Select Attachment"
+                        labelStyle={{color: "white"}}
+                    floatingLabelStyle={{color:'#86C232'}}
                       >
                         {attachments}
                       </SelectField>
                     </div>
 
                     <TextField
+                    inputStyle={{color: 'white'}}
+                    floatingLabelStyle={{color:'#86C232'}}
+                      errorStyle={{color : 'black', fontSize:'10px'}}
                       name="toEmail"
                       value={this.state.toEmail}
                       errorText="Required"
@@ -511,6 +519,9 @@ export class BillingView extends React.Component {
                     />
                     <Divider />
                     <TextField
+                    floatingLabelStyle={{color:'#86C232'}}
+                    inputStyle={{color: 'white'}}
+                    errorStyle={{color : 'black', fontSize:'10px'}}
                       name="fromEmail"
                       floatingLabelText="FROM:"
                       value={this.state.fromEmail}
@@ -521,6 +532,8 @@ export class BillingView extends React.Component {
                     />
                     <Divider />
                     <TextField
+                    floatingLabelStyle={{color:'#86C232'}}
+                    inputStyle={{color: 'white'}}
                       hintText="SUBJECT"
                       floatingLabelText="SUBJECT"
                       name="subject"
@@ -530,23 +543,33 @@ export class BillingView extends React.Component {
                     />
                     <Divider />
                     <TextField
-                      hintText="BODY"
+                    autoScrollBodyContent={true}
+                    floatingLabelStyle={{color:'#86C232'}}
+                    inputStyle={{color: 'white'}}
+                    textareaStyle={{color: 'white'}}
+                    fullWidth={true}  
+                    hintText="BODY"
                       floatingLabelText="BODY"
                       onChange={e => this.handleInputChange(e)}
                       name="bodyText"
                       multiLine={true}
-                      rows={2}
+                      rows={1}
                       underlineShow={false}
                       value={this.state.bodyText}
+                      
                     />
 
 
-                  <div>
+                  <div className='email-modal-buttons'>
                     <RaisedButton
+                    backgroundColor={buttonStyle1.backgroundColor}
+                    labelColor={buttonStyle1.labelColor}
                       onClick={() => this.handleEmailModalCancel()}
                       label="Cancel"
                     />
                     <RaisedButton
+                    backgroundColor={buttonStyle2.backgroundColor}
+                    labelColor={buttonStyle2.labelColor}
                       onClick={() => this.handleEmailSend()}
                       disabled={this.state.emailSubmit}
                       label="Submit"
@@ -570,7 +593,7 @@ export class BillingView extends React.Component {
           </div>
         )}
       </div>
-    );
+    )
   }
 }
 
