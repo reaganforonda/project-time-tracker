@@ -5,7 +5,8 @@ import {
   TimePicker,
   TextField,
   RaisedButton,
-  DatePicker
+  DatePicker,
+  FlatButton
 } from "material-ui";
 
 import moment from 'moment';
@@ -122,23 +123,44 @@ export class Entries extends React.Component {
   }
 
   render() {
-    const style= {
-      backgroundColor : "#1695A3"
+    const style = {backgroundColor: "#6B6E70"};
+
+    const styleButton = {
+      color: "#86C232",
+      backgroundColor: "#222629",
+    };
+
+    const stylePaper = {
+      style : {
+        backgroundColor : '#6B6E70'
+    }}
+
+    const buttonStyle1 = {
+      labelColor : "white",
+      backgroundColor: "#86C232"
+    };
+
+    const buttonStyle2 = {
+      labelColor : "white",
+      backgroundColor: "#86C232"
     }
+
+    const overlayStyle = {backgroundColor: "rgba(0,0,0, .89)"}
+
     
     return (
       <div>
-        <Paper style={style}zDepth={1} className="enteries-container">
+        <Paper style={style} zDepth={1} className="enteries-container">
           <p>{this.props.jobname}</p>
           <p>{this.props.clientName}</p>
           <p>{moment(this.props.entry.entry_date).format('MM/DD/YYYY')}</p>
           <p>{this.props.startTime}</p>
           <p>{this.props.endTime}</p>
           <p>{numeral(this.props.duration).format('0,0.0')} Hrs</p>
-          <RaisedButton onClick={() => this.handleModalOpen()} label="Edit">
-            <Dialog modal={true} open={this.state.openModal}>
-              <h1>{this.props.jobname}</h1>
-              <h2>{this.props.clientName}</h2>
+          <FlatButton style={styleButton} onClick={() => this.handleModalOpen()} label="EDIT">
+            <Dialog modal={true} open={this.state.openModal} contentStyle={{ width: "fit-content" }} paperProps = {stylePaper} overlayStyle={overlayStyle}>
+              <h1>{this.props.clientName}</h1>
+              <h2>{this.props.jobname}</h2>
               <DatePicker
                 autoOk={false}
                 name="startDate"
@@ -165,18 +187,19 @@ export class Entries extends React.Component {
                 floatingLabelText="Comment"
                 
               />
-              <div>
-                <RaisedButton
+              <div className='entries-edit-button'>
+                <RaisedButton backgroundColor={buttonStyle1.backgroundColor} labelColor={buttonStyle1.labelColor}
                   onClick={() => this.handleModalClose()}
-                  label="Cancel"
+                  label="CANCEL"
                 />
-                <RaisedButton onClick={()=>this.updateEntry()} label="Save" />
+                <RaisedButton onClick={()=>this.updateEntry()} label="Save" backgroundColor={buttonStyle1.backgroundColor} labelColor={buttonStyle1.labelColor}/>
               </div>
             </Dialog>
-          </RaisedButton>
-          <RaisedButton
+          </FlatButton>
+          <FlatButton
+          style={styleButton}
             onClick={() => this.props.delete(this.props.entry)}
-            label="Delete"
+            label="DELETE"
           />
         </Paper>
       </div>

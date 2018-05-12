@@ -95,7 +95,7 @@ export class Clients extends React.Component {
     const style = {
       cardStyle: {
         backgroundColor: "#6B6E70",
-        width: '49%'
+        width: '40%'
       },
 
       titleHeader:{

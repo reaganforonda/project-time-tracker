@@ -3,8 +3,13 @@ $padding: 15px;
 $height: 60px;
 $button-margin: 20px;
 $font-size: 15px;
-
-
+$color1: #222629;
+$color2: #474B4F;
+$color3: #6B6E70;
+$color4: #61892F;
+$color5: #86C232;
+$color6: white;
+$color7: black;
 .enteries-container {
     display: flex;
     align-items: center;
@@ -14,9 +19,27 @@ $font-size: 15px;
     margin-top: $margin;
     margin-bottom: $margin;
     height: $height;
-    
 }
 
-.enteries-container p{
+.enteries-container p {
     font-size: $font-size;
+}
+
+.enteries-container p {
+    color: $color6;
+    text-align: center;
+    text-transform: uppercase;
+}
+
+.entries-edit-button {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 15px;
+}
+
+.enteries-container h1 {
+    color: $color5;
+    text-align: center;
+    text-transform: uppercase;
+    font-size: 40px;
 }

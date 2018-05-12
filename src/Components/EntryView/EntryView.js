@@ -15,24 +15,12 @@ export class EntryView extends React.Component {
       enteries: []
     };
 
-    // this.getAllEntries = this.getAllEntries.bind(this);TODO: REMOVE
     this.handleDeleteEntry = this.handleDeleteEntry.bind(this);
   }
 
   componentDidMount() {
     this.props.getAllEntries(this.props.user.user_id)
   }
-
-  // getAllEntries() {
-  //   axios
-  //     .get(`/api/entry/${this.props.user.user_id}`)
-  //     .then(enteries => {
-  //       this.setState({ enteries: enteries.data });
-  //     })
-  //     .catch(e => {
-  //       console.log(e);
-  //     });
-  // }
 
   handleDeleteEntry(entry) {
     axios

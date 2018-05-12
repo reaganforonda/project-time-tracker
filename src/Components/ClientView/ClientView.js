@@ -42,7 +42,7 @@ export class ClientView extends React.Component {
     });
     return (
       <div>
-        {" "}
+        
         {!this.props.user.user_id ? (
           this.props.history.push("/")
         ) : (
