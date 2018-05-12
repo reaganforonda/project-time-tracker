@@ -5,6 +5,7 @@ import ClientForm from "../ClientForm/ClientForm";
 import Clients from "./Clients";
 import { connect } from "react-redux";
 import {withRouter} from 'react-router-dom'
+import {getAllClients} from '../../ducks/clientReducer'
 
 export class ClientView extends React.Component {
   constructor(props) {
@@ -13,31 +14,14 @@ export class ClientView extends React.Component {
     this.state = {
       clients: []
     };
-
-    this.getAllClients = this.getAllClients.bind(this);
   }
 
   componentDidMount() {
-    this.getAllClients();
-  }
-
-  componentDidUpdate() {
-    this.getAllClients();
-  }
-
-  getAllClients() {
-    axios
-      .get(`/api/clients/${this.props.user.user_id}`)
-      .then(clients => {
-        this.setState({ clients: clients.data });
-      })
-      .catch(e => {
-        console.log(`Error: ${e}`);
-      });
+    this.props.getAllClients(this.props.user.user_id);
   }
 
   render() {
-    let clientArr = this.state.clients.map(client => {
+    let clientArr = this.props.clients.map(client => {
       return (
         <div key={client.client_id}>
           <Clients
@@ -58,10 +42,8 @@ export class ClientView extends React.Component {
     });
     return (
 
-
       <div> {
-        !this.props.user.user_id ? this.props.history.push('/') : <div className="clientview-container">
-        
+        !this.props.user.user_id ? this.props.history.push('/') : <div className="clientview-container">        
         <div className="clientlist-container" />
         {clientArr}
         <div className="floating-action">
@@ -69,7 +51,6 @@ export class ClientView extends React.Component {
         </div>
         </div>
       }
-        
       </div>
     );
   }
@@ -82,4 +63,4 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps, {})(withRouter(ClientView));
+export default connect(mapStateToProps, {getAllClients})(withRouter(ClientView));

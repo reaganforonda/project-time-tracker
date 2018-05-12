@@ -21,7 +21,7 @@ import {
 import { getAllClients } from "../../ducks/clientReducer";
 import Dropzone from "react-dropzone";
 import numeral from "numeral";
-import {withRouter} from 'react-router-dom'
+import { withRouter } from "react-router-dom";
 
 export class BillingView extends React.Component {
   constructor(props) {
@@ -36,15 +36,16 @@ export class BillingView extends React.Component {
       fromEmail: this.props.user.email,
       toEmail: "",
       subject: "",
-      bodyText: '',
+      bodyText: "",
       emailSnackBar: false,
       uploadSnackBar: false,
       signedUrl: "",
       selectedFile: {},
       submitDisabled: true,
       invoice: "",
-      attachment: '',
-      emailSubmit: true
+      attachment: "",
+      emailSubmit: true,
+      invoiceButtonOpen: false
     };
 
     this.getBilling = this.getBilling.bind(this);
@@ -60,16 +61,23 @@ export class BillingView extends React.Component {
     this.handleInvoiceSelect = this.handleInvoiceSelect.bind(this);
     this.handleEmailModalCancel = this.handleEmailModalCancel.bind(this);
     this.handleEmailStateReset = this.handleEmailStateReset.bind(this);
+    this.handleInvoiceButtonClickOpen = this.handleInvoiceButtonClickOpen.bind(
+      this
+    );
+    this.handleInvoiceModalCloseCancel = this.handleInvoiceModalCloseCancel.bind(
+      this
+    );
+    this.handleClientSelectInvoice = this.handleClientSelectInvoice.bind(this);
   }
 
   componentDidMount() {
     this.getBilling();
-    
   }
 
   getBilling() {
     this.props.getBilling(this.props.user.user_id);
     this.props.getAllBilling(this.props.user.user_id);
+    this.props.getAllClients(this.props.user.user_id);
   }
 
   handleUploadModalOpen() {
@@ -90,20 +98,20 @@ export class BillingView extends React.Component {
     this.props.getAllClients(this.props.user.user_id);
   }
 
-  handleEmailModalCancel(){
+  handleEmailModalCancel() {
     this.handleEmailModalClose();
     this.handleEmailStateReset();
   }
 
-  handleEmailStateReset(){
+  handleEmailStateReset() {
     this.setState({
-      selectedClient : '',
-      toEmail : '',
-      fromEmail : '',
-      attachment : '',
-      subject : '',
-      bodyText : '',
-    })
+      selectedClient: "",
+      toEmail: "",
+      fromEmail: this.props.user.email,
+      attachment: "",
+      subject: "",
+      bodyText: ""
+    });
   }
 
   handleEmailModalClose() {
@@ -117,46 +125,59 @@ export class BillingView extends React.Component {
 
   handleClientSelect = (event, index, value) => {
     this.setState({ selectedClient: value });
-    this.setState({ toEmail: value });
-    if(this.state.toEmail !== '' && this.state.fromEmail !== '') {
-      this.setState({emailSubmit : false})
+    this.setState({ toEmail: value.email });
+    if (this.state.toEmail !== "" && this.state.fromEmail !== "") {
+      this.setState({ emailSubmit: false });
     } else {
-      this.setState({emailSubmit : true})
+      this.setState({ emailSubmit: true });
     }
-
   };
-
-
 
   handleInputChange(e) {
     this.setState({ [e.target.name]: e.target.value });
-    
-    if(this.state.toEmail !== '' && this.state.fromEmail !== '') {
-      this.setState({emailSubmit : false})
+
+    if (this.state.toEmail !== "" && this.state.fromEmail !== "") {
+      this.setState({ emailSubmit: false });
     } else {
-      this.setState({emailSubmit : true})
+      this.setState({ emailSubmit: true });
     }
   }
 
   handleEmailSend() {
-    let email = {
-      toEmail: this.state.toEmail,
-      fromEmail: this.state.fromEmail,
-      subject: this.state.subject,
-      message: this.state.bodyText,
-      attachments : [
+
+    let email = {}
+
+    if(this.state.attachment === '') {
+      let email = {
+        toEmail: this.state.toEmail,
+        fromEmail: this.state.fromEmail,
+        subject: this.state.subject,
+        message: this.state.bodyText,
+      };
+    } else {
+      let email = {
+        toEmail: this.state.toEmail,
+        fromEmail: this.state.fromEmail,
+        subject: this.state.subject,
+        message: this.state.bodyText,
+        attachments: [
           {
             path: this.state.attachment
           }
-      ]
-    };
+        ]
+      };
+    }
+    
 
     axios
       .post("/api/email", email)
       .then(result => {
         console.log(result);
-        this.setState({ emailSnackBar: true, attachment: '', emailModalOpen:false });
-
+        this.setState({
+          emailSnackBar: true,
+          attachment: "",
+          emailModalOpen: false
+        });
       })
       .catch(e => {
         console.log(`Error while trying to send email front end : ${e}`);
@@ -221,7 +242,22 @@ export class BillingView extends React.Component {
   };
 
   handleAttachmentSelect = (event, index, value) => {
-    this.setState({attachment : value})
+    this.setState({ attachment: value });
+  };
+
+  handleInvoiceButtonClickOpen() {
+    this.setState({ invoiceButtonOpen: true });
+  }
+
+  handleInvoiceModalCloseCancel() {
+    this.setState({ invoiceButtonOpen: false });
+    this.setState({
+      selectedClient : ''
+    })
+  }
+
+  handleClientSelectInvoice = (event, index, value) => {
+    this.setState({selectedClient : value})
   }
 
   render() {
@@ -243,8 +279,9 @@ export class BillingView extends React.Component {
       return (
         <MenuItem
           key={client.client_id}
-          value={client.email}
+          value={client}
           primaryText={client.client_name}
+          
         />
       );
     });
@@ -263,6 +300,18 @@ export class BillingView extends React.Component {
       );
     });
 
+    let filteredInvoices = this.props.allBilling.filter((o)=> {
+      return o.client_id === this.state.selectedClient.client_id
+    }).map((value) => {
+      return (
+        <MenuItem
+          key={value.invoice_id}
+          primaryText={value.invoice_number}
+          value={value}
+        />
+      )
+    })
+
     let attachments = this.props.allBilling.map(value => {
       return (
         <MenuItem
@@ -273,151 +322,186 @@ export class BillingView extends React.Component {
       );
     });
 
+
+
     return (
-      <div>{
-        !this.props.user.user_id ? this.props.history.push('/') : 
-      
-
-        <div className="billing-view-container">
-        
-        <div className="billing-view-top-menu">
-          <RaisedButton
-            onClick={() => this.handleUploadModalOpen()}
-            label="UPLOAD INVOICE"
-            backgroundColor={"#EB7F00"}
-          >
-            <Dialog
-              modal={true}
-              open={this.state.uploadModalOpen}
-              contentStyle={{ width: "fit-content" }}
-            >
-              <SelectField
-                hintText="Select Invoice"
-                floatingLabelText="Select Invoice"
-                value={this.state.invoice}
-                onChange={this.handleInvoiceSelect}
+      <div>
+        {!this.props.user.user_id ? (
+          this.props.history.push("/")
+        ) : (
+          <div className="billing-view-container">
+            <div className="billing-view-top-menu">
+              {/* DOWNLOAD INVOICES SECTION */}
+              <RaisedButton
+                label="INVOICES"
+                backgroundColor={"#EB7F00"}
+                onClick={() => this.handleInvoiceButtonClickOpen()}
               >
-                {invoices}
-              </SelectField>
-              
-              <Dropzone onDrop={this.onDrop}>
-                <p>Drop Invoice or click to select files to upload</p>
-              </Dropzone>
-              <div>{files}</div>
-              <div className="upload-buttons-div">
-                <RaisedButton
-                  onClick={() => this.handleCancelUploadModal()}
-                  label="CANCEL"
-                />
-                <RaisedButton
-                  onClick={() => this.handleS3Upload()}
-                  disabled={this.state.submitDisabled}
-                  label="SUBMIT"
-                />
-              </div>
-            </Dialog>
-          </RaisedButton>
-
-          <RaisedButton
-            onClick={() => this.handleEmailModalOpen()}
-            label="EMAIL CLIENT"
-            backgroundColor={"#EB7F00"}
-          >
-            <Dialog modal={true} open={this.state.emailModalOpen}>
-              <Paper>
-                <div>
-                  <SelectField
-                    value={this.state.selectedClient}
-                    onChange={(event, index, value) =>
-                      this.handleClientSelect(event, index, value)
-                    }
-                    hintText="Select Client"
-                    floatingLabelText="Select Client"
-                  >
-                    {clients}
+                <Dialog
+                  modal={true}
+                  open={this.state.invoiceButtonOpen}
+                  contentStyle={{ width: "fit-content" }}
+                >
+                <SelectField value={this.state.selectedClient} onChange={this.handleClientSelectInvoice} hintText='Select Client' floatingLabelText='Select Client'>
+                  {clients}
+                </SelectField>
+                <br/>
+                <SelectField hintText='Select Invoice' floatingLabelText='Select Invoice'>
+                    {filteredInvoices}
                   </SelectField>
-                </div>
-                <div>
+
+
+
+                  <div className="invoice-modal-buttons">
+                    <RaisedButton
+                      onClick={() => this.handleInvoiceModalCloseCancel()}
+                      label="CANCEL"
+                    />
+                    <RaisedButton label="DOWNLOAD" />
+                  </div>
+                </Dialog>
+              </RaisedButton>
+
+              {/* UPLOAD INVOICE SECTION */}
+              <RaisedButton
+                onClick={() => this.handleUploadModalOpen()}
+                label="UPLOAD INVOICE"
+                backgroundColor={"#EB7F00"}
+              >
+                <Dialog
+                  modal={true}
+                  open={this.state.uploadModalOpen}
+                  contentStyle={{ width: "fit-content" }}
+                >
                   <SelectField
-                    value={this.state.attachment}
-                    onChange={(event, index, value) =>
-                      this.handleAttachmentSelect(event, index, value)
-                    }
-                    hintText="Select Attachment"
-                    floatingLabelText="Select Attachment"
+                    hintText="Select Invoice"
+                    floatingLabelText="Select Invoice"
+                    value={this.state.invoice}
+                    onChange={this.handleInvoiceSelect}
                   >
-                    {attachments}
+                    {invoices}
                   </SelectField>
-                </div>
 
-                <TextField
-                  name="toEmail"
-                  value={this.state.toEmail}
-                  errorText='Required'
-                  onChange={e => this.handleInputChange(e)}
-                  hintText="TO:"
-                  floatingLabelText='TO:'
-                  underlineShow={false}
-                />
-                <Divider />
-                <TextField
-                  name="fromEmail"
-                  floatingLabelText='FROM:'
-                  value={this.state.fromEmail}
-                  onChange={e => this.handleInputChange(e)}
-                  errorText='Required'
-                  hintText="FROM:"
-                  underlineShow={false}
-                />
-                <Divider />
-                <TextField
-                  hintText="SUBJECT"
-                  floatingLabelText='SUBJECT'
-                  name="subject"
-                  onChange={e => this.handleInputChange(e)}
-                  value={this.state.subject}
-                  underlineShow={false}
-                />
-                <Divider />
-                <TextField
-                  hintText="BODY"
-                  floatingLabelText='BODY'
-                  onChange={e => this.handleInputChange(e)}
-                  name='bodyText'
-                  multiLine={true}
-                  rows={2}
-                  underlineShow={false}
-                  value={this.state.bodyText}
-                />
-              </Paper>
+                  <Dropzone onDrop={this.onDrop}>
+                    <p>Drop Invoice or click to select files to upload</p>
+                  </Dropzone>
+                  <div>{files}</div>
+                  <div className="upload-buttons-div">
+                    <RaisedButton
+                      onClick={() => this.handleCancelUploadModal()}
+                      label="CANCEL"
+                    />
+                    <RaisedButton
+                      onClick={() => this.handleS3Upload()}
+                      disabled={this.state.submitDisabled}
+                      label="SUBMIT"
+                    />
+                  </div>
+                </Dialog>
+              </RaisedButton>
 
-              <div>
-                <RaisedButton
-                  onClick={() => this.handleEmailModalCancel()}
-                  label="Cancel"
-                />
-                <RaisedButton
-                  onClick={() => this.handleEmailSend()}
-                  disabled={this.state.emailSubmit}
-                  label="Submit"
-                />
-              </div>
-            </Dialog>
-          </RaisedButton>
-        </div>
-        <div className="billing-items-container">{arr}</div>
-        <div className="billing-view-footer>" />
-        <Snackbar
-          open={this.state.emailSnackBar}
-          message="Email Sent"
-          autoHideDuration={3000}
-        />
-        <Snackbar
-          open={this.state.uploadSnackBar}
-          message="Upload Successful"
-          autoHideDuration={3000}
-        />
-        </div>}
+              {/* EMAIL INVOICE SECTION */}
+              <RaisedButton
+                onClick={() => this.handleEmailModalOpen()}
+                label="EMAIL CLIENT"
+                backgroundColor={"#EB7F00"}
+              >
+                <Dialog modal={true} open={this.state.emailModalOpen}>
+                  <Paper>
+                    <div>
+                      <SelectField
+                        value={this.state.selectedClient}
+                        onChange={(event, index, value) =>
+                          this.handleClientSelect(event, index, value)
+                        }
+                        hintText="Select Client"
+                        floatingLabelText="Select Client"
+                      >
+                        {clients}
+                      </SelectField>
+                    </div>
+                    <div>
+                      <SelectField
+                        value={this.state.attachment}
+                        onChange={(event, index, value) =>
+                          this.handleAttachmentSelect(event, index, value)
+                        }
+                        hintText="Select Attachment"
+                        floatingLabelText="Select Attachment"
+                      >
+                        {attachments}
+                      </SelectField>
+                    </div>
+
+                    <TextField
+                      name="toEmail"
+                      value={this.state.toEmail}
+                      errorText="Required"
+                      onChange={e => this.handleInputChange(e)}
+                      hintText="TO:"
+                      floatingLabelText="TO:"
+                      underlineShow={false}
+                    />
+                    <Divider />
+                    <TextField
+                      name="fromEmail"
+                      floatingLabelText="FROM:"
+                      value={this.state.fromEmail}
+                      onChange={e => this.handleInputChange(e)}
+                      errorText="Required"
+                      hintText="FROM:"
+                      underlineShow={false}
+                    />
+                    <Divider />
+                    <TextField
+                      hintText="SUBJECT"
+                      floatingLabelText="SUBJECT"
+                      name="subject"
+                      onChange={e => this.handleInputChange(e)}
+                      value={this.state.subject}
+                      underlineShow={false}
+                    />
+                    <Divider />
+                    <TextField
+                      hintText="BODY"
+                      floatingLabelText="BODY"
+                      onChange={e => this.handleInputChange(e)}
+                      name="bodyText"
+                      multiLine={true}
+                      rows={2}
+                      underlineShow={false}
+                      value={this.state.bodyText}
+                    />
+                  </Paper>
+
+                  <div>
+                    <RaisedButton
+                      onClick={() => this.handleEmailModalCancel()}
+                      label="Cancel"
+                    />
+                    <RaisedButton
+                      onClick={() => this.handleEmailSend()}
+                      disabled={this.state.emailSubmit}
+                      label="Submit"
+                    />
+                  </div>
+                </Dialog>
+              </RaisedButton>
+            </div>
+            <div className="billing-items-container">{arr}</div>
+            <div className="billing-view-footer>" />
+            <Snackbar
+              open={this.state.emailSnackBar}
+              message="Email Sent"
+              autoHideDuration={3000}
+            />
+            <Snackbar
+              open={this.state.uploadSnackBar}
+              message="Upload Successful"
+              autoHideDuration={3000}
+            />
+          </div>
+        )}
       </div>
     );
   }
@@ -429,8 +513,7 @@ function mapStateToProps(state) {
     billing: state.billingReducer.billing,
     selectedJob: state.billingReducer.selectedJob,
     clients: state.clientReducer.clients,
-    allBilling: state.billingReducer.allBilling,
-
+    allBilling: state.billingReducer.allBilling
   };
 }
 
@@ -438,6 +521,5 @@ export default connect(mapStateToProps, {
   getBilling,
   getLastBillingNumber,
   getAllClients,
-  getAllBilling,
-
+  getAllBilling
 })(withRouter(BillingView));

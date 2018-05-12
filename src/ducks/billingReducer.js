@@ -35,8 +35,6 @@ export function getAllBilling(userid) {
     .catch(e => {
       console.log(`Error GET at Reducer - Attempt to get all billing: ${e}`);
     });
-
-  console.log(allBilling);
   return {
     type: GET_ALL_BILLING,
     payload: allBilling

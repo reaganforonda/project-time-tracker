@@ -1,21 +1,18 @@
 import React from "react";
 import {
   Card,
-  // CardActions, TODO: REMOVE
   CardHeader,
-  // CardMedia, TODO: REMOVE
-  // CardTitle, TODO: REMOVE
   CardText,
   RaisedButton,
   Dialog,
   TextField,
   Checkbox
 } from "material-ui";
-// import { Link } from "react-router-dom"; TODO: REMOVE
-
+import { getAllClients } from "../../ducks/clientReducer";
+import { connect } from "react-redux";
 import axios from "axios";
 
-export default class Clients extends React.Component {
+export class Clients extends React.Component {
   constructor(props) {
     super(props);
 
@@ -73,7 +70,7 @@ export default class Clients extends React.Component {
       website: this.state.website,
       zip: this.state.zip,
       active: this.state.active,
-      email : this.state.email
+      email: this.state.email
     };
 
     axios
@@ -85,6 +82,7 @@ export default class Clients extends React.Component {
       )
       .then(result => {
         console.log(result.data);
+        this.props.getAllClients(this.props.client.user_id);
       })
       .catch(e => {
         console.log(e);
@@ -94,20 +92,18 @@ export default class Clients extends React.Component {
   }
 
   render() {
-
     const style = {
-      bg : {
-        'backgroundColor' : "#225378"
+      bg: {
+        backgroundColor: "#225378"
       },
 
-      pText : {
-        'color' : 'white'
-      },
-
-    }
+      pText: {
+        color: "white"
+      }
+    };
     return (
       <div className="card-container">
-        <Card style={style.bg}className="card">
+        <Card style={style.bg} className="card">
           <CardHeader>
             <h1>{this.props.name}</h1>
           </CardHeader>
@@ -189,7 +185,7 @@ export default class Clients extends React.Component {
                 floatingLabelText="Website"
               />
 
-                <TextField
+              <TextField
                 value={this.state.email}
                 onChange={e => this.handleInputChange(e)}
                 name="email"
@@ -216,3 +212,12 @@ export default class Clients extends React.Component {
     );
   }
 }
+
+function mapStateToProps(state) {
+  return {
+    user: state.userReducer.user,
+    clients: state.clientReducer.clients
+  };
+}
+
+export default connect(mapStateToProps, { getAllClients })(Clients);

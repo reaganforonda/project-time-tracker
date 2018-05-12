@@ -12,7 +12,8 @@ const ENTRY_INTIAL_STATE = {
   totalHrs: 0,
   entry: {},
   activeEntry: {},
-  entryForEdit: {}
+  entryForEdit: {},
+  allEntries :[]
 };
 
 const UPDATE_ENTRY_DATE = "UPDATE_ENTRY_DATE";
@@ -110,16 +111,18 @@ export function updateBilled(billed) {
 }
 
 export function getAllEntries(userid) {
-  let enteries = [];
+  
 
-  axios
+  let enteries = axios
     .get(`/api/entry/${userid}`)
     .then(enteries => {
-      enteries = enteries.data;
+      return enteries.data
     })
     .catch(e => {
       console.log(e);
     });
+
+    console.log(enteries)
 
   return {
     type: GET_ALL_ENTRIES,
@@ -222,8 +225,8 @@ export default function entryReducer(state = ENTRY_INTIAL_STATE, action) {
     case ADD_NEW_ENTRY:
       return Object.assign({}, state, { entry: action.payload });
 
-    case GET_ALL_ENTRIES:
-      return Object.assign({}, state, { entries: action.payload });
+    case GET_ALL_ENTRIES + "_FULFILLED":
+      return Object.assign({}, state, { allEntries : action.payload });
 
     case GET_ENTRIES_BY_JOB_ID + "_FULFILLED":
       return Object.assign({}, state, { entries: action.payload });

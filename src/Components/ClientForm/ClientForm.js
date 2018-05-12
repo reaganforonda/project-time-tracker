@@ -75,12 +75,14 @@ export class ClientForm extends React.Component {
       .post("/api/client/", client)
       .then(result => {
         console.log(result);
+        this.props.getAllClients(this.props.user.user_id);
       })
       .catch(e => {
         console.log(e);
       });
 
     this.handleResetState();
+    
   }
 
   handleResetState() {
@@ -97,7 +99,7 @@ export class ClientForm extends React.Component {
       country: ""
     });
 
-    this.props.getClients();
+    this.props.getAllClients(this.props.user.user_id);
   }
 
   render() {

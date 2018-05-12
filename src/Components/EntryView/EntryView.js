@@ -6,6 +6,8 @@ import Entries from "./Entries";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 
+import {getAllEntries} from '../../ducks/entryReducer'
+
 export class EntryView extends React.Component {
   constructor(props) {
     super(props);
@@ -13,35 +15,31 @@ export class EntryView extends React.Component {
       enteries: []
     };
 
-    this.getAllEntries = this.getAllEntries.bind(this);
+    // this.getAllEntries = this.getAllEntries.bind(this);TODO: REMOVE
     this.handleDeleteEntry = this.handleDeleteEntry.bind(this);
   }
 
   componentDidMount() {
-    this.getAllEntries();
+    this.props.getAllEntries(this.props.user.user_id)
   }
 
-  componentDidUpdate() {
-    this.getAllEntries();
-  }
-
-  getAllEntries() {
-    axios
-      .get(`/api/entry/${this.props.user.user_id}`)
-      .then(enteries => {
-        this.setState({ enteries: enteries.data });
-      })
-      .catch(e => {
-        console.log(e);
-      });
-  }
+  // getAllEntries() {
+  //   axios
+  //     .get(`/api/entry/${this.props.user.user_id}`)
+  //     .then(enteries => {
+  //       this.setState({ enteries: enteries.data });
+  //     })
+  //     .catch(e => {
+  //       console.log(e);
+  //     });
+  // }
 
   handleDeleteEntry(entry) {
     axios
       .delete(`/api/entry/delete/${this.props.user.user_id}/${entry.entry_id}`)
       .then(result => {
         console.log(result.data);
-        this.getAllEntries();
+        this.props.getAllEntries(this.props.user.user_id);
       })
       .catch(e => {
         console.log(`Error while deleting entry: ${e}`);
@@ -49,7 +47,8 @@ export class EntryView extends React.Component {
   }
 
   render() {
-    let entryArr = this.state.enteries.map(entry => {
+    let entryArr = this.props.allEntries.map(entry => {
+      console.log(entry)
       return (
         <div key={entry.entry_id}>
           <Entries
@@ -87,8 +86,8 @@ export class EntryView extends React.Component {
 function mapStateToProps(state) {
   return {
     user: state.userReducer.user,
-    entries: state.entryReducer.entries
+    allEntries: state.entryReducer.allEntries
   };
 }
 
-export default connect(mapStateToProps, {})(withRouter(EntryView));
+export default connect(mapStateToProps, {getAllEntries})(withRouter(EntryView));
