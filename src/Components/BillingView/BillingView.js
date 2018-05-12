@@ -16,11 +16,10 @@ import {
   getBilling,
   getLastBillingNumber,
   getAllBilling,
-  setEmailBodyTemplate
 } from "../../ducks/billingReducer";
 import { getAllClients } from "../../ducks/clientReducer";
 import Dropzone from "react-dropzone";
-import numeral from "numeral";
+// import numeral from "numeral"; TODO: REMOVE
 import { withRouter } from "react-router-dom";
 
 export class BillingView extends React.Component {
@@ -45,7 +44,9 @@ export class BillingView extends React.Component {
       invoice: "",
       attachment: "",
       emailSubmit: true,
-      invoiceButtonOpen: false
+      invoiceButtonOpen: false,
+      invoiceToDownload : '',
+      downloadButtonDisabled : true
     };
 
     this.getBilling = this.getBilling.bind(this);
@@ -148,14 +149,14 @@ export class BillingView extends React.Component {
     let email = {}
 
     if(this.state.attachment === '') {
-      let email = {
+      email = {
         toEmail: this.state.toEmail,
         fromEmail: this.state.fromEmail,
         subject: this.state.subject,
         message: this.state.bodyText,
       };
     } else {
-      let email = {
+      email = {
         toEmail: this.state.toEmail,
         fromEmail: this.state.fromEmail,
         subject: this.state.subject,
@@ -252,13 +253,21 @@ export class BillingView extends React.Component {
   handleInvoiceModalCloseCancel() {
     this.setState({ invoiceButtonOpen: false });
     this.setState({
-      selectedClient : ''
+      selectedClient : '',
+      downloadButtonDisabled: true
     })
   }
 
   handleClientSelectInvoice = (event, index, value) => {
     this.setState({selectedClient : value})
   }
+
+  handleInvoiceSelectDownload = (event, index, value) => {
+    this.setState({invoiceToDownload : value, downloadButtonDisabled : false})
+    console.log(this.state.invoiceToDownload);
+  }
+
+  
 
   render() {
     let arr = this.props.billing.map(value => {
@@ -303,6 +312,7 @@ export class BillingView extends React.Component {
     let filteredInvoices = this.props.allBilling.filter((o)=> {
       return o.client_id === this.state.selectedClient.client_id
     }).map((value) => {
+      
       return (
         <MenuItem
           key={value.invoice_id}
@@ -346,7 +356,7 @@ export class BillingView extends React.Component {
                   {clients}
                 </SelectField>
                 <br/>
-                <SelectField hintText='Select Invoice' floatingLabelText='Select Invoice'>
+                <SelectField value={this.state.invoiceToDownload} onChange={this.handleInvoiceSelectDownload}  hintText='Select Invoice' floatingLabelText='Select Invoice'>
                     {filteredInvoices}
                   </SelectField>
 
@@ -357,7 +367,7 @@ export class BillingView extends React.Component {
                       onClick={() => this.handleInvoiceModalCloseCancel()}
                       label="CANCEL"
                     />
-                    <RaisedButton label="DOWNLOAD" />
+                    <RaisedButton href={this.state.invoiceToDownload.aws_file_location} target='_blank'disabled={this.state.downloadButtonDisabled} label="DOWNLOAD" />
                   </div>
                 </Dialog>
               </RaisedButton>

@@ -48,7 +48,6 @@ export class EntryView extends React.Component {
 
   render() {
     let entryArr = this.props.allEntries.map(entry => {
-      console.log(entry)
       return (
         <div key={entry.entry_id}>
           <Entries
