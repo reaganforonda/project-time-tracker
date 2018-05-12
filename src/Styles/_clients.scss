@@ -6,3 +6,22 @@
   line-height: 30px;
 }
 
+.client-website-link:link {
+  text-decoration: none;
+  color: white;
+
+}
+.client-website-link:hover {
+  color: #86C232
+}
+
+.client-website-link:visited{
+  color: white;
+}
+
+.add-clients-form-button {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+  
+}

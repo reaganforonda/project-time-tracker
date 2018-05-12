@@ -545,8 +545,8 @@ export class BillingView extends React.Component {
                     <TextField
                     autoScrollBodyContent={true}
                     floatingLabelStyle={{color:'#86C232'}}
-                    inputStyle={{color: 'white'}}
-                    textareaStyle={{color: 'white'}}
+                    inputStyle={{color: 'white', fontSize: '16px'}}
+                    textareaStyle={{color: 'white', fontSize: '16px'}}
                     fullWidth={true}  
                     hintText="BODY"
                       floatingLabelText="BODY"
@@ -565,14 +565,14 @@ export class BillingView extends React.Component {
                     backgroundColor={buttonStyle1.backgroundColor}
                     labelColor={buttonStyle1.labelColor}
                       onClick={() => this.handleEmailModalCancel()}
-                      label="Cancel"
+                      label="CANCEL"
                     />
                     <RaisedButton
                     backgroundColor={buttonStyle2.backgroundColor}
                     labelColor={buttonStyle2.labelColor}
                       onClick={() => this.handleEmailSend()}
                       disabled={this.state.emailSubmit}
-                      label="Submit"
+                      label="SUBMIT"
                     />
                   </div>
                 </Dialog>

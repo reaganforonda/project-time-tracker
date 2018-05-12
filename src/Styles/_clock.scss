@@ -1,0 +1,35 @@
+.pip {
+    width: 17px;
+    height: 17px;
+    margin: 7px;
+    background-color: white;
+    border-radius: 100%;
+    transition: all .3s ease-in;
+  }
+  
+  .pip--on {
+    background-color: #86C232;
+    transform: scale(1.1);
+  }
+  
+  .clock {
+    display: flex;
+    margin-left: 41.5%;
+      margin-right : 50%;
+  }
+  
+  .binary-digit-group {
+    display: flex;
+    margin: 0 6px;
+  }
+
+  .clock-div{
+      margin-bottom: 20px;
+
+  }
+
+//   .clock-container {
+//       margin-left: 50%;
+//       margin-right : 50%;
+
+//   }

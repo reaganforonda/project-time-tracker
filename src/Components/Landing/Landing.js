@@ -1,8 +1,10 @@
 import React from "react";
 import Particles from "react-particles-js";
+import Clock from './Clock';
+
 
 export default class Landing extends React.Component {
-  handleLogin() {}
+  
 
   render() {
     const params = {
@@ -37,6 +39,9 @@ export default class Landing extends React.Component {
         
         <div className="landing-content">
           <h1 className="landing-h1">ON THE CLOCK</h1>
+          <div className='clock-div'>
+          <Clock/>
+            </div>
           <p>A time tracking and billing application</p>
 
           <a href={process.env.REACT_APP_LOGIN}>

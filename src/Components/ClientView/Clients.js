@@ -105,12 +105,13 @@ export class Clients extends React.Component {
         },
         titleStyle:{
           textTransform:'uppercase',
-          fontSize: '20px',
+          fontSize: '30px',
           textAlign : 'center'
         }
       },
       pText: {
-        color: "white"
+        color: "white",
+        fontSize:"16px"
       }
     };
 
@@ -126,7 +127,7 @@ export class Clients extends React.Component {
               {this.props.city}, {this.props.state} {this.props.zipcode}
             </p>
             <p>{this.props.client.country}</p>
-            <p>{this.props.website}</p>
+            <p><a className='client-website-link' href={this.props.website} target='_blank'> {this.props.website}</a></p>
             <p>{this.props.phone}</p>
             <p>{this.props.email}</p>
           </CardText>
