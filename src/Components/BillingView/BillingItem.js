@@ -110,7 +110,7 @@ export class BillingItem extends React.Component {
     const styleButton = {
       color: "#86C232",
       backgroundColor: "#222629",
-      borderRadius : '30px'
+      // borderRadius : '30px' TODO: REMOVE
     };
 
     const stylePaper = {

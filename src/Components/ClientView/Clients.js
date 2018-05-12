@@ -93,23 +93,35 @@ export class Clients extends React.Component {
 
   render() {
     const style = {
-      bg: {
-        backgroundColor: "#225378"
+      cardStyle: {
+        backgroundColor: "#6B6E70",
+        width: '45%'
       },
 
+      titleHeader:{
+        titleColor:"#86C232",
+        style:{
+          textAlign : 'center'
+        },
+        titleStyle:{
+          textTransform:'uppercase',
+          fontSize: '20px',
+          textAlign : 'center'
+        }
+      },
       pText: {
         color: "white"
       }
     };
+
+
     return (
-      <div className="card-container">
-        <Card style={style.bg} className="card">
-          <CardHeader>
-            <h1>{this.props.name}</h1>
-          </CardHeader>
+      
+        <Card style={style.cardStyle} className="card">
+          <CardHeader style={style.titleHeader.style} title={this.props.name} titleColor={style.titleHeader.titleColor} titleStyle={style.titleHeader.titleStyle}/>
           <CardText style={style.pText}>
-            <p>{this.props.addressOne}</p>
-            <p>{this.props.addressTwo}</p>
+            <p>{this.props.addressOne} {this.props.addressTwo}</p>
+            
             <p>
               {this.props.city}, {this.props.state} {this.props.zipcode}
             </p>
@@ -119,7 +131,7 @@ export class Clients extends React.Component {
             <p>{this.props.email}</p>
           </CardText>
           <CardText>
-            <RaisedButton onClick={() => this.handleOpenEdit()} label="EDIT" />
+            <RaisedButton backgroundColor='#86C232' labelColor='black' onClick={() => this.handleOpenEdit()} label="EDIT" />
             <Dialog modal={true} open={this.state.openModal}>
               <TextField
                 value={this.state.client_name}
@@ -208,7 +220,7 @@ export class Clients extends React.Component {
             </Dialog>
           </CardText>
         </Card>
-      </div>
+      
     );
   }
 }

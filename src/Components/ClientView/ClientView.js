@@ -23,8 +23,8 @@ export class ClientView extends React.Component {
   render() {
     let clientArr = this.props.clients.map(client => {
       return (
-        <div key={client.client_id}>
           <Clients
+          key={client.client_id}
             clientId={client.client_id}
             name={client.client_name}
             addressOne={client.address_one}
@@ -36,8 +36,8 @@ export class ClientView extends React.Component {
             phone={client.phone}
             email={client.email}
             client={client}
-          />
-        </div>
+          ></Clients>
+
       );
     });
     return (
@@ -47,8 +47,8 @@ export class ClientView extends React.Component {
           this.props.history.push("/")
         ) : (
           <div className="clientview-container">
-            <div className="clientlist-container" />
-            {clientArr}
+            <div className="clientlist-container">
+            {clientArr}</div>
             <div className="floating-action">
               <ClientForm getClients={this.getAllClients} />
             </div>
