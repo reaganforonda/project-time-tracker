@@ -35,6 +35,21 @@ export class Job extends React.Component {
   }
 
   render() {
+
+    const overlayStyle = {
+      backgroundColor: "rgba(0,0,0, .89)"
+    }
+
+    const stylePaper = {
+      style : {
+        backgroundColor : '#6B6E70'
+    }}
+
+    const buttonStyle1 = {
+      labelColor : "white",
+      backgroundColor: "#86C232"
+    };
+
     let arr = this.props.entries.map(entry => {
       return (
         <Paper
@@ -53,16 +68,6 @@ export class Job extends React.Component {
         </Paper>
       );
     });
-
-    const stylePaper = {
-      backgroundColor: "#1695A3",
-      textAlign: "left"
-    };
-
-    const dialogStyle = {
-      backgroundColor: "rgba(0,0,0,.2)"
-    };
-
     return (
       <div>
         <Paper zDepth={1} style={stylePaper} className="single-job-container">
@@ -71,28 +76,31 @@ export class Job extends React.Component {
           <div>
             {!this.props.clockedIn ? (
               <RaisedButton
-                backgroundColor={"#EB7F00"}
+                backgroundColor={"#86C232"}
                 labelColor={"black"}
                 onClick={() => this.props.clockIn(this.props.job)}
                 className="job-button"
-                label="Clock In"
+                label="CLOCK IN"
               />
             ) : (
               <RaisedButton
                 onClick={() => this.props.clockOut(this.props.job)}
                 className="job-button"
-                label="Clock Out"
-                secondary={true}
+                backgroundColor={"#222629"}
+                labelColor={"White"}
+                label="CLOCK OUT"
+                
               />
             )}
             <RaisedButton
               onClick={() => this.handleViewEnteries()}
               className="job-button"
-              label="View Enteries"
+              label="ENTRIES"
             >
               <Dialog
-                overlayStyle={dialogStyle}
-                paperProps={{ style: { backgroundColor: "#F3FFE2" } }}
+                overlayStyle={overlayStyle}
+                contentStyle={{ width: "fit-content" }}
+                paperProps = {stylePaper}
                 modal={true}
                 open={this.props.open}
               >
@@ -109,8 +117,10 @@ export class Job extends React.Component {
                   {arr}
                 </div>
                 <RaisedButton
+                backgroundColor={buttonStyle1.backgroundColor}
+                labelColor={buttonStyle1.labelColor}
                   onClick={() => this.handleCloseEnteries()}
-                  label="Close"
+                  label="CLOSE"
                 />
               </Dialog>
             </RaisedButton>
