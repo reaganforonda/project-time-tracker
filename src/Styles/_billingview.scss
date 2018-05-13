@@ -27,3 +27,12 @@
     display: flex;
     justify-content: space-between;
 }
+
+.dropzone-div {
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+}
+

@@ -124,10 +124,17 @@ export class BillingItem extends React.Component {
     return (
       <div>
         <Paper zDepth={1} style={style} className="billing-item">
+        
+        <div className='bill-item-div'>
+        <div>
           <p>{this.props.job.client_name}</p>
-          <p>{this.props.jobName}</p>
-          <p>{numeral(this.props.job.total_hrs).format("0,0.0")} Total Hrs.</p>
-          <p>{numeral(this.props.total).format("$0,0.00")}</p>
+          </div>
+          <div><p>{this.props.jobName}</p></div>
+          <div><p>{numeral(this.props.job.total_hrs).format("0,0.0")} Total Hrs.</p></div>
+          <div><p >{numeral(this.props.total).format("$0,0.00")}</p></div>
+          </div>
+          
+          <div className='bill-item-button'>
           <FlatButton
             style={styleButton}
             onClick={() => this.handleOpenModal()}
@@ -144,8 +151,8 @@ export class BillingItem extends React.Component {
             >
               <div className="billing-modal-head">
                 <div className="billing-modal-head-sec2">
-                  <p>{this.props.job.client_name}</p>
-                  <p>{this.props.job.job_name}</p>
+                  <h1>{this.props.job.client_name}</h1>
+                  <h2>{this.props.job.job_name}</h2>
                 </div>
                 <div className="billing-modal-head-sec1">
                   <h1>INVOICE # : {this.state.invoiceNumber}</h1>
@@ -158,18 +165,30 @@ export class BillingItem extends React.Component {
                 </div>
               </div>
 
-              <DatePicker
-                onChange={this.handleJobEndDateSelect}
-                hintText="Select Job End Date"
-                floatingLabelText="Select Job End Date"
+              <DatePicker 
+              fullWidth={true} 
+              textFieldStyle={{color: 'white'}} 
+              inputStyle={{color: 'white'}} 
+              floatingLabelStyle={{color:'#86C232'}}
+              onChange={this.handleJobEndDateSelect}
+              hintText="Select Job End Date"
+              floatingLabelText="Select Job End Date"
               />
               <DatePicker
+              fullWidth={true} 
+              textFieldStyle={{color: 'white'}} 
+              inputStyle={{color: 'white'}} 
+              floatingLabelStyle={{color:'#86C232'}}
                 onChange={this.handleInvoiceDateChange}
                 defaultDate={this.state.invoiceDate}
                 hintText="Select Invoice Date"
                 floatingLabelText="Select Invoice Date"
               />
               <DatePicker
+              fullWidth={true} 
+              textFieldStyle={{color: 'white'}} 
+              inputStyle={{color: 'white'}} 
+              floatingLabelStyle={{color:'#86C232'}}
                 defaultDate={this.state.dueDate}
                 onChange={this.handleDueDateChange}
                 hintText="Select Due Date"
@@ -197,6 +216,7 @@ export class BillingItem extends React.Component {
               </div>
             </Dialog>
           </FlatButton>
+          </div>
         </Paper>
       </div>
     );

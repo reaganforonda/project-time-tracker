@@ -6,6 +6,7 @@ import {
   TextField,
   DatePicker,
   RaisedButton,
+  FlatButton,
   FloatingActionButton,
   MenuItem,
   SelectField
@@ -134,18 +135,41 @@ export class JobForm extends React.Component {
       );
     });
 
+    const stylePaper = {
+      style : {
+        backgroundColor : '#6B6E70'
+    }}
+
+    const overlayStyle = {
+      backgroundColor: "rgba(0,0,0, .89)"
+    }
+
+    const buttonStyle1 = {
+      labelColor : "white",
+      backgroundColor: "#86C232"
+    };
+
     return (
       <div>
         <FloatingActionButton
           onClick={() => this.handleOpenModal()}
           mini={false}
           disabled={false}
-          zDepth={5}
+          zDepth={4}
           backgroundColor='#EB7F00'
+          backgroundColor='#86C232'
         >
           <ContentAdd className='content-add'/>
-          <Dialog modal={true} open={this.state.modalOpen}>
+          <Dialog modal={true} open={this.state.modalOpen}
+          contentStyle={{ width: "fit-content", height: 'fit-content'}}
+          paperProps = {stylePaper}
+          overlayStyle={overlayStyle}
+          autoScrollBodyContent={true}
+          >
             <SelectField
+            labelStyle={{color: "white"}}
+            floatingLabelStyle={{color:'#86C232'}}
+            fullWidth={true}
               hintText="Select Client"
               floatingLabelText="Select Client"
               value={this.state.client}
@@ -157,6 +181,10 @@ export class JobForm extends React.Component {
             </SelectField>
             <form className="job-entry-form">
               <TextField
+              inputStyle={{color: 'white'}}
+              fullWidth={true}
+              floatingLabelStyle={{color:'#86C232'}}
+              underlineFocusStyle={{borderColor: "#86C232" }}
                 value={this.state.jobName}
                 onChange={e => this.handleTextChange(e)}
                 name="jobName"
@@ -164,6 +192,10 @@ export class JobForm extends React.Component {
                 floatingLabelText="Job Name"
               />
               <TextField
+              inputStyle={{color: 'white'}}
+              fullWidth={true}
+              floatingLabelStyle={{color:'#86C232'}}
+              underlineFocusStyle={{borderColor: "#86C232" }}
                 value={this.state.jobDescription}
                 onChange={e => this.handleTextChange(e)}
                 name="jobDescription"
@@ -172,6 +204,10 @@ export class JobForm extends React.Component {
               />
 
               <DatePicker
+              fullWidth={true}
+              textFieldStyle={{color: 'white'}}
+              inputStyle={{color: 'white'}}
+              floatingLabelStyle={{color:'#86C232'}}
                 onChange={this.handleDateChange}
                 name="startDate"
                 hintText="Job Start Date"
@@ -179,24 +215,34 @@ export class JobForm extends React.Component {
               />
 
               <TextField
+              inputStyle={{color: 'white'}}
+              fullWidth={true}
+              floatingLabelStyle={{color:'#86C232'}}
+              underlineFocusStyle={{borderColor: "#86C232" }}
                 type="number"
+                min={0}
                 value={this.state.hourlyRate}
                 onChange={e => this.handleTextChange(e)}
                 name="hourlyRate"
                 hintText="Hourly Rate"
                 floatingLabelText="Hourly Rate"
               />
-              <div>
+              <div className='job-form-buttons'>
                 <RaisedButton
+                backgroundColor={buttonStyle1.backgroundColor}
+                labelColor={buttonStyle1.labelColor}
                   label="CANCEL"
-                  secondary={true}
+    
                   onClick={() => this.handleCancelModalClick()}
                 />
 
-                <RaisedButton
-                  label="CONFIRM"
-                  primary={true}
-                  onClick={() => this.handleOnConfirm()}
+                <FlatButton label='test'/>
+
+                <RaisedButton 
+                onClick={() => this.handleOnConfirm()}
+                label="CONFIRM"
+                backgroundColor={buttonStyle1.backgroundColor} 
+                labelColor={buttonStyle1.labelColor}
                 />
               </div>
             </form>

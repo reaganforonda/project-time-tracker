@@ -433,13 +433,15 @@ export class BillingView extends React.Component {
                     onChange={this.handleInvoiceSelect}
                     labelStyle={{color: "white"}}
                     floatingLabelStyle={{color:'#86C232'}}
+                    fullWidth={true}
                   >
                     {invoices}
                   </SelectField>
 
-                  <Dropzone onDrop={this.onDrop}>
-                    <p>Drop Invoice or click to select files to upload</p>
-                  </Dropzone>
+            <div className='dropzone-div'>
+                  <Dropzone onDrop={this.onDrop}/>
+                  <p style={{color: '#61892F'}}>Drop Invoice or click to select files to upload</p>
+                  </div>
                   <div>{files}</div>
                   <div className="upload-buttons-div">
                     <RaisedButton

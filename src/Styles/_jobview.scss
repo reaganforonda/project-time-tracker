@@ -1,18 +1,15 @@
 $h1-size: 40px;
 $opacity: 1;
-$clockIn-back : rgb(22, 149, 163);
-$clockOut-back : rgb(22, 149, 163);
 $floating-action-pos: 15px;
-$font-color: rgb(235, 127, 0);
 $height: 70px;
 $padding: 15px;
-$border-color : #ACF0F2;
-
-$color1 : #225378;
-$color2 : #1695A3;
-$color3 : #ACF0F2;
-$color4: #F3FFE2;
-$color5: #EB7F00;
+$color1 : #222629;
+$color2 : #474B4F;
+$color3 : #6B6E70;
+$color4: #61892F;
+$color5: #86C232;
+$color6: white;
+$color7: black;
 
 .clockedIn h1 {
     font-size: $h1-size;
@@ -21,34 +18,30 @@ $color5: #EB7F00;
     font-weight: 900;
 }
 
-.clockedOut h1 {
-    font-size: $h1-size;
-    text-align: center;
-    color : $color3;
-    font-weight: 900;
-}
-
 .clockedIn {
-    border : 1px solid $color5;
+    border : solid 1px $color5;
     padding-top: $padding;
-    background : $color1;
+    background : $color7;
     margin-bottom : 10px;
     height : $height;
 }
 
-
+.clockedOut h1 {
+    font-size: $h1-size;
+    text-align: center;
+    color : $color1;
+    font-weight: 900;
+}
 
 .clockedOut {
-    border-color: $border-color;
-    border : 1px solid;
+    border : 1px solid $color1;
     padding-top: $padding;
-    background: $color1;
+    background: $color6;
     height : $height;
-    
 }
 
 .floating-action {
-    position : absolute;
+    position : fixed;
     bottom: $floating-action-pos;
     right: $floating-action-pos;
 }

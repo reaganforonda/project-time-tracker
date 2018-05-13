@@ -184,6 +184,10 @@ export class JobView extends React.Component {
 
     return (
       <div>
+
+        {
+          this.props.user.user_id ? 
+          <div> 
         <div className="job-container">
           <div className="clock-in-container">
             <div className="clockedIn">
@@ -213,6 +217,7 @@ export class JobView extends React.Component {
         <div className="floating-action">
           <JobForm getAllActiveJobs={this.getAllActiveJobs} />
         </div>
+        </div> : this.props.history.push('/')}
       </div>
     );
   }
