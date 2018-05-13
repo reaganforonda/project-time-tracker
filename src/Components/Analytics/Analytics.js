@@ -196,23 +196,23 @@ export class Analytics extends React.Component {
           this.props.history.push("/")
         ) : (
           <div className="jobs-in-progress">
-            <Paper>
-              <h1>
-                JOBS IN PROGRESS :{" "}
+            <Paper zDepth={3} style={{backgroundColor: '#6B6E70', display:'flex', justifyContent:'space-between', alignItems:'center', paddingLeft:'5%', paddingRight:'5%', height:'10vh'}}>
+              <h1 style={{display : 'flex', alignItems:'center', color: 'white'}}>
+              <div style={{marginRight:'30px'}}>IN PROGRESS JOBS</div>
                 <span className="progress-count">
                   {numeral(this.props.inProgressCount).format("0,0")}
                 </span>
               </h1>
-              <h1>
-                ACCRUED HOURS:{" "}
+              <h1 style={{display : 'flex', alignItems:'center', color: 'white'}}>
+              <div style={{marginRight:'30px'}}>IN PROGRESS HOURS</div>
                 <span className="progress-hrs">
                   {numeral(this.props.inProgressTotals.total_hrs).format(
                     "0,0.0"
                   )}
                 </span>
               </h1>
-              <h1>
-                ACCRUED REVENUE :{" "}
+              <h1 style={{display : 'flex', alignItems:'center', color: 'white'}}>
+                <div style={{marginRight:'30px'}}>IN PROGRESS REVENUE</div>
                 <span className="progress-count">
                   {numeral(this.props.inProgressTotals.total_rev).format(
                     "$0,0.00"
@@ -220,7 +220,8 @@ export class Analytics extends React.Component {
                 </span>
               </h1>
             </Paper>
-            <div>
+            <hr className='analytics-hr'/>
+            <div className='chart-section-1'>
               <Paper>
                 <Doughnut data={dataSet1} options={optionsDataSet1} />
               </Paper>
@@ -229,7 +230,7 @@ export class Analytics extends React.Component {
                 <Doughnut data={dataSet2} options={optionsDataSet2} />
               </Paper>
             </div>
-            <div>
+            <div className='chart-section-2'>
               <Paper>
                 <Bar data={barDataSet1} options={optionsBarSet1} />
               </Paper>

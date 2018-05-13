@@ -1,0 +1,27 @@
+$color1 : #222629;
+$color2 : #474B4F;
+$color3 : #6B6E70;
+$color4: #61892F;
+$color5: #86C232;
+$color6: white;
+$color7: black;
+
+.progress-count {
+    font-size: 40px;
+    font-weight: 800;
+    color: $color5;
+}
+
+.progress-hrs {
+    font-size: 40px;
+    font-weight: 800;
+    color: $color5;
+}
+
+.analytics-hr {
+    height: 1px;
+   border : 0;
+   margin: .8em 0;
+   padding: 0;
+   background-image: linear-gradient(to right, #474B4F, #86C232, #474B4F)
+}
