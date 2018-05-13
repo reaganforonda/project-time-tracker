@@ -108,20 +108,19 @@ export class BillingItem extends React.Component {
     };
 
     const styleButton = {
-      color: "#86C232",
-      backgroundColor: "#222629",
+      labelColor : "white",
+      backgroundColor: "#86C232"
     };
 
     const stylePaper = {
-      backgroundColor: "#1695A3",
-      textAlign: "left",
-      position: 'relative'
-    };
+      style : {
+        backgroundColor : '#6B6E70'
+    }}
 
-    const dialogStyle = {
-      backgroundColor: "rgba(0,0,0, .8)"
-    };
 
+    const overlayStyle = {
+      backgroundColor: "rgba(0,0,0, .89)"
+    }
     return (
       <div>
         <Paper zDepth={1} style={style} className="billing-item">
@@ -136,11 +135,12 @@ export class BillingItem extends React.Component {
             className="select-for-billing-button"
           >
             <Dialog
-              overlayStyle={dialogStyle}
-              paperProps={{ style: { backgroundColor: "#F3FFE2" } }}
+              overlayStyle={overlayStyle}
+              autoScrollBodyContent={true}
+              paperProps = {stylePaper}
               modal={true}
               open={this.state.open}
-              contentStyle={{ width: "400px" }}
+              contentStyle={{ width: "fit-content", height: 'fit-content'}}
             >
               <div className="billing-modal-head">
                 <div className="billing-modal-head-sec2">
@@ -148,13 +148,12 @@ export class BillingItem extends React.Component {
                   <p>{this.props.job.job_name}</p>
                 </div>
                 <div className="billing-modal-head-sec1">
-                  <h1>Invoice Number: {this.state.invoiceNumber}</h1>
+                  <h1>INVOICE # : {this.state.invoiceNumber}</h1>
                   <h2>
-                    Total Hours:
-                    {numeral(this.props.job.total_hrs).format("0,0.0")}
+                    HOURS : <span className='inv-tot'>{numeral(this.props.job.total_hrs).format("0,0.0")}</span>
                   </h2>
                   <h2>
-                    Total: {numeral(this.props.job.total).format("$0,0.00")}
+                    TOTAL : <span className='inv-tot'>{numeral(this.props.job.total).format("$0,0.00")}</span>
                   </h2>
                 </div>
               </div>
@@ -179,6 +178,8 @@ export class BillingItem extends React.Component {
 
               <div className="modal-buttons-billing">
                 <RaisedButton
+                backgroundColor={styleButton.backgroundColor}
+                labelColor={styleButton.labelColor}
                   onClick={() => this.handleCloseModal()}
                   label="CANCEL"
                 />
@@ -187,7 +188,10 @@ export class BillingItem extends React.Component {
                     onClick={() => this.handleLinkClick()}
                     to="/invoiceview"
                   >
-                    <RaisedButton label="PREVIEW" />
+                    <RaisedButton 
+                    labelColor={styleButton.labelColor}
+                    backgroundColor={styleButton.backgroundColor}
+                    label="PREVIEW" />
                   </Link>
                 </div>
               </div>
