@@ -58,7 +58,9 @@ export function Menu(props) {
 
   const listItemStyle = {
     color: "white",
-    textAlign: "center"
+    textAlign: "center",
+    marginTop: '5%',
+    marginBottom: '5%'
   };
 
   return (
@@ -72,7 +74,7 @@ export function Menu(props) {
       >
         <div className="avatar-container">
           <Avatar src={props.img} size={75} onClick={navToUserView} />
-          <p>{props.user.user_name}</p>
+          <p style={{color: '#86C232', marginBottom:'5%', marginTop:'5%'}}>{props.user.user_name}</p>
         </div>
 
         <List>
