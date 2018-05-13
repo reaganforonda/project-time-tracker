@@ -40,9 +40,15 @@ export class Job extends React.Component {
       backgroundColor: "rgba(0,0,0, .89)"
     }
 
-    const stylePaper = {
+    const styleEntryPaper = {
       style : {
         backgroundColor : '#6B6E70'
+    }}
+
+    const stylePaper = {
+      stylePaper : {
+        backgroundColor : '#6B6E70',
+        color: 'white'
     }}
 
     const buttonStyle1 = {
@@ -58,7 +64,6 @@ export class Job extends React.Component {
           zDepth={1}
         >
           <div className="job-entry-modal-entries">
-            
             <p>{moment(new Date(entry.entry_date)).format('MM/DD/YYYY')}</p>
             <p>{entry.start_time}</p>
             <p>{entry.end_time}</p>
@@ -70,7 +75,7 @@ export class Job extends React.Component {
     });
     return (
       <div>
-        <Paper zDepth={1} style={stylePaper} className="single-job-container">
+        <Paper zDepth={1} style={stylePaper.stylePaper} className="single-job-container">
           <p>{this.props.clientName}</p>
           <p>{this.props.jobName}</p>
           <div>
@@ -87,20 +92,22 @@ export class Job extends React.Component {
                 onClick={() => this.props.clockOut(this.props.job)}
                 className="job-button"
                 backgroundColor={"#222629"}
-                labelColor={"White"}
+                labelColor={"#86C232"}
                 label="CLOCK OUT"
                 
               />
             )}
             <RaisedButton
               onClick={() => this.handleViewEnteries()}
+              backgroundColor={"black"}
+                labelColor={"white"}
               className="job-button"
               label="ENTRIES"
             >
               <Dialog
                 overlayStyle={overlayStyle}
                 contentStyle={{ width: "fit-content" }}
-                paperProps = {stylePaper}
+                paperProps = {styleEntryPaper}
                 modal={true}
                 open={this.props.open}
               >

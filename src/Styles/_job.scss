@@ -3,6 +3,13 @@ $padding: 15px;
 $height: 60px;
 $button-margin: 20px;
 $font-size: 20px;
+$color1 : #222629;
+$color2 : #474B4F;
+$color3 : #6B6E70;
+$color4: #61892F;
+$color5: #86C232;
+$color6: white;
+$color7: black;
 
 .single-job-container {
     display: flex;
@@ -42,9 +49,19 @@ $font-size: 20px;
     padding-top: 10px;
     padding-bottom: 10px;
     font-size: 18px;
-    background-color: $color1;
+    background-color: $color7;
     color: $color4;
     margin-bottom: 10px;
+}
+
+.job-entry-modal-entries p {
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+.job-enteries-header h2 {
+    margin-left: 20px;
+    margin-right: 20px;
 }
 
 
