@@ -12,8 +12,8 @@ import {
   SelectField
 } from "material-ui";
 import { connect } from "react-redux";
-import {getAllEntries} from '../../ducks/entryReducer'
-import {getAllActiveJobs} from '../../ducks/jobReducer'
+import {getAllEntries} from '../../ducks/entryReducer';
+import {getAllActiveJobs} from '../../ducks/jobReducer';
 
 export class EntryForm extends React.Component {
   constructor(props) {
@@ -125,7 +125,6 @@ export class EntryForm extends React.Component {
 
   handleAddEntry() {
     let duration = this.calculateDuration();
-
     let entry = {
       user_id: this.props.user.user_id,
       job_id: this.state.job.job_id,
@@ -206,10 +205,6 @@ export class EntryForm extends React.Component {
     const overlayStyle = {
       backgroundColor: "rgba(0,0,0, .89)"
     }
-
-
-
-
     return (
       <div>
         <FloatingActionButton
@@ -227,33 +222,45 @@ export class EntryForm extends React.Component {
           autoScrollBodyContent={true}
           modal={true} 
           open={this.state.modalOpen}>
-            <form className="entry-entry-form">
+            
               <SelectField
-                hintText="Select Job"
-                floatingLabelText="Select Job"
-                value={this.state.job}
-                onChange={(event, index, value) =>
-                  this.hanldeJobSelect(event, index, value)
-                }
-              >
-                {jobArr}
+              fullWidth={true}
+              labelStyle={{color: "white"}}
+              floatingLabelStyle={{color:'#86C232'}} 
+              hintText="Select Job"
+              floatingLabelText="Select Job"
+              value={this.state.job}
+              onChange={(event, index, value) =>
+                this.hanldeJobSelect(event, index, value)
+              }>
+              {jobArr}
               </SelectField>
-              <DatePicker
-              
-                onChange={this.handleDateChange}
-                
+              <DatePicker 
+              fullWidth={true}
+              textFieldStyle={{color: 'white'}}
+              inputStyle={{color: 'white'}}
+              floatingLabelStyle={{color:'#86C232'}}
+              onChange={this.handleDateChange}
                 name="startDate"
                 hintText="Entry Date"
                 floatingLabelText="Entry Date"
               />
 
               <TimePicker
+              fullWidth={true}
+              textFieldStyle={{color: 'white'}}
+              inputStyle={{color: 'white'}}
+              floatingLabelStyle={{color:'#86C232'}}
                 onChange={this.handleTimeSelectStart}
                 floatingLabelText="Entry Start Time"
                 hintText="Enty Start Time"
                 name="startTime"
               />
               <TimePicker
+              fullWidth={true}
+              textFieldStyle={{color: 'white'}}
+              inputStyle={{color: 'white'}}
+              floatingLabelStyle={{color:'#86C232'}}
                 onChange={this.handleTimeSelectEnd}
                 floatingLabelText="Entry End Time"
                 hintText="Enty End Time"
@@ -266,31 +273,22 @@ export class EntryForm extends React.Component {
               inputStyle={{color: 'white'}}
               floatingLabelStyle={{color:'#86C232'}}
               underlineFocusStyle={{borderColor: "#86C232" }}
-                type="text"
-                value={this.state.comment}
-                onChange={e => this.handleTextChange(e)}
-                name="comment"
-                hintText="Comment"
-                floatingLabelText="Comment"
+              type="text"
+              value={this.state.comment} 
+              onChange={e => this.handleTextChange(e)}
+              name="comment" hintText="Comment" floatingLabelText="Comment"
               />
 
-              <div>
-                <RaisedButton
-                  label="CANCEL"
-                  secondary={true}
-                  onClick={() => this.handleCancelModalClick()}
-                />
+              <div className='entry-form-buttons'>
+                <RaisedButton backgroundColor={buttonStyle1.backgroundColor} labelColor={buttonStyle1.labelColor} label="CANCEL" secondary={true} onClick={() => this.handleCancelModalClick()}/>
 
-                <RaisedButton
-                  onClick={() => this.handleAddEntry()}
-                  label="CONFIRM"
-                  primary={true}
-                />
+                <RaisedButton backgroundColor={buttonStyle2.backgroundColor} labelColor={buttonStyle2.labelColor} onClick={() => this.handleAddEntry()} label="CONFIRM" primary={true}/>
               </div>
-            </form>
+            
           </Dialog>
           <div />
         </FloatingActionButton>
+        
       </div>
     );
   }

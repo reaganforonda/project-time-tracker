@@ -10,19 +10,19 @@ export default class Landing extends React.Component {
     const params = {
       particles: {
         number: {
-          value: 30
+          value: 100
         },
 
         line_linked: {
-          distance: 125,
-          color: "#61892F",
-          width: 3,
-          opacity: .8
+          distance: 325,
+          color: "#6B6E70",
+          width: 1,
+          opacity: .3
         },
-        color: { value: "#6b6e70" },
+        color: { value: "#86C232" },
 
         size: {
-          value: 8
+          value: 3
         },
 
         shape: {

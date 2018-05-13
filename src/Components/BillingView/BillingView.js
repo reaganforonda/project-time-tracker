@@ -567,11 +567,7 @@ export class BillingView extends React.Component {
                       onClick={() => this.handleEmailModalCancel()}
                       label="CANCEL"
                     />
-                    <RaisedButton
-                    backgroundColor={buttonStyle2.backgroundColor}
-                    labelColor={buttonStyle2.labelColor}
-                      onClick={() => this.handleEmailSend()}
-                      disabled={this.state.emailSubmit}
+                    <RaisedButton backgroundColor={buttonStyle2.backgroundColor} labelColor={buttonStyle2.labelColor} onClick={() => this.handleEmailSend()} disabled={this.state.emailSubmit}
                       label="SUBMIT"
                     />
                   </div>

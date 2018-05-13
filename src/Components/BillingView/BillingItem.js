@@ -180,14 +180,14 @@ export class BillingItem extends React.Component {
               <div className="modal-buttons-billing">
                 <RaisedButton
                   onClick={() => this.handleCloseModal()}
-                  label="Cancel"
+                  label="CANCEL"
                 />
                 <div>
                   <Link
                     onClick={() => this.handleLinkClick()}
                     to="/invoiceview"
                   >
-                    <RaisedButton label="Preview" />
+                    <RaisedButton label="PREVIEW" />
                   </Link>
                 </div>
               </div>
