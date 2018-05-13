@@ -87,7 +87,7 @@ export class Analytics extends React.Component {
         position: "top",
         text: "TOTAL REVENUE",
         fontSize: 20,
-        fontColor: "#EB7F00"
+        fontColor: "#222629"
       }
     };
 
@@ -115,7 +115,7 @@ export class Analytics extends React.Component {
         position: "top",
         text: "TOTAL HOURS",
         fontSize: 25,
-        fontColor: "#EB7F00"
+        fontColor: "#222629"
       }
     };
 
@@ -145,7 +145,7 @@ export class Analytics extends React.Component {
         position: "top",
         text: "MONTHLY HOURS",
         fontSize: 25,
-        fontColor: "#EB7F00"
+        fontColor: "#222629"
       },
       legend : {display : false}
     };
@@ -176,7 +176,7 @@ export class Analytics extends React.Component {
         position: "top",
         text: "MONTHLY REVENUE",
         fontSize: 25,
-        fontColor: "#EB7F00"
+        fontColor: "#222629"
       },
       legend : {display : false},
       scales : {
@@ -222,20 +222,24 @@ export class Analytics extends React.Component {
             </Paper>
             <hr className='analytics-hr'/>
             <div className='chart-section-1'>
-              <Paper>
+              <Paper style={{display: 'flex'}}>
+                <div style={{width:'50%'}}>
                 <Doughnut data={dataSet1} options={optionsDataSet1} />
-              </Paper>
-
-              <Paper>
+                </div>
+                <div style={{width:'50%'}}>
                 <Doughnut data={dataSet2} options={optionsDataSet2} />
+                </div>
               </Paper>
             </div>
+            <hr className='analytics-hr'/>
             <div className='chart-section-2'>
-              <Paper>
-                <Bar data={barDataSet1} options={optionsBarSet1} />
-              </Paper>
-              <Paper>
+              <Paper style={{display: 'flex'}}>
+                <div style={{width:'50%'}}>
                 <Bar data={barDataSet2} options={optionsBarSet2} />
+                </div>
+              <div style={{width:'50%'}}>
+                <Bar data={barDataSet1} options={optionsBarSet1} />
+                </div>
               </Paper>
             </div>
           </div>
