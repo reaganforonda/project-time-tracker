@@ -188,6 +188,28 @@ export class EntryForm extends React.Component {
       );
     });
 
+    const stylePaper = {
+      style : {
+        backgroundColor : '#6B6E70'
+    }}
+
+    const buttonStyle1 = {
+      labelColor : "white",
+      backgroundColor: "#86C232"
+    };
+
+    const buttonStyle2 = {
+      labelColor : "white",
+      backgroundColor: "#86C232"
+    }
+
+    const overlayStyle = {
+      backgroundColor: "rgba(0,0,0, .89)"
+    }
+
+
+
+
     return (
       <div>
         <FloatingActionButton
@@ -198,7 +220,13 @@ export class EntryForm extends React.Component {
           backgroundColor='#86C232'
         >
           <ContentAdd />
-          <Dialog modal={true} open={this.state.modalOpen}>
+          <Dialog 
+          contentStyle={{ width: "fit-content" }}
+          paperProps = {stylePaper}
+          overlayStyle={overlayStyle}
+          autoScrollBodyContent={true}
+          modal={true} 
+          open={this.state.modalOpen}>
             <form className="entry-entry-form">
               <SelectField
                 hintText="Select Job"
@@ -233,6 +261,11 @@ export class EntryForm extends React.Component {
               />
 
               <TextField
+              fullWidth={true}
+              textFieldStyle={{color: 'white'}}
+              inputStyle={{color: 'white'}}
+              floatingLabelStyle={{color:'#86C232'}}
+              underlineFocusStyle={{borderColor: "#86C232" }}
                 type="text"
                 value={this.state.comment}
                 onChange={e => this.handleTextChange(e)}

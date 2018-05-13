@@ -197,8 +197,7 @@ export class Entries extends React.Component {
               textFieldStyle={{color: 'white'}}
               inputStyle={{color: 'white'}}
               floatingLabelStyle={{color:'#86C232'}}
-              inputStyle={{color: 'white'}}
-              floatingLabelStyle={{color:'#86C232'}}
+
               underlineFocusStyle={{borderColor: "#86C232" }}
                 onChange={(e)=>this.handleInputChange(e)}
                 type="text"
