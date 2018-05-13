@@ -17,6 +17,7 @@ export class Job extends React.Component {
     super(props);
     this.handleViewEnteries = this.handleViewEnteries.bind(this);
     this.handleCloseEnteries = this.handleCloseEnteries.bind(this);
+    this.convertToTime = this.convertToTime.bind(this);
   }
 
   handleViewEnteries() {
@@ -27,12 +28,31 @@ export class Job extends React.Component {
     );
     this.props.getTotal(this.props.user.user_id, this.props.job.job_id);
     this.props.getTotalHrs(this.props.user.user_id, this.props.job.job_id);
+    
   }
 
   handleCloseEnteries() {
     this.props.closeModal();
     this.props.resetState();
   }
+
+  convertToTime(strg) {
+    let newTimeStrg = '';
+
+    let arr = strg.split(':')
+    let timePeriod = ''
+    let hr = ''
+    let minute = ''
+    if(Number(arr[0]) > 12 ) {
+        timePeriod = 'PM'
+        hr = String(Number(arr[0]) - 12)
+    } else {
+        hr =arr[0]
+        timePeriod = 'AM'
+    }
+    return  `${hr}:${arr[1]}:${arr[2]} ${timePeriod}`
+}
+
 
   render() {
 
@@ -65,8 +85,8 @@ export class Job extends React.Component {
         >
           <div className="job-entry-modal-entries">
             <p>{moment(new Date(entry.entry_date)).format('MM/DD/YYYY')}</p>
-            <p>{entry.start_time}</p>
-            <p>{entry.end_time}</p>
+            <p>{this.convertToTime(entry.start_time)}</p>
+            <p>{this.convertToTime(entry.end_time)}</p>
             <p>{numeral(entry.duration).format("0,0.0")} hrs</p>
             <p>{numeral(entry.total).format("$0,0.00")}</p>
           </div>
@@ -76,8 +96,11 @@ export class Job extends React.Component {
     return (
       <div>
         <Paper zDepth={1} style={stylePaper.stylePaper} className="single-job-container">
-          <p>{this.props.clientName}</p>
-          <p>{this.props.jobName}</p>
+          <p style={{width: '20%'}}>{this.props.clientName}</p>
+          <p style={{width: '16%'}}>{this.props.jobName}</p>
+          <p style={{width: '24%'}}>{this.props.job.description}</p>
+          <p style={{width: '7%'}}>{moment(new Date(this.props.job.start_date)).format('MM/DD/YYYY')}</p>
+          <p style={{width: '5%',textAlign:'right'}}>{numeral(this.props.job.rate).format('$0,0.00')}</p>
           <div>
             {!this.props.clockedIn ? (
               <RaisedButton
