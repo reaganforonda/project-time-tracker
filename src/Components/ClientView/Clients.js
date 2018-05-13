@@ -164,6 +164,7 @@ export class Clients extends React.Component {
               <TextField
               floatingLabelStyle={{color:'#86C232'}}
               inputStyle={{color: 'white'}}
+              underlineFocusStyle={{borderColor: "#86C232" }}
               fullWidth={true}
               value={this.state.client_name}
               onChange={e => this.handleInputChange(e)}
@@ -172,20 +173,33 @@ export class Clients extends React.Component {
               floatingLabelText="Client Name"
               />
               <TextField
+              floatingLabelStyle={{color:'#86C232'}}
+              inputStyle={{color: 'white'}}
+              underlineFocusStyle={{borderColor: "#86C232" }}
+              fullWidth={true}
                 value={this.state.address_one}
                 onChange={e => this.handleInputChange(e)}
                 name="address_one"
                 hintText="Address"
                 floatingLabelText="Address"
-              />
+              /><br/>
               <TextField
+              floatingLabelStyle={{color:'#86C232'}}
+              inputStyle={{color: 'white'}}
+              underlineFocusStyle={{borderColor: "#86C232" }}
+              fullWidth={true}
                 value={this.state.address_two}
                 onChange={e => this.handleInputChange(e)}
                 name="address_two"
                 hintText="Address Cont."
                 floatingLabelText="Address Cont."
-              />
+              /><br/>
               <TextField
+              style={{width: '413px', marginRight: '20px'}}
+              floatingLabelStyle={{color:'#86C232'}}
+              inputStyle={{color: 'white'}}
+              underlineFocusStyle={{borderColor: "#86C232" }}
+              fullWidth={true}
                 value={this.state.city}
                 onChange={e => this.handleInputChange(e)}
                 name="city"
@@ -193,6 +207,10 @@ export class Clients extends React.Component {
                 floatingLabelText="City"
               />
               <TextField
+              style={{width: '100px', marginRight:'20px'}}
+                floatingLabelStyle={{color:'#86C232'}}
+                inputStyle={{color: 'white'}}
+                underlineFocusStyle={{borderColor: "#86C232" }} 
                 value={this.state.state}
                 onChange={e => this.handleInputChange(e)}
                 name="state"
@@ -200,6 +218,10 @@ export class Clients extends React.Component {
                 floatingLabelText="State"
               />
               <TextField
+              style={{width : '166px'}}
+              floatingLabelStyle={{color:'#86C232'}}
+              inputStyle={{color: 'white'}}
+              underlineFocusStyle={{borderColor: "#86C232" }}
                 value={this.state.zip}
                 onChange={e => this.handleInputChange(e)}
                 name="zip"
@@ -207,6 +229,10 @@ export class Clients extends React.Component {
                 floatingLabelText="Zip"
               />
               <TextField
+              floatingLabelStyle={{color:'#86C232'}}
+              inputStyle={{color: 'white'}}
+              underlineFocusStyle={{borderColor: "#86C232" }}
+              fullWidth={true}
                 value={this.state.country}
                 onChange={e => this.handleInputChange(e)}
                 name="country"
@@ -214,6 +240,10 @@ export class Clients extends React.Component {
                 floatingLabelText="Country"
               />
               <TextField
+              floatingLabelStyle={{color:'#86C232'}}
+              inputStyle={{color: 'white'}}
+              underlineFocusStyle={{borderColor: "#86C232" }}
+              fullWidth={true}
                 value={this.state.phone}
                 onChange={e => this.handleInputChange(e)}
                 name="phone"
@@ -221,6 +251,10 @@ export class Clients extends React.Component {
                 floatingLabelText="Phone"
               />
               <TextField
+              floatingLabelStyle={{color:'#86C232'}}
+              inputStyle={{color: 'white'}}
+              underlineFocusStyle={{borderColor: "#86C232" }}
+              fullWidth={true}
                 value={this.state.website}
                 onChange={e => this.handleInputChange(e)}
                 name="website"
@@ -229,6 +263,10 @@ export class Clients extends React.Component {
               />
 
               <TextField
+              floatingLabelStyle={{color:'#86C232'}}
+              inputStyle={{color: 'white'}}
+              underlineFocusStyle={{borderColor: "#86C232" }}
+              fullWidth={true}
                 value={this.state.email}
                 onChange={e => this.handleInputChange(e)}
                 name="email"
@@ -239,15 +277,25 @@ export class Clients extends React.Component {
                 checked={this.state.checked}
                 onCheck={this.handleCheckBox}
                 label="Set as Inactive"
+                labelStyle={{color: "#86C232"}}
+                iconStyle={{fill : "#86C232"}}
               />
+
+              <div className='clients-edit-buttons'>
               <RaisedButton
+              backgroundColor={buttonStyle1.backgroundColor}
+              labelColor={buttonStyle1.labelColor}
                 onClick={() => this.handleCancel()}
-                label="Cancel"
+                label="CANCEL"
               />
               <RaisedButton
+              backgroundColor={buttonStyle1.backgroundColor}
+              labelColor={buttonStyle1.labelColor}
                 onClick={() => this.handleUpdateClient()}
-                label="Save"
+                label="SAVE"
               />
+
+              </div>
             </Dialog>
           </CardText>
         </Card>
