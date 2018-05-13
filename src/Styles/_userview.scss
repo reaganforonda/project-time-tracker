@@ -1,3 +1,49 @@
+$color1 : #222629;
+$color2 : #474B4F;
+$color3 : #6B6E70;
+$color4: #61892F;
+$color5: #86C232;
+$color6: white;
+$color7: black;
+$margin1: 30px;
+
 .profile-picture-user-view {
-    border : black 3px solid;
+    margin-top: $margin1;
+    margin-bottom: $margin1;
+    margin-left: auto;
+    margin-right : auto;
+}
+
+.header-user-view {
+    display : flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.header-user-view h1 {
+    font-size: 50px;
+    text-align: center;
+    color: $color5;
+    text-transform: uppercase;
+}
+
+.user-view {
+    margin-top: 44px;
+    padding-right: 30px;
+    padding-left: 30px;
+}
+
+.userview-button {
+    display: inline-block;
+    margin-top: 20px;
+    // margin-left: 41%;
+}
+
+.user-view-paper {
+    // padding-left: 30px;
+    padding-right: 30px;
+    padding-bottom: 20px;
+    display : flex
+
 }

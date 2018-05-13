@@ -27,7 +27,6 @@ export class UserView extends React.Component {
     this.state = {
       edit: false,
       disable: true,
-
       first_name: this.props.user.first_name,
       last_name: this.props.user.last_name,
       email: this.props.user.email,
@@ -38,7 +37,9 @@ export class UserView extends React.Component {
       city: this.props.user.city,
       state: this.props.user.state,
       address_one: this.props.user.address_one,
-      address_two: this.props.user.address_two
+      address_two: this.props.user.address_two,
+      buttonMargin : '41%'
+      
     };
 
     this.handleInputChange = this.handleInputChange.bind(this);
@@ -51,7 +52,10 @@ export class UserView extends React.Component {
   }
 
   switchToEditMode() {
-    this.setState({ edit: true, disable: false });
+    
+    this.setState({ edit: true, disable: false, buttonMargin: '31%' });
+    
+    
   }
 
   handleUpdateInfo() {
@@ -82,20 +86,26 @@ export class UserView extends React.Component {
     };
 
     this.props.updateUserInfo(this.props.user.user_id, user);
-    this.setState({ edit: false, disable: true });
+    this.setState({ edit: false, disable: true, butMargin:'41%' });
   }
 
   render() {
-    return (
-      <div>
-        <header className='header-user-view'>
-          <h1>Profile</h1>
-          <Avatar className='profile-picture-user-view' src={this.props.user.picture} size={200} />
-        </header>
 
+    const buttonStyle1 = {
+      labelColor : "white",
+      backgroundColor: "#86C232"
+    };
+    return (
+      <div className='user-view'>
         <div>
-          <Paper zDepth={2}>
+          <Paper className='user-view-paper' style={{backgroundColor : '#6B6E70'}}zDepth={2}>
+          <div style={{width:'50%', display:'flex', justifyContent:'center', alignItems:'center'}}><Avatar className='profile-picture-user-view' src={this.props.user.picture} size={400} /></div>
+          <div style ={{width:'50%'}}>
             <TextField
+            style={{marginRight : '5%', width:'47%'  }}
+            inputStyle={{color: 'white'}}
+            floatingLabelStyle={{color:'#86C232'}}
+             underlineFocusStyle={{borderColor: "#86C232" }}
               value={this.state.first_name}
               onChange={e => this.handleInputChange(e)}
               disabled={this.state.disable}
@@ -103,6 +113,10 @@ export class UserView extends React.Component {
               floatingLabelText="First Name"
             />
             <TextField
+            style={{width:'47%'  }}
+            inputStyle={{color: 'white'}}
+            floatingLabelStyle={{color:'#86C232'}}
+             underlineFocusStyle={{borderColor: "#86C232" }}
               value={this.state.last_name}
               onChange={e => this.handleInputChange(e)}
               disabled={this.state.disable}
@@ -110,6 +124,10 @@ export class UserView extends React.Component {
               floatingLabelText="Last Name"
             />
             <TextField
+            style={{marginRight : '5%', width:'47%'  }}
+            inputStyle={{color: 'white'}}
+            floatingLabelStyle={{color:'#86C232'}}
+             underlineFocusStyle={{borderColor: "#86C232" }}
               value={this.state.email}
               onChange={e => this.handleInputChange(e)}
               disabled={this.state.disable}
@@ -117,6 +135,10 @@ export class UserView extends React.Component {
               floatingLabelText="Email"
             />
             <TextField
+            style={{width:'47%'  }}
+            inputStyle={{color: 'white'}}
+            floatingLabelStyle={{color:'#86C232'}}
+             underlineFocusStyle={{borderColor: "#86C232" }}
               value={this.state.phone}
               onChange={e => this.handleInputChange(e)}
               disabled={this.state.disable}
@@ -124,6 +146,10 @@ export class UserView extends React.Component {
               floatingLabelText="Phone"
             />
             <TextField
+            style={{marginRight : '5%', width:'47%'  }}
+            inputStyle={{color: 'white'}}
+            floatingLabelStyle={{color:'#86C232'}}
+             underlineFocusStyle={{borderColor: "#86C232" }}
               value={this.state.address_one}
               onChange={e => this.handleInputChange(e)}
               disabled={this.state.disable}
@@ -131,6 +157,10 @@ export class UserView extends React.Component {
               floatingLabelText="Address"
             />
             <TextField
+            style={{width:'47%'  }}
+            inputStyle={{color: 'white'}}
+            floatingLabelStyle={{color:'#86C232'}}
+             underlineFocusStyle={{borderColor: "#86C232" }}
               value={this.state.address_two}
               onChange={e => this.handleInputChange(e)}
               disabled={this.state.disable}
@@ -138,6 +168,10 @@ export class UserView extends React.Component {
               floatingLabelText="Address Cont."
             />
             <TextField
+            style={{marginRight : '5%', width:'47%'  }}
+            inputStyle={{color: 'white'}}
+            floatingLabelStyle={{color:'#86C232'}}
+             underlineFocusStyle={{borderColor: "#86C232" }}
               value={this.state.city}
               onChange={e => this.handleInputChange(e)}
               disabled={this.state.disable}
@@ -145,6 +179,10 @@ export class UserView extends React.Component {
               floatingLabelText="City"
             />
             <TextField
+            style={{width:'47%'  }}
+            inputStyle={{color: 'white'}}
+            floatingLabelStyle={{color:'#86C232'}}
+             underlineFocusStyle={{borderColor: "#86C232" }}
               value={this.state.state}
               onChange={e => this.handleInputChange(e)}
               disabled={this.state.disable}
@@ -152,6 +190,10 @@ export class UserView extends React.Component {
               floatingLabelText="State"
             />
             <TextField
+            style={{marginRight : '5%', width:'47%'  }}
+            inputStyle={{color: 'white'}}
+            floatingLabelStyle={{color:'#86C232'}}
+             underlineFocusStyle={{borderColor: "#86C232" }}
               value={this.state.zip}
               onChange={e => this.handleInputChange(e)}
               disabled={this.state.disable}
@@ -159,34 +201,49 @@ export class UserView extends React.Component {
               floatingLabelText="Zip"
             />
             <TextField
+            style={{width:'47%'  }}
+            inputStyle={{color: 'white'}}
+            floatingLabelStyle={{color:'#86C232'}}
+             underlineFocusStyle={{borderColor: "#86C232" }}
               value={this.state.country}
               onChange={e => this.handleInputChange(e)}
               disabled={this.state.disable}
               name="country"
               floatingLabelText="Country"
             />
+            <div style={{display: 'inline-block', width: '100%'}}>
             <TextField
+            style={{width:'47%'}}
+            inputStyle={{color: 'white'}}
+            floatingLabelStyle={{color:'#86C232'}}
+             underlineFocusStyle={{borderColor: "#86C232" }}
               value={this.state.website}
               onChange={e => this.handleInputChange(e)}
               disabled={this.state.disable}
               name="website"
               floatingLabelText="Website"
             />
-            <div>
+            <div style={{marginLeft : `${this.state.buttonMargin}`}}className='userview-button'>
               <Link to="/dashboard">
-                {this.state.edit ? <RaisedButton label="Cancel" /> : null}
+                {this.state.edit ? <RaisedButton labelColor={buttonStyle1.labelColor} backgroundColor={buttonStyle1.backgroundColor} label="Cancel" /> : null}
               </Link>
               {this.state.edit ? (
                 <RaisedButton
+                backgroundColor={buttonStyle1.backgroundColor}
+                labelColor={buttonStyle1.labelColor}
                   onClick={() => this.handleUpdateInfo()}
                   label="Save"
                 />
               ) : (
                 <RaisedButton
+                backgroundColor={buttonStyle1.backgroundColor}
+                labelColor={buttonStyle1.labelColor}
                   onClick={() => this.switchToEditMode()}
                   label="Edit"
                 />
               )}
+            </div>
+            </div>
             </div>
           </Paper>
         </div>
