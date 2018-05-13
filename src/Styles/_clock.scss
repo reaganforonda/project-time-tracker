@@ -14,8 +14,7 @@
   
   .clock {
     display: flex;
-    margin-left: 41.5%;
-      margin-right : 50%;
+    justify-content: center;
   }
   
   .binary-digit-group {
@@ -25,6 +24,5 @@
 
   .clock-div{
       margin-bottom: 20px;
-
   }
 

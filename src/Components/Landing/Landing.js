@@ -2,15 +2,12 @@ import React from "react";
 import Particles from "react-particles-js";
 import Clock from './Clock';
 
-
 export default class Landing extends React.Component {
-  
-
-  render() {
+   render() {
     const params = {
       particles: {
         number: {
-          value: 100
+          value: 150
         },
 
         line_linked: {
@@ -50,6 +47,10 @@ export default class Landing extends React.Component {
             </button>
           </a>
         </div>
+        <footer>
+          Created by Reagan Foronda - Year of the Dog
+          
+        </footer>
       </div>
     );
   }

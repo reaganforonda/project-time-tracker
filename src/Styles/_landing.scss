@@ -33,6 +33,7 @@ $color7: black;
     font-size : 20px;
     font-style: italic;
     margin-bottom: 20px;
+    margin-top: 20px;
 }
 
 .btn {
@@ -55,5 +56,14 @@ $color7: black;
 
 .landing-page  {
     height: 100%;
-    width: 100%
+    width: 100%;
+}
+
+footer {
+    color: $color6;
+    text-align: center;
+    font-size: 10px;
+    margin-top: 40px;
+    margin-left: auto;
+    margin-right: auto;
 }

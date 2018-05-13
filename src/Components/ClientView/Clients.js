@@ -6,6 +6,7 @@ import {
   RaisedButton,
   Dialog,
   TextField,
+  FlatButton,
   Checkbox
 } from "material-ui";
 import { getAllClients } from "../../ducks/clientReducer";
@@ -116,6 +117,32 @@ export class Clients extends React.Component {
     };
 
 
+    const styleButton = {
+      color: "#86C232",
+      backgroundColor: "#222629",
+    };
+
+
+    const stylePaper = {
+      style : {
+        backgroundColor : '#6B6E70'
+    }}
+
+    const buttonStyle1 = {
+      labelColor : "white",
+      backgroundColor: "#86C232"
+    };
+
+    const buttonStyle2 = {
+      labelColor : "white",
+      backgroundColor: "#86C232"
+    }
+
+    const overlayStyle = {
+      backgroundColor: "rgba(0,0,0, .89)"
+    }
+
+
     return (
       
         <Card style={style.cardStyle} className="card">
@@ -132,14 +159,17 @@ export class Clients extends React.Component {
             <p>{this.props.email}</p>
           </CardText>
           <CardText>
-            <RaisedButton backgroundColor='#86C232' labelColor='black' onClick={() => this.handleOpenEdit()} label="EDIT" />
-            <Dialog modal={true} open={this.state.openModal}>
+            <FlatButton style={styleButton} onClick={() => this.handleOpenEdit()} label="EDIT" />
+            <Dialog modal={true} open={this.state.openModal} contentStyle={{ width: "fit-content" }} paperProps = {stylePaper} overlayStyle={overlayStyle}>
               <TextField
-                value={this.state.client_name}
-                onChange={e => this.handleInputChange(e)}
-                name="client_name"
-                hintText="Client Name"
-                floatingLabelText="Client Name"
+              floatingLabelStyle={{color:'#86C232'}}
+              inputStyle={{color: 'white'}}
+              fullWidth={true}
+              value={this.state.client_name}
+              onChange={e => this.handleInputChange(e)}
+              name="client_name"
+              hintText="Client Name"
+              floatingLabelText="Client Name"
               />
               <TextField
                 value={this.state.address_one}
