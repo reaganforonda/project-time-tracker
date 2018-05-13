@@ -12,6 +12,7 @@ import {
 import { getAllClients } from "../../ducks/clientReducer";
 import { connect } from "react-redux";
 import axios from "axios";
+import MapContainer from '../Maps/MapContainer'
 
 export class Clients extends React.Component {
   constructor(props) {
@@ -157,6 +158,9 @@ export class Clients extends React.Component {
             <p><a className='client-website-link' href={this.props.website} target='_blank'> {this.props.website}</a></p>
             <p>{this.props.phone}</p>
             <p>{this.props.email}</p>
+          </CardText>
+          <CardText>
+          <MapContainer/>
           </CardText>
           <CardText>
             <FlatButton style={styleButton} onClick={() => this.handleOpenEdit()} label="EDIT" />

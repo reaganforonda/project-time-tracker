@@ -23,8 +23,9 @@ export class ClientView extends React.Component {
   render() {
     let clientArr = this.props.clients.map(client => {
       return (
-        <div key={client.client_id}>
+        
           <Clients
+          key={client.client_id}
             clientId={client.client_id}
             name={client.client_name}
             addressOne={client.address_one}
@@ -37,7 +38,7 @@ export class ClientView extends React.Component {
             email={client.email}
             client={client}
           />
-        </div>
+        
       );
     });
     return (

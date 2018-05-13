@@ -1,5 +1,6 @@
 .card {
   margin-bottom: 10px;
+  
 }
 
 .card p {
@@ -30,4 +31,8 @@
   margin-top: 20px;
   display: flex;
   justify-content: space-between
+}
+
+.clientlist-container { 
+  display : flex;
 }

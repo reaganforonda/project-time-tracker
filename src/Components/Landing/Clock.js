@@ -53,9 +53,7 @@ export default class Clock extends React.Component {
   }
   
   render() {
-
-    const Pip = ({isOn}) =>
-  <div className={`pip ${isOn && 'pip--on'}`}></div>
+    const Pip = ({isOn}) => <div className={`pip ${isOn && 'pip--on'}`}></div>
 
 const BinaryDigit = ({base2NumberAsArray}) =>
   <div className="binary-digit">
@@ -70,8 +68,6 @@ const BinaryDigitGroup = ({group}) =>
       group.map((binaryDigit, idx) => <BinaryDigit base2NumberAsArray={binaryDigit} key={idx} /> )
     }
   </div>
-  console.log(Pip)
-  console.log(this.state.digits)
 
     return (
       <div className="clock-container">
