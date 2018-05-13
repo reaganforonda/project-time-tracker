@@ -208,6 +208,7 @@ export class JobForm extends React.Component {
               textFieldStyle={{color: 'white'}}
               inputStyle={{color: 'white'}}
               floatingLabelStyle={{color:'#86C232'}}
+              underlineFocusStyle={{borderColor: "#86C232" }}
                 onChange={this.handleDateChange}
                 name="startDate"
                 hintText="Job Start Date"
@@ -229,16 +230,15 @@ export class JobForm extends React.Component {
               />
               <div className='job-form-buttons'>
                 <RaisedButton
+                style={{backgroundColor: '#86C232'}}
                 backgroundColor={buttonStyle1.backgroundColor}
                 labelColor={buttonStyle1.labelColor}
                   label="CANCEL"
     
                   onClick={() => this.handleCancelModalClick()}
                 />
-
-                <FlatButton label='test'/>
-
                 <RaisedButton 
+                style={{backgroundColor: '#86C232'}}
                 onClick={() => this.handleOnConfirm()}
                 label="CONFIRM"
                 backgroundColor={buttonStyle1.backgroundColor} 

@@ -170,15 +170,16 @@ export class JobView extends React.Component {
   render() {
     let allJobs = this.props.offTheClockJobs.map(job => {
       return (
-        <div key={job.job_id}>
+        
           <Job
+          key={job.job_id}
             clientName={job.client_name}
             jobName={job.job_name}
             job={job}
             clockIn={this.handleClockIn}
             clockedIn={false}
           />
-        </div>
+        
       );
     });
 
