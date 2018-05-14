@@ -36,7 +36,8 @@ export class ClientForm extends React.Component {
       zipcode: "",
       website: "",
       phone: "",
-      country: ""
+      country: "",
+      disable: true
     };
 
     this.handleOpenModal = this.handleOpenModal.bind(this);
@@ -46,8 +47,13 @@ export class ClientForm extends React.Component {
     this.handleResetState = this.handleResetState.bind(this);
   }
 
+  
+
   handleTextChange(e) {
     this.setState({ [e.target.name]: e.target.value });
+    if(this.state.disable !== '') {
+      this.setState({disable:false})
+    }
   }
 
   handleOpenModal() {
@@ -98,7 +104,8 @@ export class ClientForm extends React.Component {
       zipcode: "",
       website: "",
       phone: "",
-      country: ""
+      country: "",
+      disable: true
     });
 
     this.props.getAllClients(this.props.user.user_id);
@@ -145,6 +152,7 @@ export class ClientForm extends React.Component {
             modal={true} open={this.state.modalOpen}>
       
               <TextField
+              underlineFocusStyle={{borderColor: "#86C232" }}
                 floatingLabelStyle={{color:'#86C232'}}
                 inputStyle={{color: 'white'}}
                 errorStyle={{color : 'black', fontSize:'10px'}}
@@ -160,6 +168,7 @@ export class ClientForm extends React.Component {
 
 
               <TextField
+              underlineFocusStyle={{borderColor: "#86C232" }}
               floatingLabelStyle={{color:'#86C232'}}
               inputStyle={{color: 'white'}}
                 type="text"
@@ -173,6 +182,7 @@ export class ClientForm extends React.Component {
               <br/>
 
               <TextField
+              underlineFocusStyle={{borderColor: "#86C232" }}
               floatingLabelStyle={{color:'#86C232'}}
               inputStyle={{color: 'white'}}
                 type="text"
@@ -183,8 +193,10 @@ export class ClientForm extends React.Component {
                 floatingLabelText="Address Cont."
                 fullWidth={true}
               /><br/>
-
+<div style={{display:'flex', justifyContent:'space-between'}}>
               <TextField
+              style={{width:'56%'}}
+              underlineFocusStyle={{borderColor: "#86C232" }}
               floatingLabelStyle={{color:'#86C232'}}
               inputStyle={{color: 'white'}}
                 type="text"
@@ -197,6 +209,8 @@ export class ClientForm extends React.Component {
               />
 
               <TextField
+              style={{width:'16%%', marginLeft:'20px', marginRight:'20px'}}
+              underlineFocusStyle={{borderColor: "#86C232" }}
               floatingLabelStyle={{color:'#86C232'}}
               inputStyle={{color: 'white'}}
               className='client-input-state'
@@ -210,6 +224,7 @@ export class ClientForm extends React.Component {
               />
 
               <TextField
+              underlineFocusStyle={{borderColor: "#86C232" }}
               floatingLabelStyle={{color:'#86C232'}}
               inputStyle={{color: 'white'}}
                 type="Number"
@@ -221,7 +236,10 @@ export class ClientForm extends React.Component {
               />
               <br/>
 
+              </div>
+
               <TextField
+              underlineFocusStyle={{borderColor: "#86C232" }}
               floatingLabelStyle={{color:'#86C232'}}
               inputStyle={{color: 'white'}}
                 type="text"
@@ -234,6 +252,7 @@ export class ClientForm extends React.Component {
               /><br/>
 
               <TextField
+              underlineFocusStyle={{borderColor: "#86C232" }}
               floatingLabelStyle={{color:'#86C232'}}
               inputStyle={{color: 'white'}}
                 type="text"
@@ -246,6 +265,7 @@ export class ClientForm extends React.Component {
               /><br/>
 
               <TextField
+              underlineFocusStyle={{borderColor: "#86C232" }}
               floatingLabelStyle={{color:'#86C232'}}
               inputStyle={{color: 'white'}}
                 type="text"
@@ -258,6 +278,7 @@ export class ClientForm extends React.Component {
               /><br/>
 
               <TextField
+              underlineFocusStyle={{borderColor: "#86C232" }}
               floatingLabelStyle={{color:'#86C232'}}
               inputStyle={{color: 'white'}}
                 type="email"
@@ -272,17 +293,20 @@ export class ClientForm extends React.Component {
               <div className='add-clients-form-button'>
               
                 <RaisedButton
+                style={{backgroundColor : '#86C232'}}
                   label="CANCEL"
                   backgroundColor={buttonStyle1.backgroundColor}
-                  
                   labelColor={buttonStyle1.labelColor}  
                   onClick={() => this.handleCancelModalClick()}
                 />
                 <RaisedButton
+                style={{backgroundColor : '#86C232'}}
+                disabledBackgroundColor='#86C232'
                   backgroundColor={buttonStyle2.backgroundColor}
                   labelColor={buttonStyle2.labelColor}
                   onClick={() => this.handleAddClient()}
                   label="CONFIRM"
+                  disabled={this.state.disable}
                 />
               </div>
             
