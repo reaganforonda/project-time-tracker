@@ -56,6 +56,14 @@ export function Menu(props) {
     }
   };
 
+  let navToLogout = ()=> {
+    if (props.user.user_id) {
+      props.history.push('/');
+    } else {
+      props.history.push('/');
+    }
+  }
+
   const listItemStyle = {
     color: "white",
     textAlign: "center",
@@ -107,6 +115,12 @@ export function Menu(props) {
             style={listItemStyle}
             onClick={navToBillingView}
             primaryText="BILLING"
+          />
+          <ListItem
+            hoverColor={"#86C232"}
+            style={listItemStyle}
+            onClick={navToLogout}
+            primaryText="LOGOUT"
           />
         </List>
       </Drawer>
