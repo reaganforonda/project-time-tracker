@@ -32,6 +32,7 @@ export class ClientForm extends React.Component {
       modalOpen: false,
       clientName: "",
       address_one: "",
+      email: '',
       address_two: "",
       city: "",
       state: "",
@@ -95,6 +96,7 @@ export class ClientForm extends React.Component {
         website: this.state.website,
         zip: this.state.zipcode,
         active: true,
+        email: this.state.email,
         lan : lan,
         long : long,
       };
@@ -130,6 +132,7 @@ export class ClientForm extends React.Component {
       zipcode: "",
       website: "",
       phone: "",
+      email: '',
       country: "",
       disable: true
     });
