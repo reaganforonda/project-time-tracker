@@ -22,6 +22,7 @@ export class ClientView extends React.Component {
 
   render() {
     let clientArr = this.props.clients.map(client => {
+      
       return (
           <Clients
           key={client.client_id}

@@ -99,15 +99,11 @@ export class Entries extends React.Component {
   updateEntry(){
 
     let duration = this.calculateDuration();
-    
-    console.log(this.props.entry.rate)
     let total = duration * this.props.entry.rate
     let start_time = moment(this.state.startTime).format('h:mm:ss a')
-    console.log(start_time)
     let end_time = moment(this.state.endTime).format('h:mm:ss a')
-    console.log(end_time)
     let entry_date = moment(this.state.startDate).format('MM/DD/YYYY')
-    console.log(entry_date)
+    
 
     let updatedEntry = {
       entry_date : entry_date,
@@ -117,7 +113,7 @@ export class Entries extends React.Component {
       total : total,
       comment : this.state.comment,
     }
-    console.log(updatedEntry)
+    
     this.props.updateActiveEntry(this.props.entry.job_id, this.props.user.user_id, this.props.entry.entry_id, updatedEntry);
     this.props.getAllEntries(this.props.user.user_id);
     this.handleModalClose();

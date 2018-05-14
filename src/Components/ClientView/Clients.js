@@ -143,6 +143,7 @@ export class Clients extends React.Component {
       backgroundColor: "rgba(0,0,0, .89)"
     }
 
+    console.log(this.props.client.lan, this.props.client.long)
 
     return (
       
@@ -161,7 +162,8 @@ export class Clients extends React.Component {
             <p>{this.props.email}</p>
           </CardText>
           
-          <MapContainer />
+          
+          <MapContainer client={this.props.client}/>
           
           
           </div><div className='client-edit-button-div'>

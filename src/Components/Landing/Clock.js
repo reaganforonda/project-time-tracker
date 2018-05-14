@@ -34,7 +34,6 @@ export default class Clock extends React.Component {
           pair[0] = this.numberToBinary(parseInt(numberAsArray[0], 10));
           pair[1] = this.numberToBinary(parseInt(numberAsArray[1], 10));
         }
-        
         return pair;
       }
   
