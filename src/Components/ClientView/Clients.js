@@ -6,6 +6,7 @@ import {
   RaisedButton,
   Dialog,
   TextField,
+  Snackbar,
   FlatButton,
   Checkbox
 } from "material-ui";
@@ -32,7 +33,8 @@ export class Clients extends React.Component {
       zip: this.props.client.zip,
       active: this.props.client.active,
       checked: !this.props.client.active,
-      email: this.props.client.email
+      email: this.props.client.email,
+      snackbar: false
     };
 
     this.handleCancel = this.handleCancel.bind(this);
@@ -40,6 +42,7 @@ export class Clients extends React.Component {
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleCheckBox = this.handleCheckBox.bind(this);
     this.handleUpdateClient = this.handleUpdateClient.bind(this);
+    this.handleRequestCloseSnackbar = this.handleRequestCloseSnackbar.bind(this);
   }
 
   handleCheckBox() {
@@ -98,6 +101,7 @@ export class Clients extends React.Component {
       .then(result => {
         console.log(result.data);
         this.props.getAllClients(this.props.client.user_id);
+        this.setState({snackbar:true})
       })
       .catch(e => {
         console.log(e);
@@ -105,6 +109,11 @@ export class Clients extends React.Component {
 
     this.setState({ openModal: false });
   })}
+
+
+  handleRequestCloseSnackbar(){
+    this.setState({snackbar: false})
+  }
 
   render() {
     const style = {
@@ -181,7 +190,7 @@ export class Clients extends React.Component {
           
           </div><div className='client-edit-button-div'>
             <FlatButton style={styleButton} onClick={() => this.handleOpenEdit()} label="EDIT" /></div>
-            <Dialog modal={true} open={this.state.openModal} contentStyle={{ width: "fit-content" }} paperProps = {stylePaper} overlayStyle={overlayStyle}>
+            <Dialog autoScrollBodyContent={true} modal={true} open={this.state.openModal} contentStyle={{ width: "fit-content" }} paperProps = {stylePaper} overlayStyle={overlayStyle}>
               <TextField
               floatingLabelStyle={{color:'#86C232'}}
               inputStyle={{color: 'white'}}
@@ -318,6 +327,13 @@ export class Clients extends React.Component {
 
               </div>
             </Dialog>
+            <Snackbar
+              open={this.state.snackbar}
+              message="Client Saved"
+              autoHideDuration={3000}
+              onRequestClose={this.handleRequestCloseSnackbar}
+              contentStyle={{color:'#86C232'}}
+            />
             
         </Card>
       

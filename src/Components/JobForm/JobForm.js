@@ -9,7 +9,8 @@ import {
   FlatButton,
   FloatingActionButton,
   MenuItem,
-  SelectField
+  SelectField,
+  Snackbar
 } from "material-ui";
 
 import { connect } from "react-redux";
@@ -26,7 +27,8 @@ export class JobForm extends React.Component {
       startDate: null,
       hourlyRate: 0,
       clients: [],
-      client: ""
+      client: "",
+      snackbar: false
     };
 
     this.handleOpenModal = this.handleOpenModal.bind(this);
@@ -39,10 +41,14 @@ export class JobForm extends React.Component {
 
     this.handleOnConfirm = this.handleOnConfirm.bind(this);
     this.handleResetState = this.handleResetState.bind(this);
+    this.handleRequestCloseSnackbar = this.handleRequestCloseSnackbar.bind(this);
   }
 
   componentDidMount() {
     this.handleGetClients();
+  }
+  handleRequestCloseSnackbar(){
+    this.setState({snackbar: false})
   }
 
   handleCancelModalClick() {
@@ -98,6 +104,7 @@ export class JobForm extends React.Component {
       .post(`/api/job`, job)
       .then(result => {
         console.log(result.data);
+        this.setState({snackbar: true})
       })
       .catch(e => {
         console.log(`${e}`);
@@ -248,6 +255,14 @@ export class JobForm extends React.Component {
             </form>
           </Dialog>
         </FloatingActionButton>
+        <Snackbar
+              open={this.state.snackbar}
+              message="Job Added"
+              autoHideDuration={3000}
+              onRequestClose={this.handleRequestCloseSnackbar}
+              contentStyle={{color:'#86C232'}}
+            />
+        
       </div>
     );
   }

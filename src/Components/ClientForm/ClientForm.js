@@ -5,7 +5,8 @@ import {
   TextField,
   Dialog,
   RaisedButton,
-  FloatingActionButton
+  FloatingActionButton,
+  Snackbar
 } from "material-ui";
 import {
   updateAddressOne,
@@ -38,7 +39,8 @@ export class ClientForm extends React.Component {
       website: "",
       phone: "",
       country: "",
-      disable: true
+      disable: true,
+      snackbar : false
     };
 
     this.handleOpenModal = this.handleOpenModal.bind(this);
@@ -46,6 +48,7 @@ export class ClientForm extends React.Component {
     this.handleCancelModalClick = this.handleCancelModalClick.bind(this);
     this.handleAddClient = this.handleAddClient.bind(this);
     this.handleResetState = this.handleResetState.bind(this);
+    this.handleRequestCloseSnackbar = this.handleRequestCloseSnackbar.bind(this);
   }
 
   
@@ -103,6 +106,7 @@ export class ClientForm extends React.Component {
         console.log(result);
         this.props.getAllClients(this.props.user.user_id);
         this.handleResetState();
+        this.setState({snackbar:true})
       })
       .catch(e => {
         console.log(e);
@@ -131,6 +135,10 @@ export class ClientForm extends React.Component {
     });
 
     this.props.getAllClients(this.props.user.user_id);
+  }
+
+  handleRequestCloseSnackbar(){
+    this.setState({snackbar: false})
   }
 
   render() {
@@ -334,6 +342,13 @@ export class ClientForm extends React.Component {
             
           </Dialog>
         </FloatingActionButton>
+        <Snackbar
+              open={this.state.snackbar}
+              message="Client Added"
+              autoHideDuration={3000}
+              onRequestClose={this.handleRequestCloseSnackbar}
+              contentStyle={{color:'#86C232'}}
+            />
       </div>
     );
   }

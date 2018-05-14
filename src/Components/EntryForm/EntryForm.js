@@ -9,7 +9,8 @@ import {
   RaisedButton,
   FloatingActionButton,
   MenuItem,
-  SelectField
+  SelectField,
+  Snackbar
 } from "material-ui";
 import { connect } from "react-redux";
 import {getAllEntries} from '../../ducks/entryReducer';
@@ -28,7 +29,8 @@ export class EntryForm extends React.Component {
       comment: "",
       jobs: [],
       job: "",
-      edit: false
+      edit: false,
+      snackbar : false
     };
 
     this.handleTextChange = this.handleTextChange.bind(this);
@@ -46,10 +48,17 @@ export class EntryForm extends React.Component {
     this.hanldeJobSelect = this.hanldeJobSelect.bind(this);
     this.handleAddEntry = this.handleAddEntry.bind(this);
     this.handleRounding = this.handleRounding.bind(this);
+    this.handleRequestCloseSnackbar = this.handleRequestCloseSnackbar.bind(this);
   }
+
+  
 
   componentDidMount() {
     this.props.getAllActiveJobs(this.props.user.user_id)
+  }
+
+  handleRequestCloseSnackbar(){
+    this.setState({snackbar: false})
   }
 
   handleTextChange(e) {
@@ -143,6 +152,7 @@ export class EntryForm extends React.Component {
       .then(result => {
         console.log(entry);
         this.props.getAllEntries(this.props.user.user_id);
+        this.setState({snackbar:true})
       })
       .catch(e => {
         console.log(e);
@@ -292,6 +302,13 @@ export class EntryForm extends React.Component {
           </Dialog>
           <div />
         </FloatingActionButton>
+        <Snackbar
+              open={this.state.snackbar}
+              message="Entry Added"
+              autoHideDuration={3000}
+              onRequestClose={this.handleRequestCloseSnackbar}
+              contentStyle={{color:'#86C232'}}
+            />
         
       </div>
     );

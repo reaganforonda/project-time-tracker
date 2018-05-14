@@ -6,7 +6,8 @@ import {
   TextField,
   RaisedButton,
   DatePicker,
-  FlatButton
+  FlatButton,
+  Snackbar
 } from "material-ui";
 
 import moment from 'moment';
@@ -26,7 +27,8 @@ export class Entries extends React.Component {
       duration: 0,
       comment: '',
       job: "",
-      edit: false
+      edit: false,
+      snackbar: false
     };
 
     this.handleModalOpen = this.handleModalOpen.bind(this);
@@ -37,7 +39,12 @@ export class Entries extends React.Component {
     this.formatTime = this.formatTime.bind(this);
     this.calculateDuration = this.calculateDuration.bind(this);
     this.updateEntry = this.updateEntry.bind(this)
+    this.handleRequestCloseSnackbar = this.handleRequestCloseSnackbar.bind(this);
     
+  }
+
+  handleRequestCloseSnackbar(){
+    this.setState({snackbar: false})
   }
 
   handleInputChange(e) {
@@ -115,6 +122,7 @@ export class Entries extends React.Component {
     }
     
     this.props.updateActiveEntry(this.props.entry.job_id, this.props.user.user_id, this.props.entry.entry_id, updatedEntry);
+    this.setState({snackbar:true})
     this.props.getAllEntries(this.props.user.user_id);
     this.handleModalClose();
   }
@@ -238,6 +246,14 @@ export class Entries extends React.Component {
             label="DELETE"
           /></div>
         </Paper>
+        <Snackbar
+              open={this.state.snackbar}
+              message="Entry Saved"
+              autoHideDuration={3000}
+              onRequestClose={this.handleRequestCloseSnackbar}
+              contentStyle={{color:'#86C232'}}
+            />
+
       </div>
     )
   }

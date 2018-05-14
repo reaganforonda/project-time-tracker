@@ -69,6 +69,8 @@ export class BillingView extends React.Component {
       this
     );
     this.handleClientSelectInvoice = this.handleClientSelectInvoice.bind(this);
+
+    this.handleRequestCloseSnackbar = this.handleRequestCloseSnackbar.bind(this);
   }
 
   componentDidMount() {
@@ -264,6 +266,10 @@ export class BillingView extends React.Component {
   handleInvoiceSelectDownload = (event, index, value) => {
     this.setState({ invoiceToDownload: value, downloadButtonDisabled: false });
   };
+
+  handleRequestCloseSnackbar(){
+    this.setState({emailSnackBar: false, uploadSnackBar : false})
+  }
 
   render() {
     let arr = this.props.billing.map(value => {
@@ -582,11 +588,15 @@ export class BillingView extends React.Component {
               open={this.state.emailSnackBar}
               message="Email Sent"
               autoHideDuration={3000}
+              onRequestClose={this.handleRequestCloseSnackbar}
+              contentStyle={{color:'#86C232'}}
             />
             <Snackbar
               open={this.state.uploadSnackBar}
               message="Upload Successful"
               autoHideDuration={3000}
+              onRequestClose={this.handleRequestCloseSnackbar}
+              contentStyle={{color:'#86C232'}}
             />
           </div>
         )}
