@@ -39,6 +39,7 @@ export class Dashboard extends React.Component {
         <div className="menu-section">
           <Menu img={picture} userName={user_name} />
         </div>
+        
         <div className="dashboard-container">
           <Switch>
             <Route path="/dashboard/jobview" component={JobView} />
