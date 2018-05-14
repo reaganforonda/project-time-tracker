@@ -181,7 +181,8 @@ export class Analytics extends React.Component {
           yAxes : [{
               ticks : {
                   callback : function (value, index, values) {
-                      return '$' + value;
+                      // return '$' + value;
+                      return numeral(value).format('$0,0')
                   }
               }
           }]
