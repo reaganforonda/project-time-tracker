@@ -61,19 +61,32 @@ export class Clients extends React.Component {
   }
 
   handleUpdateClient() {
-    let client = {
-      client_name: this.state.client_name,
-      address_one: this.state.address_one,
-      address_two: this.state.address_two,
-      city: this.state.city,
-      state: this.state.state,
-      country: this.state.country,
-      phone: this.state.phone,
-      website: this.state.website,
-      zip: this.state.zip,
-      active: this.state.active,
-      email: this.state.email
-    };
+    let loc = {
+      address : this.state.address_one,
+      city : this.state.city,
+      state : this.state.state
+    }
+
+    axios.post(`/api/google/geocoding`, loc).then((result) => {
+      let lan = result.data.lat;
+      let long = result.data.lng;
+      let client = {
+        client_name: this.state.client_name,
+        address_one: this.state.address_one,
+        address_two: this.state.address_two,
+        city: this.state.city,
+        state: this.state.state,
+        country: this.state.country,
+        phone: this.state.phone,
+        website: this.state.website,
+        zip: this.state.zip,
+        active: this.state.active,
+        email: this.state.email,
+        lan : lan,
+        long : long
+      };
+
+      console.log(client);
 
     axios
       .put(
@@ -91,7 +104,7 @@ export class Clients extends React.Component {
       });
 
     this.setState({ openModal: false });
-  }
+  })}
 
   render() {
     const style = {
@@ -141,9 +154,7 @@ export class Clients extends React.Component {
 
     const overlayStyle = {
       backgroundColor: "rgba(0,0,0, .89)"
-    }
-
-    console.log(this.props.client.lan, this.props.client.long)
+    }  
 
     return (
       

@@ -96,8 +96,7 @@ export class ClientForm extends React.Component {
         long : long,
       };
 
-      console.log(client);
-
+      
       axios
       .post("/api/client/", client)
       .then(result => {
