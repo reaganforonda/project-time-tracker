@@ -16,7 +16,8 @@ import {
   updatePhone,
   updateZip,
   getAllClients,
-  updateWebsite
+  updateWebsite,
+  getLocation
 } from "../../ducks/clientReducer";
 import axios from "axios";
 import { connect } from "react-redux";
@@ -65,31 +66,53 @@ export class ClientForm extends React.Component {
   }
 
   handleAddClient() {
-    let client = {
-      user_id: this.props.user.user_id,
-      client_name: this.state.clientName,
-      address_one: this.state.address_one,
-      address_two: this.state.address_two,
-      city: this.state.city,
-      state: this.state.state,
-      phone: this.state.phone,
-      country: this.state.country,
-      website: this.state.website,
-      zip: this.state.zipcode,
-      active: true
-    };
 
-    axios
+
+    let loc = {
+      address : this.state.address_one,
+      city : this.state.city,
+      state : this.state.state
+    }
+    
+    axios.post(`/api/google/geocoding`, loc).then((result) => {
+      let lan = result.data.lat;
+      let long = result.data.lng;
+      
+      
+
+      let client = {
+        user_id: this.props.user.user_id,
+        client_name: this.state.clientName,
+        address_one: this.state.address_one,
+        address_two: this.state.address_two,
+        city: this.state.city,
+        state: this.state.state,
+        phone: this.state.phone,
+        country: this.state.country,
+        website: this.state.website,
+        zip: this.state.zipcode,
+        active: true,
+        lan : lan,
+        long : long,
+      };
+
+      console.log(client);
+
+      axios
       .post("/api/client/", client)
       .then(result => {
         console.log(result);
         this.props.getAllClients(this.props.user.user_id);
+        this.handleResetState();
       })
       .catch(e => {
         console.log(e);
       });
+    })
 
-    this.handleResetState();
+    
+
+    
     
   }
 
@@ -332,5 +355,6 @@ export default connect(mapStateToProps, {
   updateState,
   updateZip,
   updatePhone,
-  updateWebsite
+  updateWebsite,
+  getLocation
 })(ClientForm);

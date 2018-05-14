@@ -143,7 +143,7 @@ export default function reducer(state = INITIAL_STATE, action) {
       case UPDATE_PHONE:
       return Object.assign({}, state, {phone : action.payload});
 
-      case GET_LOCATION:
+      case GET_LOCATION + "_FULFILLED":
       return Object.assign({}, state, {loc : action.payload})
       
     default:
