@@ -19,7 +19,7 @@ import {
 } from "../../ducks/billingReducer";
 import { getAllClients } from "../../ducks/clientReducer";
 import Dropzone from "react-dropzone";
-// import numeral from "numeral"; TODO: REMOVE
+
 import { withRouter } from "react-router-dom";
 
 export class BillingView extends React.Component {
@@ -79,6 +79,7 @@ export class BillingView extends React.Component {
     this.props.getBilling(this.props.user.user_id);
     this.props.getAllBilling(this.props.user.user_id);
     this.props.getAllClients(this.props.user.user_id);
+    this.props.getLastBillingNumber(this.props.user.user_id)
   }
 
   handleUploadModalOpen() {

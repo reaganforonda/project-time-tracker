@@ -2,7 +2,6 @@ import React from "react";
 import axios from "axios";
 import { connect } from "react-redux";
 import { getUser } from "../../ducks/userReducer";
-// import printJS from "../../../node_modules/print-js/src/index";
 import printJS from '../../print-js/src/index'
 import { Link } from "react-router-dom";
 import { RaisedButton, Divider } from "material-ui";
@@ -39,7 +38,7 @@ export class InvoiceView extends React.Component {
   }
 
   handlePrint() {
-    printJS("print-invoice", "html");
+    window.print()
     this.handleAddBilling();
     this.updateJobBilling();
   }
@@ -104,6 +103,11 @@ export class InvoiceView extends React.Component {
         </TableRow>
       );
     });
+
+    const buttonStyle2 = {
+      labelColor : "white",
+      backgroundColor: "#86C232"
+    };
 
     return (
       <div>
@@ -215,11 +219,11 @@ export class InvoiceView extends React.Component {
 
           </div>
         </div>
-        <div>
+        <div className='invoice-buttons'>
           <Link to="/dashboard/billingview">
-            <RaisedButton label="Return" />
+            <RaisedButton backgroundColor={buttonStyle2.backgroundColor} labelColor={buttonStyle2.labelColor} label="Return" />
           </Link>
-          <RaisedButton label="Print" onClick={() => this.handlePrint()} />
+          <RaisedButton backgroundColor={buttonStyle2.backgroundColor} labelColor={buttonStyle2.labelColor} label="Print" onClick={() => this.handlePrint()} />
         </div>
       </div>
     );

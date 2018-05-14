@@ -1,6 +1,14 @@
 $box-borders : 2px black solid;
 $para-spacing : 8px;
 
+$color1 : #222629;
+$color2 : #474B4F;
+$color3 : #6B6E70;
+$color4: #61892F;
+$color5: #86C232;
+$color6: white;
+$color7: black;
+
 .user-contact-info {
     
     width: 50%;
@@ -16,22 +24,52 @@ $para-spacing : 8px;
     margin-bottom: $para-spacing;
     font-size: 15px;
     text-align: right;
+    
 }
+
+.inv {
+    background: $color6;
+    margin-right: auto;
+    margin-left: auto;
+    padding: 0px;
+    width: 760px;
+    height: 900px;
+    clear: both;
+    page-break-after: always;
+
+}
+
 
 
 .client-info p {
     margin-top: $para-spacing;
     margin-bottom: $para-spacing;
     margin-left: 30px;
+    
 }
 
 .client-info h2 {
     margin-left: 30px;
 }
 
+.client-info {
+    width: calc(100% / 3);
+}
+
+.invoice-info-sect1 {
+    width: calc(100% / 3);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.inv-total {
+    width: calc(100% / 3)
+}
 
 .remit {
     margin-left: 30px;
+    border: solid $color3 3px;
 }
 
 .remit p {
@@ -45,7 +83,7 @@ $para-spacing : 8px;
     align-items: center;
     padding-top: 30px;
     padding-bottom : 30px;
-    background-color: rgb(34, 83, 120)
+    background-color: $color4
 }
 
 .invoice-header h1 {
@@ -82,17 +120,17 @@ $para-spacing : 8px;
 .main-total {
     
     font-size: 30px;
-    color: rgb(34, 83, 120);
+    color: $color4;
     text-align: right;
     font-weight: bold
 }
 
 .invoice-hr {
-   height: 2px;
+   height: 1px;
    border : 0;
    margin: 1em 0;
    padding: 0;
-   background-image: linear-gradient(to right, #ccc, #225378, #ccc)
+   background-image: linear-gradient(to right, black, $color5, black)
 }
 
 .bottom-section {
@@ -108,10 +146,19 @@ $para-spacing : 8px;
     display: flex;
 }
 
-
-@media print {
-    .inv {
-        width: 210mm;
-        height: 297mm;
-    }
+.invoice-buttons {
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-between;
+    margin-left: auto;
+    margin-right: auto;
+    width: 25%;
 }
+
+
+// @media print {
+//     .inv {
+//         width: 210mm;
+//         height: 297mm;
+//     }
+// }

@@ -8,18 +8,19 @@ export class MapContainer extends React.Component{
         const style = {
             width: '400px',
             height: '400px',
+            
         }
 
         const pos = {lat : this.props.client.lan, lng:this.props.client.long}
         
 
         if(!this.props.loaded & !this.props.client) {
-            console.log(pos)
+            
             return <div>Loading...</div>
         } else {
             return (
                 <div className='google-map-container' style={style}>
-                    <Map lan={this.props.client.lan} long={this.props.client.long} style={style} google={this.props.google}>
+                    <Map title={this.props.client.client_name} name={this.props.client.client_name}center={{lat: this.props.client.lan, lng:this.props.client.long}} style={style} google={this.props.google}>
                         
                         <Marker position={pos}/>
                     </Map>
