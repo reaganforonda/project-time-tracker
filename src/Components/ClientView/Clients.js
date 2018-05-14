@@ -97,7 +97,7 @@ export class Clients extends React.Component {
     const style = {
       cardStyle: {
         backgroundColor: "#6B6E70",
-        width: '40%'
+        width: '49%'
       },
 
       titleHeader:{
@@ -148,6 +148,7 @@ export class Clients extends React.Component {
       
         <Card style={style.cardStyle} className="card">
           <CardHeader style={style.titleHeader.style} title={this.props.name} titleColor={style.titleHeader.titleColor} titleStyle={style.titleHeader.titleStyle}/>
+          <div className='card-mid-section'>
           <CardText style={style.pText}>
             <p>{this.props.addressOne} {this.props.addressTwo}</p>
             
@@ -159,11 +160,12 @@ export class Clients extends React.Component {
             <p>{this.props.phone}</p>
             <p>{this.props.email}</p>
           </CardText>
-          <CardText>
+          
           <MapContainer/>
-          </CardText>
-          <CardText>
-            <FlatButton style={styleButton} onClick={() => this.handleOpenEdit()} label="EDIT" />
+          
+          
+          </div><div className='client-edit-button-div'>
+            <FlatButton style={styleButton} onClick={() => this.handleOpenEdit()} label="EDIT" /></div>
             <Dialog modal={true} open={this.state.openModal} contentStyle={{ width: "fit-content" }} paperProps = {stylePaper} overlayStyle={overlayStyle}>
               <TextField
               floatingLabelStyle={{color:'#86C232'}}
@@ -301,7 +303,7 @@ export class Clients extends React.Component {
 
               </div>
             </Dialog>
-          </CardText>
+            
         </Card>
       
     );
