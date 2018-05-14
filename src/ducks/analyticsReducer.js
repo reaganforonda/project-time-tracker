@@ -20,6 +20,7 @@ export function getHrsMonthly(userid) {
     }).catch((e) => {
         console.log(`Error at reducer while trying to access server: ${e}`);
     })
+    console.log(hrsMonthly)
 
     return {
         type: "GET_HRS_MONTHLY",

@@ -102,7 +102,7 @@ export function Menu(props) {
             hoverColor={"#86C232"}
             style={listItemStyle}
             onClick={navToEntryView}
-            primaryText="ENTERIES"
+            primaryText="ENTRIES"
           />
           <ListItem
             hoverColor={"#86C232"}

@@ -11,6 +11,9 @@ import {
   getRevMonthly,
   getHrsMonthly
 } from "../../ducks/analyticsReducer";
+import {
+  getClockedInJob
+} from '../../ducks/jobReducer'
 
 export class Analytics extends React.Component {
   constructor(props) {
@@ -27,6 +30,7 @@ export class Analytics extends React.Component {
     this.props.getTotalsClient(this.props.user.user_id);
     this.props.getHrsMonthly(this.props.user.user_id);
     this.props.getRevMonthly(this.props.user.user_id);
+    this.props.getClockedInJob(this.props.user.user_id);
   }
 
   createDoughnutDataSet1(data, label) {
@@ -260,6 +264,7 @@ function mapStateToProps(state) {
 }
 
 export default connect(mapStateToProps, {
+  getClockedInJob,
   getInProgressCount,
   getInProgressTotals,
   getTotalsClient,

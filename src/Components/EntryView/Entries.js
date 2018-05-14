@@ -178,6 +178,7 @@ export class Entries extends React.Component {
           <p style={{width: '15%', textAlign:'left'}}>{this.props.jobname}</p>
           <p style={{width: '25%', textAlign:'left'}}>{this.props.clientName}</p>
           <p style={{width: '6%', textAlign:'right'}}>{moment(this.props.entry.entry_date).format('MM/DD/YYYY')}</p>
+          {/* <p style={{width: '6%', textAlign:'right'}}>{this.props.entry.entry_date}</p> */}
           <p style={{width: '6%', textAlign:'right'}}>{this.props.startTime}</p>
           <p style={{width: '6%', textAlign:'right'}}>{this.props.endTime}</p>
           <p style={{width: '5%', textAlign:'right'}}>{numeral(this.props.duration).format('0,0.0')} Hrs</p>

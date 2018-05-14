@@ -67,6 +67,7 @@ export class JobView extends React.Component {
   }
 
   handleClockIn(job) {
+    console.log(job);
     axios
       .put(
         `/api/jobs/updateclock/${
@@ -77,15 +78,16 @@ export class JobView extends React.Component {
         console.log(result.data);
         this.props.getClockedInJob(this.props.user.user_id);
         this.props.getOffTheClockJobs(this.props.user.user_id);
+        this.addNewEntry(job);
       })
       .catch(e => {
         console.log(`Error while trying to Update Job: ${e}`);
       });
 
-    this.addNewEntry(job);
   }
 
   handleClockOut(job) {
+    console.log(this.props.activeEntry)
     axios
       .put(
         `/api/jobs/updateclock/${
@@ -96,12 +98,12 @@ export class JobView extends React.Component {
         console.log(result.data);
         this.props.getClockedInJob(this.props.user.user_id);
         this.props.getOffTheClockJobs(this.props.user.user_id);
+        this.updateEntry(this.props.activeEntry);
       })
       .catch(e => {
         console.log(`Error while trying to Update Job: ${e}`);
       });
 
-    this.updateEntry(this.props.activeEntry);
   }
 
   // Get time as soon as the user hit clock in
@@ -138,6 +140,7 @@ export class JobView extends React.Component {
     let time = this.getClockTime();
     this.props.updateStartTime(time);
     let entry_date = this.formatDate(time);
+    console.log(entry_date)
     let start_time = this.formatTime(time);
     let entry = {
       user_id: this.props.user.user_id,
@@ -147,6 +150,7 @@ export class JobView extends React.Component {
       start_time: start_time,
       billed: false
     };
+    console.log(entry)
 
     this.props.addActiveEntry(entry);
   }
@@ -194,7 +198,7 @@ export class JobView extends React.Component {
             <div className="clockedIn">
               <h1>ON THE CLOCK</h1>
             </div>
-            {this.props.jobOnClock ? (
+            {!this.props.jobOnClock ? null :(
               <Job
                 className="on-clock-job"
                 job={this.props.jobOnClock}
@@ -203,7 +207,7 @@ export class JobView extends React.Component {
                 clientName={this.props.jobOnClock.client_name}
                 jobName={this.props.jobOnClock.job_name}
               />
-            ) : null}
+            )}
             <div />
           </div>
 
