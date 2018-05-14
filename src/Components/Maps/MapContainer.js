@@ -20,7 +20,7 @@ export class MapContainer extends React.Component{
         } else {
             return (
                 <div className='google-map-container' style={style}>
-                    <Map title={this.props.client.client_name} name={this.props.client.client_name}center={{lat: this.props.client.lan, lng:this.props.client.long}} style={style} google={this.props.google}>
+                    <Map containerStyle={{position: 'relative'}} title={this.props.client.client_name} name={this.props.client.client_name}center={{lat: this.props.client.lan, lng:this.props.client.long}} style={style} google={this.props.google}>
                         
                         <Marker position={pos}/>
                     </Map>
