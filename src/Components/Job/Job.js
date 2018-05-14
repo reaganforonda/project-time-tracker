@@ -104,7 +104,7 @@ export class Job extends React.Component {
           <p style={{width: '16%'}}>{this.props.jobName}</p>
           <p style={{width: '24%'}}>{this.props.job.description}</p>
           <p style={{width: '7%'}}>{moment(new Date(this.props.job.start_date)).format('MM/DD/YYYY')}</p>
-          <p style={{width: '5%',textAlign:'right'}}>{numeral(this.props.job.rate).format('$0,0.00')}</p>
+          <p style={{width: '5%',textAlign:'right'}}>Rate {numeral(this.props.job.rate).format('$0,0.00')}</p>
           <div>
             {!this.props.clockedIn ? (
               <RaisedButton

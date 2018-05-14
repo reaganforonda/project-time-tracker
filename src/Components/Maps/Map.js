@@ -34,7 +34,7 @@ export default class Map extends React.Component {
 
     render() {
         return (
-            <div ref='map'>
+            <div className='map-con' ref='map'>
                 Loading Map...
             </div>
         )

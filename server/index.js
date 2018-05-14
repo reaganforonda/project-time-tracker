@@ -15,6 +15,7 @@ const jobsController = require("./controllers/jobsController"),
   analyticsController = require('./controllers/analyticsController'),
   s3Controller = require("./controllers/s3Controller"),
   billingController = require("./controllers/billingController"),
+  googleController = require('./controllers/googleController')
   entryController = require("./controllers/entryController");
 
 const app = express();
@@ -220,6 +221,10 @@ app.get("/api/data/jobs/progress/total/:userid", analyticsController.getJobsInPr
 app.get('/api/data/jobs/clientotal/:userid', analyticsController.getTotalsClient)
 app.get('/api/data/jobs/hrsmonthly/:userid', analyticsController.getHrsMonthly)
 app.get('/api/data/jobs/revmonthly/:userid', analyticsController.getRevMonthly)
+
+
+// ###### ENDPOINTS - GOOGLE ######
+app.post('/api/google/geocoding', googleController.getGeolocation)
 
 // START SERVER
 app.listen(CONNECTION_PORT, () => {

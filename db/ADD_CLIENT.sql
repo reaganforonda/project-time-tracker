@@ -1,5 +1,5 @@
 INSERT INTO clients
-(user_id, client_name, address_one, address_two, city, state, country, phone, website, zip, active, email)
+(user_id, client_name, address_one, address_two, city, state, country, phone, website, zip, active, email, long, lan )
 VALUES
-($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)
+($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14)
 RETURNING *;

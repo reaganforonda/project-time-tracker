@@ -136,7 +136,8 @@ export class BillingItem extends React.Component {
           
           <div className='bill-item-button'>
           <FlatButton
-            style={styleButton}
+            style={{background : 'black'}}
+            labelStyle={{color: '#86C232'}}
             onClick={() => this.handleOpenModal()}
             label="Select For Billing"
             className="select-for-billing-button"
@@ -147,7 +148,7 @@ export class BillingItem extends React.Component {
               paperProps = {stylePaper}
               modal={true}
               open={this.state.open}
-              contentStyle={{ width: "fit-content", height: 'fit-content'}}
+              contentStyle={{ width: "fit-content", height: 'fit-content', minWidth:'500px'}}
             >
               <div className="billing-modal-head">
                 <div className="billing-modal-head-sec2">

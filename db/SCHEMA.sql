@@ -37,7 +37,9 @@ CREATE TABLE clients
     website VARCHAR(45),
     zip INTEGER,
     active BOOLEAN,
-    email VARCHAR(70)
+    email VARCHAR(70),
+    long VARCHAR(45),
+    lan VARCHAR(45)
 );
 
 CREATE TABLE jobs

@@ -31,7 +31,9 @@ module.exports = {
       website,
       zip,
       active,
-      email
+      email,
+      long,
+      lan
     } = req.body;
 
     dbInstance
@@ -47,7 +49,9 @@ module.exports = {
         website,
         zip,
         active,
-        email
+        email,
+        long,
+        lan
       ])
       .then(client => {
         res.status(200).send(client[0]);
@@ -91,7 +95,9 @@ module.exports = {
       website,
       zip,
       active,
-      email
+      email,
+      long,
+      lan
     } = req.body;
 
     dbInstance
@@ -108,7 +114,9 @@ module.exports = {
         website,
         zip,
         active,
-        email
+        email,
+        long,
+        lan
       ])
       .then(result => {
         res.status(200).send(result);

@@ -12,7 +12,8 @@ const INITIAL_STATE = {
   country: "",
   phone: "",
   website: "",
-  zip: ""
+  zip: "",
+  loc:{}
 };
 
 const GET_ALL_CLIENTS = "GET_ALL_CLIENTS";
@@ -24,6 +25,21 @@ const UPDATE_STATE = "UPDATE_STATE";
 const UPDATE_ZIP = "UPDATE_ZIP";
 const UPDATE_WEBSITE = "UPDATE_WEBSITE";
 const UPDATE_PHONE = "UPDATE_PHONE";
+const GET_LOCATION = 'GET_LOCATION'
+
+export function getLocation(address) {
+  
+  let loc = axios.get('/api/google/geocoding', address).then ((result) => {
+    return result.data
+  }).catch((e) => {
+    console.log(`Error at reducer trying to get location: ${e}`)
+  });
+
+  return {
+    type : GET_LOCATION,
+    payload : loc
+  }
+}
 
 export function getAllClients(userid) {
   let clientsData = axios
@@ -126,6 +142,9 @@ export default function reducer(state = INITIAL_STATE, action) {
 
       case UPDATE_PHONE:
       return Object.assign({}, state, {phone : action.payload});
+
+      case GET_LOCATION:
+      return Object.assign({}, state, {loc : action.payload})
       
     default:
       return state;

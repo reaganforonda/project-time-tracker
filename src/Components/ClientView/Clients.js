@@ -161,7 +161,7 @@ export class Clients extends React.Component {
             <p>{this.props.email}</p>
           </CardText>
           
-          <MapContainer/>
+          <MapContainer />
           
           
           </div><div className='client-edit-button-div'>

@@ -262,7 +262,6 @@ export class BillingView extends React.Component {
 
   handleInvoiceSelectDownload = (event, index, value) => {
     this.setState({ invoiceToDownload: value, downloadButtonDisabled: false });
-    console.log(this.state.invoiceToDownload);
   };
 
   render() {
