@@ -52,10 +52,10 @@ export function addActiveEntry(entry) {
 }
 
 export function updateActiveEntry(jobid, userid, entryid, updateEntry) {
-  
+  console.log(updateEntry);
   axios
     .put(
-      `/api/entry/fullupdate/${userid}/${entryid}/${jobid}`,
+      `/api/entry/update/${jobid}/${userid}/${entryid}`,
       updateEntry
     )
     .then(result => {

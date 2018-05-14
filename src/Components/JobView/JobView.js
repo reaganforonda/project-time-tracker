@@ -67,7 +67,7 @@ export class JobView extends React.Component {
   }
 
   handleClockIn(job) {
-    console.log(job);
+    
     axios
       .put(
         `/api/jobs/updateclock/${
@@ -75,7 +75,7 @@ export class JobView extends React.Component {
         }/${job.job_id}/true`
       )
       .then(result => {
-        console.log(result.data);
+        
         this.props.getClockedInJob(this.props.user.user_id);
         this.props.getOffTheClockJobs(this.props.user.user_id);
         this.addNewEntry(job);
@@ -87,7 +87,7 @@ export class JobView extends React.Component {
   }
 
   handleClockOut(job) {
-    console.log(this.props.activeEntry)
+    console.log(`${this.props.activeEntry}`)
     axios
       .put(
         `/api/jobs/updateclock/${
@@ -95,7 +95,7 @@ export class JobView extends React.Component {
         }/${job.job_id}/false`
       )
       .then(result => {
-        console.log(result.data);
+        console.log(result.data[0]);
         this.props.getClockedInJob(this.props.user.user_id);
         this.props.getOffTheClockJobs(this.props.user.user_id);
         this.updateEntry(this.props.activeEntry);
@@ -150,7 +150,7 @@ export class JobView extends React.Component {
       start_time: start_time,
       billed: false
     };
-    console.log(entry)
+    
 
     this.props.addActiveEntry(entry);
   }
