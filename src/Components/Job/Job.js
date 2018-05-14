@@ -39,6 +39,9 @@ export class Job extends React.Component {
   convertToTime(strg) {
     let newTimeStrg = '';
 
+    if(strg === null) {
+      return ''
+    }
     let arr = strg.split(':')
     let timePeriod = ''
     let hr = ''
@@ -50,6 +53,7 @@ export class Job extends React.Component {
         hr =arr[0]
         timePeriod = 'AM'
     }
+    
     return  `${hr}:${arr[1]}:${arr[2]} ${timePeriod}`
 }
 

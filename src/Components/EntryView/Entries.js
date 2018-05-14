@@ -37,6 +37,7 @@ export class Entries extends React.Component {
     this.formatTime = this.formatTime.bind(this);
     this.calculateDuration = this.calculateDuration.bind(this);
     this.updateEntry = this.updateEntry.bind(this)
+    
   }
 
   handleInputChange(e) {
@@ -122,12 +123,35 @@ export class Entries extends React.Component {
     this.handleModalClose();
   }
 
+  
+  convertToTime(strg) {
+    let newTimeStrg = '';
+
+    if(strg === null) {
+      return ''
+    }
+    let arr = strg.split(':')
+    let timePeriod = ''
+    let hr = ''
+    let minute = ''
+    if(Number(arr[0]) > 12 ) {
+        timePeriod = 'PM'
+        hr = String(Number(arr[0]) - 12)
+    } else {
+        hr =arr[0]
+        timePeriod = 'AM'
+    }
+    
+    return  `${hr}:${arr[1]}:${arr[2]} ${timePeriod}`
+}
+
   render() {
     const style = {backgroundColor: "#6B6E70"};
 
     const styleButton = {
       color: "#86C232",
       backgroundColor: "#222629",
+      marginLeft: '15px'
     };
 
     const stylePaper = {
@@ -137,13 +161,9 @@ export class Entries extends React.Component {
 
     const buttonStyle1 = {
       labelColor : "white",
-      backgroundColor: "#86C232"
+      backgroundColor: "#86C232",
+      
     };
-
-    const buttonStyle2 = {
-      labelColor : "white",
-      backgroundColor: "#86C232"
-    }
 
     const overlayStyle = {backgroundColor: "rgba(0,0,0, .89)"}
 
@@ -151,12 +171,13 @@ export class Entries extends React.Component {
     return (
       <div>
         <Paper style={style} zDepth={1} className="enteries-container">
-          <p>{this.props.jobname}</p>
-          <p>{this.props.clientName}</p>
-          <p>{moment(this.props.entry.entry_date).format('MM/DD/YYYY')}</p>
-          <p>{this.props.startTime}</p>
-          <p>{this.props.endTime}</p>
-          <p>{numeral(this.props.duration).format('0,0.0')} Hrs</p>
+          <p style={{width: '15%', textAlign:'left'}}>{this.props.jobname}</p>
+          <p style={{width: '25%', textAlign:'left'}}>{this.props.clientName}</p>
+          <p style={{width: '6%', textAlign:'right'}}>{moment(this.props.entry.entry_date).format('MM/DD/YYYY')}</p>
+          <p style={{width: '6%', textAlign:'right'}}>{this.props.startTime}</p>
+          <p style={{width: '6%', textAlign:'right'}}>{this.props.endTime}</p>
+          <p style={{width: '5%', textAlign:'right'}}>{numeral(this.props.duration).format('0,0.0')} Hrs</p>
+          <div divClass='entries-buttons'>
           <FlatButton style={styleButton} onClick={() => this.handleModalOpen()} label="EDIT">
             <Dialog modal={true} open={this.state.openModal} contentStyle={{ width: "fit-content" }} className='entries-edit-modal' paperProps = {stylePaper} overlayStyle={overlayStyle}>
               <h1>{this.props.clientName}</h1>
@@ -219,7 +240,7 @@ export class Entries extends React.Component {
           style={styleButton}
             onClick={() => this.props.delete(this.props.entry)}
             label="DELETE"
-          />
+          /></div>
         </Paper>
       </div>
     )

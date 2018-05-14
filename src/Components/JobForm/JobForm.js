@@ -161,7 +161,7 @@ export class JobForm extends React.Component {
         >
           <ContentAdd className='content-add'/>
           <Dialog modal={true} open={this.state.modalOpen}
-          contentStyle={{ width: "fit-content", height: 'fit-content'}}
+          contentStyle={{ width: "fit-content", height: 'fit-content', minWidth:'400px'}}
           paperProps = {stylePaper}
           overlayStyle={overlayStyle}
           autoScrollBodyContent={true}

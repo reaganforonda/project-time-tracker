@@ -216,7 +216,8 @@ export class EntryForm extends React.Component {
         >
           <ContentAdd />
           <Dialog 
-          contentStyle={{ width: "fit-content" }}
+          
+          contentStyle={{ width: "fit-content", minWidth:'400px' }}
           paperProps = {stylePaper}
           overlayStyle={overlayStyle}
           autoScrollBodyContent={true}
@@ -283,9 +284,9 @@ export class EntryForm extends React.Component {
               />
 
               <div className='entry-form-buttons'>
-                <RaisedButton backgroundColor={buttonStyle1.backgroundColor} labelColor={buttonStyle1.labelColor} label="CANCEL" onClick={() => this.handleCancelModalClick()}/>
+                <RaisedButton style={{backgroundColor : '#86C232'}} backgroundColor={buttonStyle1.backgroundColor} labelColor={buttonStyle1.labelColor} label="CANCEL" onClick={() => this.handleCancelModalClick()}/>
 
-                <RaisedButton backgroundColor={buttonStyle2.backgroundColor} labelColor={buttonStyle2.labelColor} onClick={() => this.handleAddEntry()} label="CONFIRM" />
+                <RaisedButton style={{backgroundColor : '#86C232'}} backgroundColor={buttonStyle2.backgroundColor} labelColor={buttonStyle2.labelColor} onClick={() => this.handleAddEntry()} label="CONFIRM" />
               </div>
             
           </Dialog>
