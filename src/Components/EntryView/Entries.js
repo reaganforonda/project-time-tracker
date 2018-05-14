@@ -181,7 +181,7 @@ export class Entries extends React.Component {
           <p style={{width: '6%', textAlign:'right'}}>{this.props.startTime}</p>
           <p style={{width: '6%', textAlign:'right'}}>{this.props.endTime}</p>
           <p style={{width: '5%', textAlign:'right'}}>{numeral(this.props.duration).format('0,0.0')} Hrs</p>
-          <div divClass='entries-buttons'>
+          <div className='entries-buttons'>
           <FlatButton style={styleButton} onClick={() => this.handleModalOpen()} label="EDIT">
             <Dialog modal={true} open={this.state.openModal} contentStyle={{ width: "fit-content" }} className='entries-edit-modal' paperProps = {stylePaper} overlayStyle={overlayStyle}>
               <h1>{this.props.clientName}</h1>
