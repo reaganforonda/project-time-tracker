@@ -59,7 +59,6 @@ export class BillingItem extends React.Component {
 
   handleSetInvoiceNumber() {
     let lastid = this.props.lastInvoiceId;
-    console.log(this.props.lastInvoiceId);
     this.setState({ lastInvID: lastid });
   }
 

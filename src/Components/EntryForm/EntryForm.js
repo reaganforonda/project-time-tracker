@@ -82,7 +82,7 @@ export class EntryForm extends React.Component {
 
   formatTime(date) {
     let formatedTime = `${date.getHours()}:${date.getMinutes()}`;
-    console.log(formatedTime);
+    
     return formatedTime;
   }
 

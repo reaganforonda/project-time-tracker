@@ -86,7 +86,7 @@ export class Clients extends React.Component {
         long : long
       };
 
-      console.log(client);
+      
 
     axios
       .put(

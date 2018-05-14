@@ -150,7 +150,6 @@ export default function reduce(state = BILLING_INITIAL_STATE, action) {
       return Object.assign({}, state, { billing: action.payload });
 
     case SELECT_FOR_BILLING:
-      console.log(action.payload);
       return Object.assign({}, state, { selectedJob: action.payload });
 
     case GET_LAST_INVOICE_ID + "_FULFILLED":

@@ -122,8 +122,6 @@ export function getAllEntries(userid) {
       console.log(e);
     });
 
-    console.log(enteries)
-
   return {
     type: GET_ALL_ENTRIES,
     payload: enteries

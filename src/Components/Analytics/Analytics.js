@@ -40,8 +40,6 @@ export class Analytics extends React.Component {
       label: label
     };
 
-    console.log(dataSet);
-
     this.setState({ dataSet1: dataSet });
   }
 

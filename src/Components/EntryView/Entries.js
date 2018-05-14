@@ -47,13 +47,13 @@ export class Entries extends React.Component {
   handleModalOpen() {
     this.setState({ openModal: true });
     this.props.getEntryForEdit(this.props.user.user_id, this.props.entry.job_id, this.props.entry.entry_id)
-    console.log(this.props.entryForEdit)
+    
   }
 
   handleModalClose() {
     this.setState({ openModal: false });
     this.props.getAllEntries(this.props.user.user_id);
-    console.log(this.props.entries)
+    
   }
 
   handleDateChange(e, date) {
@@ -62,7 +62,7 @@ export class Entries extends React.Component {
 
   handleStartTimeChange(e, date ) {
     this.setState({startTime : date})
-    console.log(date);
+    
   }
 
   handleEndTimeChange(e, date ) {
@@ -71,7 +71,7 @@ export class Entries extends React.Component {
 
   formatTime(date) {
     let formatedTime = `${date.getHours()}:${date.getMinutes()}`;
-    console.log(formatedTime);
+    
     return formatedTime;
   }
 

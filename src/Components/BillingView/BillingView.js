@@ -196,7 +196,7 @@ export class BillingView extends React.Component {
         "Content-type": file.type
       }
     };
-    console.log(upload);
+    
 
     axios
       .post(`/api/s3/upload`, upload)
@@ -213,7 +213,7 @@ export class BillingView extends React.Component {
               submitDisabled: true
             });
             let awsFileName = { key: upload.filename };
-            console.log(awsFileName);
+            
             axios
               .put(
                 `/api/billing/update/invoice/${this.props.user.user_id}/${

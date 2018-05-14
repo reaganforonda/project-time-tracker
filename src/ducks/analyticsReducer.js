@@ -61,7 +61,7 @@ export function getInProgressCount(userid) {
       console.log(`Error at reducer while trying to access server: ${e}`);
     });
 
-  console.log(count);
+  
 
   return {
     type: GET_IN_PROGRESS_COUNT,
