@@ -13,13 +13,13 @@ const INITIAL_STATE = {
   state: "",
   country: "",
   website: "",
-  zip: ""
+  zip: "",
+  loading : false
 };
 
 const GET_USER_INFO = "GET_USER_INFO";
 const UPDATE_FIRST_NAME = "UPDATE_FIRST_NAME";
 const UPDATE_LAST_NAME = "UPDATE_LAST_NAME";
-
 const UPDATE_EMAIL = "UPDATE_EMAIL";
 const UPDATE_PHONE = "UDPATE_PHONE";
 const UPDATE_PICTURE = "UPDATE_PICTURE";
@@ -143,8 +143,12 @@ export function updateUserInfo(user_id, user) {
 
 export default function reducer(state = INITIAL_STATE, action) {
   switch (action.type) {
+
+    case GET_USER_INFO + "_PENDING":
+    return Object.assign({}, state, {loading : true});
+
     case GET_USER_INFO + "_FULFILLED":
-      return Object.assign({}, state, { user: action.payload });
+      return Object.assign({}, state, {loading: false, user: action.payload });
 
     case UPDATE_FIRST_NAME:
       return Object.assign({}, state, { first_name: action.payload });

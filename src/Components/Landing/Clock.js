@@ -10,6 +10,8 @@ export default class Clock extends React.Component {
     this.numberToBinary = this.numberToBinary.bind(this);
     this.numberAsBinaryArrayPair = this.numberAsBinaryArrayPair.bind(this);
   }
+
+  // Convert base 10 to binary
   numberToBinary(base10Number) {
     const base2Values = [8, 4, 2, 1];
     let output = [0, 0, 0, 0];
@@ -23,19 +25,19 @@ export default class Clock extends React.Component {
     });
     return output;
   }
-      
-      numberAsBinaryArrayPair(number) {
-        const pair = [];
-        if(number < 10) {
-          pair[0] = this.numberToBinary();
-          pair[1] = this.numberToBinary(number);
-        } else {
-          const numberAsArray = String(number).split('');
-          pair[0] = this.numberToBinary(parseInt(numberAsArray[0], 10));
-          pair[1] = this.numberToBinary(parseInt(numberAsArray[1], 10));
-        }
-        return pair;
-      }
+
+  numberAsBinaryArrayPair(number) {
+    const pair = [];
+    if(number < 10) {
+      pair[0] = this.numberToBinary();
+      pair[1] = this.numberToBinary(number);
+    } else {
+      const numberAsArray = String(number).split('');
+      pair[0] = this.numberToBinary(parseInt(numberAsArray[0], 10));
+      pair[1] = this.numberToBinary(parseInt(numberAsArray[1], 10));
+    }
+      return pair;
+  }
   
   componentDidMount() {
     setInterval(function() {
@@ -72,7 +74,7 @@ const BinaryDigitGroup = ({group}) =>
       <div className="clock-container">
         <div className="clock">
          {
-           this.state.digits.map(digit => <BinaryDigitGroup group={digit} />)
+           this.state.digits.map((digit,index) => <BinaryDigitGroup key={digit+index} group={digit} />)
            
          }
         </div>

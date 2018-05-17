@@ -1,18 +1,14 @@
 # PROJECT TITLE
-TODO:
+On the Clock
 ___
 ## Project Summary
-TODO:
+On the Clock is a time management and billing application designed for freelancers or independent contractors that need to record and bill their working hours to their clients.
 ___
 ## Motivation
-TODO:
 This project is to demonstrate knowledge of creating a React, single-page full stack web application.  This project is also for demonstrating the ability to impliment different tech and frameworks.
 ___
-## Screenshots
-TODO:
-___
+
 ## Tech/Frameworks Used
-TODO:
 + React.js
 + React Redux
 + Postgres SQL
@@ -20,19 +16,13 @@ TODO:
 + React S3 Uploader
 + Material-UI
 + Sass
-
-___
-## Features
-TODO: 
-___
-## Installation
-TODO:
++ Nodemailer
 ___
 ## Authors
 Created by Reagan Foronda - Year of the Dog (2018)
 ___
 ## Acknowledgements
-TODO:
+Thanks to DevMountain mentors, instructors, and WPR35 with any assitance while implementing this project.
 ___
 ## License
 ___

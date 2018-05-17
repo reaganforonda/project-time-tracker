@@ -95,6 +95,7 @@ export class UserView extends React.Component {
       labelColor : "white",
       backgroundColor: "#86C232"
     };
+    
     return (
       <div className='user-view'>
         <div>

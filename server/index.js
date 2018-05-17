@@ -159,9 +159,7 @@ app.get("/api/jobs/clockin/:userid/", jobsController.getClockedInJobs);
 app.get("/api/jobs/clockout/:userid/", jobsController.getClockedOutJobs);
 app.get("/api/jobs/:userId", jobsController.getJobsByUserID);
 app.get("/api/jobs/billing/:userid", jobsController.getJobsForBilling);
-
 app.post("/api/job", jobsController.addJob);
-
 app.put(
   "/api/jobs/billing/update/:userid/:jobid",
   jobsController.updateJobsBilling

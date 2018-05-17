@@ -1,10 +1,8 @@
 import React from "react";
 import Drawer from "material-ui/Drawer";
-import MenuItem from "material-ui/MenuItem";
 import { List, ListItem } from "material-ui";
 import Avatar from "material-ui/Avatar";
 import { withRouter } from "react-router-dom";
-
 import { connect } from "react-redux";
 
 export function Menu(props) {
@@ -64,6 +62,8 @@ export function Menu(props) {
     }
   }
 
+  const onHoverColor = '#86C232';
+
   const listItemStyle = {
     color: "white",
     textAlign: "center",
@@ -72,9 +72,8 @@ export function Menu(props) {
   };
 
   return (
-    <div className="menu">
       <Drawer
-        containerStyle={{ backgroundColor: "black" }}
+        containerStyle={{ backgroundColor: "#000000" }}
         docked={true}
         width={200}
         open={true}
@@ -82,49 +81,48 @@ export function Menu(props) {
       >
         <div className="avatar-container">
           <Avatar src={props.img} size={75} onClick={navToUserView} />
-          <p style={{color: '#86C232', marginBottom:'5%', marginTop:'5%'}}>{props.user.user_name}</p>
+          <p>{props.user.user_name}</p>
         </div>
 
         <List>
           <ListItem
             style={listItemStyle}
-            hoverColor={"#86C232"}
+            hoverColor={onHoverColor}
             onClick={navToDashboard}
             primaryText="ANALYTICS"
           />
           <ListItem
-            hoverColor={"#86C232"}
+            hoverColor={onHoverColor}
             style={listItemStyle}
             onClick={navToJobView}
             primaryText="JOBS"
           />
           <ListItem
-            hoverColor={"#86C232"}
+            hoverColor={onHoverColor}
             style={listItemStyle}
             onClick={navToEntryView}
             primaryText="ENTRIES"
           />
           <ListItem
-            hoverColor={"#86C232"}
+            hoverColor={onHoverColor}
             style={listItemStyle}
             onClick={navToClientView}
             primaryText="CLIENTS"
           />
           <ListItem
-            hoverColor={"#86C232"}
+            hoverColor={onHoverColor}
             style={listItemStyle}
             onClick={navToBillingView}
             primaryText="BILLING"
           />
           <ListItem
-            hoverColor={"#86C232"}
+            hoverColor={onHoverColor}
             style={listItemStyle}
             onClick={navToLogout}
             primaryText="LOGOUT"
           />
         </List>
       </Drawer>
-    </div>
   );
 }
 

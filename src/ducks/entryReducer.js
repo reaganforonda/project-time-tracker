@@ -33,7 +33,6 @@ const UPDATE_ACTIVE_ENTRY = "UPDATE_ACTIVE_ENTRY";
 const GET_ENTRY_FOR_EDIT = "GET_ENTRY_FOR_EDIT";
 
 export function addActiveEntry(entry) {
-  console.log(entry);
   let newEntry = axios
     .post(`/api/entry/add`, entry)
     .then(result => {

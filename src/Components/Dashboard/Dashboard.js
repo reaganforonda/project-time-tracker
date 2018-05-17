@@ -4,6 +4,7 @@ import { withRouter, Switch, Route } from "react-router-dom";
 import { getUser } from "../../ducks/userReducer";
 import {getBilling} from '../../ducks/billingReducer';
 import { connect } from "react-redux";
+import {CircularProgress} from 'material-ui'
 import JobView from "../JobView/JobView";
 import EntryView from "../EntryView/EntryView";
 import ClientsView from "../ClientView/ClientView";
@@ -41,6 +42,9 @@ export class Dashboard extends React.Component {
         </div>
         
         <div className="dashboard-container">
+        {
+          this.props.loading ? (<div className='loading-circle'><CircularProgress color='#86C232' size={200}/><div className='loading-text'>Loading</div></div>) : null 
+        }
           <Switch>
             <Route path="/dashboard/jobview" component={JobView} />
             <Route path="/dashboard/entryview" component={EntryView} />
@@ -58,7 +62,8 @@ export class Dashboard extends React.Component {
 
 function mapStateToProps(state) {
   return {
-    user: state.userReducer.user
+    user: state.userReducer.user,
+    loading : state.userReducer.loading
   };
 }
 
