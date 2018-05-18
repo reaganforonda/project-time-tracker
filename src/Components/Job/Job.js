@@ -109,7 +109,7 @@ export class Job extends React.Component {
             {!this.props.clockedIn ? (
               <RaisedButton
                 backgroundColor={"#86C232"}
-                labelColor={"black"}
+                labelColor={"#000000"}
                 onClick={() => this.props.clockIn(this.props.job)}
                 className="job-button"
                 label="CLOCK IN"
@@ -126,7 +126,7 @@ export class Job extends React.Component {
             )}
             <RaisedButton
               onClick={() => this.handleViewEnteries()}
-              backgroundColor={"black"}
+              backgroundColor={"#000000"}
                 labelColor={"white"}
               className="job-button"
               label="ENTRIES"

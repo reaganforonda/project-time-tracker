@@ -39,10 +39,11 @@ export class JobView extends React.Component {
     this.addNewEntry = this.addNewEntry.bind(this);
   }
 
-  componentDidMount() {
-    this.props.getOffTheClockJobs(this.props.user.user_id);
-    this.props.getClockedInJob(this.props.user.user_id);
+componentWillReceiveProps(nextProps) {
+  if(this.props.offTheClockJobs !== nextProps.offTheClockJobs){
+    this.props.getOffTheClockJobs(this.props.user.user_id)
   }
+}
 
   handleAddJobClick() {
     this.setState({ modalOpen: true });
@@ -87,7 +88,7 @@ export class JobView extends React.Component {
   }
 
   handleClockOut(job) {
-    console.log(`${this.props.activeEntry}`)
+
     axios
       .put(
         `/api/jobs/updateclock/${
@@ -140,7 +141,7 @@ export class JobView extends React.Component {
     let time = this.getClockTime();
     this.props.updateStartTime(time);
     let entry_date = this.formatDate(time);
-    console.log(entry_date)
+
     let start_time = this.formatTime(time);
     let entry = {
       user_id: this.props.user.user_id,
@@ -220,7 +221,7 @@ export class JobView extends React.Component {
         </div>
 
         <div className="floating-action">
-          <JobForm getAllActiveJobs={this.getAllActiveJobs} />
+          <JobForm />
         </div>
         </div> : this.props.history.push('/')}
       </div>

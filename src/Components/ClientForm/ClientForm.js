@@ -188,7 +188,7 @@ export class ClientForm extends React.Component {
               underlineFocusStyle={{borderColor: "#86C232" }}
                 floatingLabelStyle={{color:'#86C232'}}
                 inputStyle={{color: 'white'}}
-                errorStyle={{color : 'black', fontSize:'10px'}}
+                errorStyle={{color : '#000000', fontSize:'10px'}}
                 errorText="Required"
                 type="text"
                 value={this.state.clientName}

@@ -12,9 +12,8 @@ import {
   SelectField,
   Snackbar
 } from "material-ui";
-
 import { connect } from "react-redux";
-import { getAllActiveJobs, getOffTheClockJobs } from "../../ducks/jobReducer";
+import { getOffTheClockJobs } from "../../ducks/jobReducer";
 
 export class JobForm extends React.Component {
   constructor(props) {
@@ -110,7 +109,7 @@ export class JobForm extends React.Component {
         console.log(`${e}`);
       });
 
-    this.props.getAllActiveJobs(this.props.user.user_id);
+    // this.props.getAllActiveJobs(this.props.user.user_id);
   }
 
   handleOnConfirm() {
@@ -152,7 +151,7 @@ export class JobForm extends React.Component {
     }
 
     const buttonStyle1 = {
-      labelColor : "white",
+      labelColor : "#ffffff",
       backgroundColor: "#86C232"
     };
 
@@ -174,7 +173,7 @@ export class JobForm extends React.Component {
           autoScrollBodyContent={true}
           >
             <SelectField
-            labelStyle={{color: "white"}}
+            labelStyle={{color: "#ffffff"}}
             floatingLabelStyle={{color:'#86C232'}}
             fullWidth={true}
               hintText="Select Client"
@@ -188,7 +187,7 @@ export class JobForm extends React.Component {
             </SelectField>
             <form className="job-entry-form">
               <TextField
-              inputStyle={{color: 'white'}}
+              inputStyle={{color: "#ffffff"}}
               fullWidth={true}
               floatingLabelStyle={{color:'#86C232'}}
               underlineFocusStyle={{borderColor: "#86C232" }}
@@ -199,7 +198,7 @@ export class JobForm extends React.Component {
                 floatingLabelText="Job Name"
               />
               <TextField
-              inputStyle={{color: 'white'}}
+              inputStyle={{color: "#ffffff"}}
               fullWidth={true}
               floatingLabelStyle={{color:'#86C232'}}
               underlineFocusStyle={{borderColor: "#86C232" }}
@@ -212,8 +211,8 @@ export class JobForm extends React.Component {
 
               <DatePicker
               fullWidth={true}
-              textFieldStyle={{color: 'white'}}
-              inputStyle={{color: 'white'}}
+              textFieldStyle={{color: "#ffffff"}}
+              inputStyle={{color: "#ffffff"}}
               floatingLabelStyle={{color:'#86C232'}}
               underlineFocusStyle={{borderColor: "#86C232" }}
                 onChange={this.handleDateChange}
@@ -223,7 +222,7 @@ export class JobForm extends React.Component {
               />
 
               <TextField
-              inputStyle={{color: 'white'}}
+              inputStyle={{color: "#ffffff"}}
               fullWidth={true}
               floatingLabelStyle={{color:'#86C232'}}
               underlineFocusStyle={{borderColor: "#86C232" }}
@@ -274,4 +273,4 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps, { getAllActiveJobs, getOffTheClockJobs })(JobForm);
+export default connect(mapStateToProps, {getOffTheClockJobs })(JobForm);

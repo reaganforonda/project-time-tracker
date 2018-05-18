@@ -26,6 +26,7 @@ export default class Clock extends React.Component {
     return output;
   }
 
+  
   numberAsBinaryArrayPair(number) {
     const pair = [];
     if(number < 10) {

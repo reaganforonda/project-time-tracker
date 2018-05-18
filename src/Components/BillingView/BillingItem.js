@@ -135,7 +135,7 @@ export class BillingItem extends React.Component {
           
           <div className='bill-item-button'>
           <FlatButton
-            style={{background : 'black'}}
+            style={{background : '#000000'}}
             labelStyle={{color: '#86C232'}}
             onClick={() => this.handleOpenModal()}
             label="Select For Billing"

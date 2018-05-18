@@ -516,7 +516,7 @@ export class BillingView extends React.Component {
                     <TextField
                     inputStyle={{color: 'white'}}
                     floatingLabelStyle={{color:'#86C232'}}
-                      errorStyle={{color : 'black', fontSize:'10px'}}
+                      errorStyle={{color : '#000000', fontSize:'10px'}}
                       name="toEmail"
                       value={this.state.toEmail}
                       errorText="Required"
@@ -529,7 +529,7 @@ export class BillingView extends React.Component {
                     <TextField
                     floatingLabelStyle={{color:'#86C232'}}
                     inputStyle={{color: 'white'}}
-                    errorStyle={{color : 'black', fontSize:'10px'}}
+                    errorStyle={{color : '#000000', fontSize:'10px'}}
                       name="fromEmail"
                       floatingLabelText="FROM:"
                       value={this.state.fromEmail}

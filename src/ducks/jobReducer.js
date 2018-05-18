@@ -18,7 +18,9 @@ const JOB_INITIAL_STATE = {
   clockedIn: false,
   newJob: {},
   open: false,
-  active : {}
+  active : {},
+  clockInJobLoading : true,
+  offTheClockJobsLoading: true,
 };
 
 const UPDATE_CLOCK_IN_TIME = "UPDATE_CLOCK_IN_TIME";
@@ -170,11 +172,17 @@ export default function jobReducer(state = JOB_INITIAL_STATE, action) {
     case UPDATE_OFF_THE_CLOCK_JOBS:
       return Object.assign({}, state, { offTheClockJobs: action.payload });
 
+      case GET_OFF_THE_CLOCK_JOBS + "_PENDING":
+      return Object.assign({}, state, {offTheClockJobsLoading: true  });  
+
     case GET_OFF_THE_CLOCK_JOBS + "_FULFILLED":
-      return Object.assign({}, state, { offTheClockJobs: action.payload });
+      return Object.assign({}, state, { offTheClockJobs: action.payload, offTheClockJobsLoading : false });
+
+      case GET_CLOCKED_IN_JOB +"_PENDING":
+      return Object.assign({}, state, {clockInJobLoading: true})
 
       case GET_CLOCKED_IN_JOB +"_FULFILLED":
-      return Object.assign({}, state, {jobOnClock : action.payload})
+      return Object.assign({}, state, {clockInJobLoading: false, jobOnClock : action.payload})
 
       case UPDATE_START_TIME :      
       return Object.assign({}, state, {clockInTime : action.payload})
