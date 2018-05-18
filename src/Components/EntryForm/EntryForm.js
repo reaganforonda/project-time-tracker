@@ -30,7 +30,8 @@ export class EntryForm extends React.Component {
       jobs: [],
       job: "",
       edit: false,
-      snackbar : false
+      snackbar : false,
+      disableConfirm : true
     };
 
     this.handleTextChange = this.handleTextChange.bind(this);
@@ -48,6 +49,12 @@ export class EntryForm extends React.Component {
     this.handleAddEntry = this.handleAddEntry.bind(this);
     this.handleRounding = this.handleRounding.bind(this);
     this.handleRequestCloseSnackbar = this.handleRequestCloseSnackbar.bind(this);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if(this.props.allJobs !== nextProps.allJobs) {
+      this.getAllActiveJobs(this.props.user.user_id)
+    }
   }
 
   handleRequestCloseSnackbar(){
@@ -72,6 +79,9 @@ export class EntryForm extends React.Component {
 
   handleTimeSelectEnd(e, date) {
     this.setState({ endTime: date });
+    if(this.state.endTime !== '') {
+      this.setState({disableConfirm : false})
+    }
   }
 
   // Formate Datepicker's date to something for useable
@@ -196,6 +206,8 @@ export class EntryForm extends React.Component {
     const overlayStyle = {
       backgroundColor: "rgba(0,0,0, .89)"
     }
+
+    console.log(this.props.allJobs)
     return (
       <div>
         <FloatingActionButton
@@ -278,7 +290,7 @@ export class EntryForm extends React.Component {
               <div className='entry-form-buttons'>
                 <RaisedButton style={{backgroundColor : '#86C232'}} backgroundColor={buttonStyle1.backgroundColor} labelColor={buttonStyle1.labelColor} label="CANCEL" onClick={() => this.handleCancelModalClick()}/>
 
-                <RaisedButton style={{backgroundColor : '#86C232'}} backgroundColor={buttonStyle2.backgroundColor} labelColor={buttonStyle2.labelColor} onClick={() => this.handleAddEntry()} label="CONFIRM" />
+                <RaisedButton disabled={this.state.disableConfirm} style={{backgroundColor : '#86C232'}} backgroundColor={buttonStyle2.backgroundColor} labelColor={buttonStyle2.labelColor} onClick={() => this.handleAddEntry()} label="CONFIRM" />
               </div>
             
           </Dialog>
