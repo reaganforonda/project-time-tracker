@@ -16,9 +16,9 @@ export class ClientView extends React.Component {
     };
   }
 
-  componentDidMount() {
-    this.props.getAllClients(this.props.user.user_id);
-  }
+  // componentDidMount() {
+  //   this.props.getAllClients(this.props.user.user_id);
+  // }
 
   render() {
     let clientArr = this.props.clients.map(client => {

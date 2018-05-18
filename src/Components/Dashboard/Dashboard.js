@@ -16,6 +16,8 @@ import {  getInProgressCount,
   getInProgressTotals}  from '../../ducks/analyticsReducer'
 
 import {getClockedInJob, getOffTheClockJobs} from '../../ducks/jobReducer'
+import {getAllClients} from '../../ducks/clientReducer'
+import {getAllEntries} from '../../ducks/entryReducer'
 
 export class Dashboard extends React.Component {
   constructor(props) {
@@ -44,6 +46,8 @@ export class Dashboard extends React.Component {
   loadInRedux(user_id){
     this.props.getOffTheClockJobs(user_id)
     this.props.getClockedInJob(user_id)
+    this.props.getAllClients(user_id)
+    this.props.getAllEntries(user_id)
     
   }
 
@@ -87,5 +91,5 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps, { getUser, getClockedInJob, getBilling, getOffTheClockJobs, getInProgressCount,
+export default connect(mapStateToProps, { getUser, getAllEntries ,getAllClients, getClockedInJob, getBilling, getOffTheClockJobs, getInProgressCount,
   getInProgressTotals })(withRouter(Dashboard));
