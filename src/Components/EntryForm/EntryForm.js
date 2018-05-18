@@ -44,17 +44,10 @@ export class EntryForm extends React.Component {
     this.calculateDuration = this.calculateDuration.bind(this);
     this.handleResetState = this.handleResetState.bind(this);
     this.handleAddEntry = this.handleAddEntry.bind(this);
-    this.getAllJobs = this.getAllJobs.bind(this);
     this.hanldeJobSelect = this.hanldeJobSelect.bind(this);
     this.handleAddEntry = this.handleAddEntry.bind(this);
     this.handleRounding = this.handleRounding.bind(this);
     this.handleRequestCloseSnackbar = this.handleRequestCloseSnackbar.bind(this);
-  }
-
-  
-
-  componentDidMount() {
-    this.props.getAllActiveJobs(this.props.user.user_id)
   }
 
   handleRequestCloseSnackbar(){
@@ -161,18 +154,6 @@ export class EntryForm extends React.Component {
     this.handleResetState();
   }
 
-  getAllJobs() {
-    let userId = this.props.user.user_id;
-    axios
-      .get(`/api/jobs/${userId}`)
-      .then(jobs => {
-        this.setState({ jobs: jobs.data });
-      })
-      .catch(e => {
-        console.log(`Error: ${e}`);
-      });
-  }
-
   hanldeJobSelect = (event, index, value) => {
     this.setState({ job: value });
   };
@@ -248,6 +229,7 @@ export class EntryForm extends React.Component {
               </SelectField>
               <DatePicker 
               fullWidth={true}
+              minDate={new Date(this.state.job.start_date)}
               textFieldStyle={{color: 'white'}}
               inputStyle={{color: 'white'}}
               floatingLabelStyle={{color:'#86C232'}}

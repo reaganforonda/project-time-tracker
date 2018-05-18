@@ -18,9 +18,14 @@ export class EntryView extends React.Component {
     this.handleDeleteEntry = this.handleDeleteEntry.bind(this);
   }
 
-  // componentDidMount() {
-  //   this.props.getAllEntries(this.props.user.user_id)
-  // }
+  componentWillReceiveProps(nextProps) {
+    console.log(this.props.allEntries)
+    console.log(nextProps.allEntries)
+    if(this.props.allEntries !== nextProps.allEntries) {
+      this.props.getAllEntries(this.props.user.user_id)
+    }
+  }
+
 
   handleDeleteEntry(entry) {
     axios
@@ -33,6 +38,7 @@ export class EntryView extends React.Component {
         console.log(`Error while deleting entry: ${e}`);
       });
   }
+ 
 
   render() {
     let entryArr = this.props.allEntries.map(entry => {
