@@ -4,7 +4,7 @@ import { withRouter, Switch, Route } from "react-router-dom";
 import { getUser } from "../../ducks/userReducer";
 import { getBilling } from "../../ducks/billingReducer";
 import { connect } from "react-redux";
-import { CircularProgress } from "material-ui";
+import { Dialog, CircularProgress } from "material-ui";
 import JobView from "../JobView/JobView";
 import EntryView from "../EntryView/EntryView";
 import ClientsView from "../ClientView/ClientView";
@@ -66,8 +66,13 @@ export class Dashboard extends React.Component {
         <div className="dashboard-container">
           {this.props.userLoading ? (
             <div className="loading-circle">
-              <CircularProgress color="#86C232" size={200} />
+            <Dialog overlayStyle={{backgroundColor: '#000000'}} paperProps={{style:{backgroundColor: '#000000'}}} open={true}>
+            <div style={{display: 'flex', flexDirection: 'column', justifyContent:'center', alignItems:'center'}}>
+            <CircularProgress color="#86C232" size={200} />
               <div className="loading-text">LOADING USER</div>
+            </div>
+              
+              </Dialog>
             </div>
           ) : null}
 
