@@ -31,6 +31,16 @@ const GET_HRS = "GET_HRS";
 const ADD_ACTIVE_ENTRY = "ADD_ACTIVE_ENTRY";
 const UPDATE_ACTIVE_ENTRY = "UPDATE_ACTIVE_ENTRY";
 const GET_ENTRY_FOR_EDIT = "GET_ENTRY_FOR_EDIT";
+const DELETE_ENTRY = 'DELETE_ENTRY';
+
+
+export function deleteEntry(entryid, userid) {
+  axios.delete(`/api/entry/delete/${userid}/${entryid}`).then(result=> {
+    console.log(result.data)
+  }).catch((e) => {
+    console.log(`Error while deleting entry: ${e}`)
+  })
+}
 
 export function addActiveEntry(entry) {
   let newEntry = axios
@@ -233,6 +243,9 @@ export default function entryReducer(state = ENTRY_INTIAL_STATE, action) {
 
     case RESET_STATE:
       return Object.assign({}, action.payload);
+
+      // case DELETE_ENTRY: TODO: EDIT
+      // return Object.assign({}, action.payload)
 
     case GET_TOTAL + "_FULFILLED":
       return Object.assign({}, state, { total: action.payload });

@@ -2,22 +2,27 @@ import React from "react";
 import Menu from "../Menu/Menu";
 import { withRouter, Switch, Route } from "react-router-dom";
 import { getUser } from "../../ducks/userReducer";
-import {getBilling} from '../../ducks/billingReducer';
+import { getBilling } from "../../ducks/billingReducer";
 import { connect } from "react-redux";
-import {CircularProgress} from 'material-ui'
+import { CircularProgress } from "material-ui";
 import JobView from "../JobView/JobView";
 import EntryView from "../EntryView/EntryView";
 import ClientsView from "../ClientView/ClientView";
 import BillingView from "../BillingView/BillingView";
 import UserView from "../User/UserView";
 import InvoiceView from "../InvoiceView/InvoiceView";
-import Analytics from '../Analytics/Analytics'
-import {  getInProgressCount,
-  getInProgressTotals}  from '../../ducks/analyticsReducer'
-
-import {getClockedInJob, getAllActiveJobs, getOffTheClockJobs} from '../../ducks/jobReducer'
-import {getAllClients} from '../../ducks/clientReducer'
-import {getAllEntries} from '../../ducks/entryReducer'
+import Analytics from "../Analytics/Analytics";
+import {
+  getInProgressCount,
+  getInProgressTotals
+} from "../../ducks/analyticsReducer";
+import {
+  getClockedInJob,
+  getAllActiveJobs,
+  getOffTheClockJobs
+} from "../../ducks/jobReducer";
+import { getAllClients } from "../../ducks/clientReducer";
+import { getAllEntries } from "../../ducks/entryReducer";
 
 export class Dashboard extends React.Component {
   constructor(props) {
@@ -36,20 +41,18 @@ export class Dashboard extends React.Component {
     this.setState({ pathname: this.props.location.pathname });
   }
 
-  componentWillReceiveProps(nextProps){
-    if(this.props.user.user_id !== nextProps.user.user_id){
-      this.loadInRedux(nextProps.user.user_id)
+  componentWillReceiveProps(nextProps) {
+    if (this.props.user.user_id !== nextProps.user.user_id) {
+      this.loadInRedux(nextProps.user.user_id);
     }
   }
 
-
-  loadInRedux(user_id){
-    this.props.getOffTheClockJobs(user_id)
-    this.props.getClockedInJob(user_id)
-    this.props.getAllClients(user_id)
-    this.props.getAllEntries(user_id)
-    this.props.getAllActiveJobs(user_id)
-    
+  loadInRedux(user_id) {
+    this.props.getOffTheClockJobs(user_id);
+    this.props.getClockedInJob(user_id);
+    this.props.getAllClients(user_id);
+    this.props.getAllEntries(user_id);
+    this.props.getAllActiveJobs(user_id);
   }
 
   render() {
@@ -59,12 +62,14 @@ export class Dashboard extends React.Component {
         <div className="menu-section">
           <Menu img={picture} userName={user_name} />
         </div>
-        
+
         <div className="dashboard-container">
-        {
-          
-          (this.props.userLoading) ? (<div className='loading-circle'><CircularProgress color='#86C232' size={200}/><div className='loading-text'>LOADING USER</div></div>) : null 
-        }
+          {this.props.userLoading ? (
+            <div className="loading-circle">
+              <CircularProgress color="#86C232" size={200} />
+              <div className="loading-text">LOADING USER</div>
+            </div>
+          ) : null}
 
           <Switch>
             <Route path="/dashboard/jobview" component={JobView} />
@@ -84,13 +89,22 @@ export class Dashboard extends React.Component {
 function mapStateToProps(state) {
   return {
     user: state.userReducer.user,
-    userLoading : state.userReducer.loading,
+    userLoading: state.userReducer.loading,
     jobOnClock: state.jobReducer.jobOnClock,
     offTheClockJobs: state.jobReducer.offTheClockJobs,
-    clockInJobLoading : state.jobReducer.clockInJobLoading,
-    offTheClockJobsLoading : state.jobReducer.offTheClockJobsLoading
+    clockInJobLoading: state.jobReducer.clockInJobLoading,
+    offTheClockJobsLoading: state.jobReducer.offTheClockJobsLoading
   };
 }
 
-export default connect(mapStateToProps, { getUser, getAllActiveJobs, getAllEntries ,getAllClients, getClockedInJob, getBilling, getOffTheClockJobs, getInProgressCount,
-  getInProgressTotals })(withRouter(Dashboard));
+export default connect(mapStateToProps, {
+  getUser,
+  getAllActiveJobs,
+  getAllEntries,
+  getAllClients,
+  getClockedInJob,
+  getBilling,
+  getOffTheClockJobs,
+  getInProgressCount,
+  getInProgressTotals
+})(withRouter(Dashboard));

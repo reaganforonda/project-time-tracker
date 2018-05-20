@@ -79,9 +79,8 @@ export class EntryForm extends React.Component {
 
   handleTimeSelectEnd(e, date) {
     this.setState({ endTime: date });
-    if(this.state.endTime !== '') {
-      this.setState({disableConfirm : false})
-    }
+    this.setState({disableConfirm : false})
+    
   }
 
   // Formate Datepicker's date to something for useable
@@ -290,7 +289,7 @@ export class EntryForm extends React.Component {
               <div className='entry-form-buttons'>
                 <RaisedButton style={{backgroundColor : '#86C232'}} backgroundColor={buttonStyle1.backgroundColor} labelColor={buttonStyle1.labelColor} label="CANCEL" onClick={() => this.handleCancelModalClick()}/>
 
-                <RaisedButton disabled={this.state.disableConfirm} style={{backgroundColor : '#86C232'}} backgroundColor={buttonStyle2.backgroundColor} labelColor={buttonStyle2.labelColor} onClick={() => this.handleAddEntry()} label="CONFIRM" />
+                <RaisedButton disabledBackgroundColor={'#86C232'} disabled={this.state.disableConfirm} style={{backgroundColor : '#86C232'}} backgroundColor={buttonStyle2.backgroundColor} labelColor={buttonStyle2.labelColor} onClick={() => this.handleAddEntry()} label="CONFIRM" />
               </div>
             
           </Dialog>

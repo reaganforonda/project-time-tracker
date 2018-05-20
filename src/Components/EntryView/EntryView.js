@@ -18,14 +18,9 @@ export class EntryView extends React.Component {
     this.handleDeleteEntry = this.handleDeleteEntry.bind(this);
   }
 
-  componentWillReceiveProps(nextProps) {
-    console.log(this.props.allEntries)
-    console.log(nextProps.allEntries)
-    if(this.props.allEntries !== nextProps.allEntries) {
-      this.props.getAllEntries(this.props.user.user_id)
-    }
+  componentDidMount(){
+    this.props.getAllEntries(this.props.user.user_id)
   }
-
 
   handleDeleteEntry(entry) {
     axios

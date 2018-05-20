@@ -304,7 +304,7 @@ export class BillingView extends React.Component {
       return (
         <MenuItem
           key={value.invoice_id}
-          primaryText={value.invoice_number}
+          primaryText={`${value.client_name} - ${value.invoice_number}`}
           value={value.invoice_id}
         />
       );
@@ -324,7 +324,9 @@ export class BillingView extends React.Component {
         );
       });
 
-    let attachments = this.props.allBilling.map(value => {
+    let attachments = this.props.allBilling.filter(o=> {
+      return o.client_id === this.state.selectedClient.client_id
+    }).map(value => {
       return (
         <MenuItem
           key={value.invoice_id}

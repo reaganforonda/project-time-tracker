@@ -1,3 +1,4 @@
 SELECT *
 FROM billing
-WHERE user_id = $1
+JOIN clients on billing.client_id = clients.client_id
+WHERE billing.user_id = $1
