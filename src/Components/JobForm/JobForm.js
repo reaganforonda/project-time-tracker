@@ -141,6 +141,8 @@ export class JobForm extends React.Component {
       );
     });
 
+
+    // Styling for Material Ui Components
     const stylePaper = {
       style : {
         backgroundColor : '#6B6E70'

@@ -37,6 +37,9 @@ export class JobView extends React.Component {
     this.getClockTime = this.getClockTime.bind(this);
     this.formatTime = this.formatTime.bind(this);
     this.addNewEntry = this.addNewEntry.bind(this);
+    this.getStartTimeInMinutes = this.getStartTimeInMinutes.bind(this);
+    this.getEndTimeInMinutes = this.getEndTimeInMinutes.bind(this);
+
   }
 
 componentWillReceiveProps(nextProps) {
@@ -59,7 +62,7 @@ componentWillReceiveProps(nextProps) {
 
   // Formate Datepicker's date to something more useable
   formatDate(date) {
-    let formatedDate = `${date.getMonth()}/${date.getDate()}/${date.getFullYear()}`;
+    let formatedDate = `${date.getMonth()+1}/${date.getDate()}/${date.getFullYear()}`;
     return formatedDate;
   }
 
@@ -119,11 +122,18 @@ componentWillReceiveProps(nextProps) {
     return formatedTime;
   }
 
-  calculateDuration(endTime) {
-    let startInMinutes =
-      ~~this.props.clockInTime.getHours() * 60 +
-      ~~this.props.clockInTime.getMinutes();
-    let endInMinutes = ~~endTime.getHours() * 60 + ~~endTime.getMinutes();
+  getStartTimeInMinutes(start) { 
+    return ~~start.getHours()* 60 + ~~start.getMinutes();
+  }
+
+  getEndTimeInMinutes(endTime) {
+    return ~~endTime.getHours() * 60 + ~~endTime.getMinutes();
+  }
+
+  calculateDuration(endTime) { 
+
+    let startInMinutes = this.getStartTimeInMinutes(this.props.clockInTime)
+    let endInMinutes = this.getEndTimeInMinutes(endTime)
     let duration = 0;
 
     try {
